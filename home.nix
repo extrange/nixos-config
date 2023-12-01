@@ -1,15 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.username = "user";
   home.homeDirectory = "/home/user";
-
-  home.keyboard =
-    {
-      layout = "us";
-      # variant = "dvorak";
-      options = [ "capslock:backspace" ];
-    };
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
@@ -29,13 +22,17 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs;
     [
+      bat
       btop # replacement of htop/nmon
       dnsutils # `dig` + `nslookup` 
       ethtool
       file
       firefox
       fzf # A command-line fuzzy finder
+      git
+      vim
       gnupg
+      gnome-extension-manager
       git-credential-manager
       iftop # network monitoring
       iotop # io monitoring
@@ -72,16 +69,80 @@
       yq-go # yaml processer https://github.com/mikefarah/yq
       zip
       zstd
+
+
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.fullscreen-avoider
+      gnomeExtensions.gsconnect
+      gnomeExtensions.tailscale-status
+      gnomeExtensions.vitals
     ];
 
 
-  dconf.settings = {
+  dconf.settings = with lib.hm.gvariant; {
     "org/gnome/mutter" = {
       edge-tiling = true;
     };
+
     "org/gnome/desktop/input-sources" = {
-      xkb-options = "['caps:backspace']";
+      # Remap capslock to backspace
+      xkb-options = [ "terminate:ctrl_alt_bksp" "caps:backspace" ];
+      # Set Dvorak keyboard layout
+      sources = [ (mkTuple [ "xkb" "us+dvorak" ]) ];
     };
+
+    "org/gnome/settings-daemon/plugins/color" = {
+      night-light-enabled = true;
+    };
+
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+
+    # Set Alt-Tab to switch between windows, instead of applications
+    "org/gnome/desktop/wm/keybindings" = {
+      switch-applications = "@as []";
+      switch-windows = [ "<alt>Tab" ];
+    };
+
+    # Open terminal with Ctrl + Alt + T
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Control><Alt>t";
+      command = "kgx";
+      name = "Launch terminal";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+    };
+
+    "org/gnome/shell" = {
+      # Setup dash shortcuts
+      favorite-apps = [
+        "firefox.desktop"
+        "org.gnome.Console.desktop"
+        "obsidian.desktop"
+        "org.gnome.Nautilus.desktop"
+        "telegram.desktop"
+        "code.desktop"
+      ];
+
+      # Enable extensions
+      enabled-extensions = [
+        "clipboard-indicator@tudmotu.com"
+        "dash-to-dock@micxgx.gmail.com"
+        "fullscreen-avoider@noobsai.github.com"
+        "gsconnect@andyholmes.github.io"
+        "Vitals@CoreCoding.com"
+      ];
+
+    };
+
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      show-trash = false;
+    };
+
+
   };
 
   programs.git = {

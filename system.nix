@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 
@@ -87,6 +87,20 @@
     packages = [ ];
   };
 
+  environment.etc."current-system-packages".text =
+
+    let
+
+      packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+
+      sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
+
+      formatted = builtins.concatStringsSep "\n" sortedUnique;
+
+    in
+
+    formatted;
+
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "user";
@@ -95,19 +109,48 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
+  # Fix login keyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    gnome-shell-extensions # This seems to remove default extensions
+  ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-  ];
+  environment.variables.EDITOR = "vim";
 
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
+  };
+
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ];
+        settings = {
+          control = {
+            z = "C-/";
+            x = "C-b";
+            c = "C-i";
+            v = "C-.";
+            t = "C-k";
+            w = "C-,";
+            # Pressing shift enters a new layer
+            shift = "layer(control_shift)";
+          };
+          # We inherit from the C-S (ctrl+shift) layer
+          # This preserves existing ctrl+shift combinations
+          "control_shift:C-S" = {
+            t = "C-S-k";
+          };
+        };
+      };
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
