@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "My NixOS Config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -9,25 +9,30 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    nixosConfigurations = {
-      laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./system.nix
+  outputs = { nixpkgs, home-manager, ... }:
 
-          # https://discourse.nixos.org/t/passing-options-to-modules-with-lib-nixossystem/27962/3
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.user = import ./home.nix;
-            home-manager.verbose = true;
-          }
-        ];
-      };
+    let
+      mkHost = hostname:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux"; # Remove? set modularly
+          specialArgs = { inherit hostname; };
+          modules = let file = n: ./hosts/${hostname}/${n}.nix; in [
+            ./common.nix # Common config
+            (file "config") # Machine specific config
+            (file "hardware-configuration")
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.user = import ./home.nix;
+              home-manager.verbose = true;
+            }
+          ];
+        };
+    in
+    {
+      nixosConfigurations = with builtins; mapAttrs
+        (hostname: _: mkHost hostname)
+        (readDir ./hosts);
     };
-
-
-  };
 }

@@ -3,6 +3,7 @@
 {
   home.username = "user";
   home.homeDirectory = "/home/user";
+  fonts.fontconfig.enable = true;
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
@@ -22,66 +23,73 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs;
     [
-      bat
-      btop # replacement of htop/nmon
-      dnsutils # `dig` + `nslookup` 
-      ethtool
-      file
+      # Desktop programs
       firefox
-      fzf # A command-line fuzzy finder
-      git
-      vim
-      gnupg
       gnome-extension-manager
-      git-credential-manager
-      iftop # network monitoring
-      iotop # io monitoring
-      ipcalc # it is a calculator for the IPv4/v6 addresses
-      iperf3
-      jq # A lightweight and flexible command-line JSON processor
-      lm_sensors # for `sensors` command
-      lsof # list open files
-      lsscsi
-      ltrace # library call monitoring
-      libva-utils # vaainfo, check on VAAPI (hw acceleration)
-      mtr # A network diagnostic tool
-      nil # Nix language server for vscode
       moonlight-qt
-      neofetch
-      nmap # A utility for network discovery and security auditing
-      nnn
-      nixpkgs-fmt # Nix formatter
       obsidian
-      p7zip
-      pciutils # lspci
-      ripgrep # recursively searches directories for a regex pattern
-      socat # replacement of openbsd-netcat
-      strace # system call monitoring
-      sysstat
       syncthing
       telegram-desktop
-      tree
-      unzip
-      usbutils # lsusb
+      whatsapp-for-linux
       vscode
-      which
-      xz
-      yq-go # yaml processer https://github.com/mikefarah/yq
-      zip
-      zstd
 
-
+      # Gnome Extensions
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.fullscreen-avoider
       gnomeExtensions.gsconnect
       gnomeExtensions.tailscale-status
       gnomeExtensions.vitals
+
+      # Fonts
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+
+      # Command line
+      bat
+      btop
+      dnsutils # `dig` + `nslookup` 
+      ethtool
+      file
+      fzf
+      git
+      git-credential-manager
+      iftop
+      iotop
+      ipcalc
+      iperf3
+      jq # Command-line JSON processor
+      libva-utils # vaainfo, check on VAAPI (hw acceleration)
+      lm_sensors # for `sensors` command
+      lsof
+      lsscsi
+      ltrace # library call monitoring
+      mtr # ping + tracert TUI
+      neofetch
+      nil # Nix language server for vscode
+      nixpkgs-fmt # Nix formatter
+      nmap
+      nnn
+      p7zip
+      pciutils # lspci
+      ripgrep # recursively searches directories for a regex pattern
+      socat
+      strace # system call monitoring
+      sysstat
+      tree
+      unzip
+      usbutils # lsusb
+      vim
+      which
+      xz
+      yq-go # yaml processer https://github.com/mikefarah/yq
+      zip
+      zstd
     ];
 
 
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/mutter" = {
+      # Snap windows to top/horizontal edges
       edge-tiling = true;
     };
 
@@ -94,6 +102,7 @@
 
     "org/gnome/settings-daemon/plugins/color" = {
       night-light-enabled = true;
+      night-light-temperature = mkUint32 1700;
     };
 
     "org/gnome/desktop/interface" = {
@@ -160,20 +169,10 @@
     enableCompletion = true;
   };
 
-  # Possible permission issues if run as system?
+  # Run as user, ivo possible permission issues if run as system
   services.syncthing.enable = true;
 
 
-  # This value determines the home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update home Manager without changing this value. See
-  # the home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "24.05";
-
-  # Let home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
