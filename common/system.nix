@@ -43,6 +43,14 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Extend sudo timeout to 30min
+  security.sudo.extraConfig = "Defaults timestamp_timeout=30";
+
+  # Virtualization
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -64,7 +72,7 @@
   users.users.user = {
     isNormalUser = true;
     description = "user";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm"];
     packages = [ ];
   };
 

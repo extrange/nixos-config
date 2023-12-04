@@ -42,7 +42,9 @@
       gnomeExtensions.vitals
 
       # Fonts
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+      open-sans
+      source-sans
 
       # Command line
       bat
@@ -52,7 +54,7 @@
       file
       fzf
       git
-      git-credential-manager
+      gh
       iftop
       iotop
       ipcalc
@@ -61,6 +63,7 @@
       libva-utils # vaainfo, check on VAAPI (hw acceleration)
       lm_sensors # for `sensors` command
       lsof
+      lsd # ls replacement with icons
       lsscsi
       ltrace # library call monitoring
       mtr # ping + tracert TUI
@@ -86,6 +89,10 @@
       zstd
     ];
 
+  programs.bash.shellAliases = {
+    ls = "lsd";
+    grep = "grep --color=auto";
+  };
 
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/mutter" = {
@@ -149,6 +156,11 @@
 
     "org/gnome/shell/extensions/dash-to-dock" = {
       show-trash = false;
+    };
+
+    "org/gnome/Console" = {
+      use-system-font = false;
+      custom-font = "JetBrainsMonoNL Nerd Font 12";
     };
 
 

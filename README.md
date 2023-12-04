@@ -1,5 +1,11 @@
 # My NixOS Configuration
 
+Each host has 3 files:
+
+- home.nix
+- config.nix
+- hardware-configuration.nix
+
 > [!IMPORTANT]
 > Before installing anything, you will need to back up your existing configuration:
 >
@@ -12,12 +18,10 @@
 
 ## Todo
 
-- git credentials - gh?
+- git credentials - gcm + passphrase in git config?
 - phase out startingpoint
-- nfs mounts
 - script to install nixos from commandline (and try myself also)
-- desktop scaling, monitor position, don't sleep/dim/lock
-- clean up tailscale old devices
+- DND on timer
 
 ## Stuff to configure manually after install
 
@@ -26,6 +30,9 @@
 - Git?
 - Syncthing folders, add to server
 - Tailscale login
+- Obsidian select vault
+- Nautilus bookmarks
+- whatsapp login
 
 ## Notes
 
