@@ -73,6 +73,7 @@
       nmap
       nnn
       p7zip
+      parted
       pciutils # lspci
       ripgrep # recursively searches directories for a regex pattern
       socat

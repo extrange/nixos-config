@@ -3,36 +3,29 @@
 Each host has 3 files:
 
 - home.nix
-- config.nix
+- system.nix
 - hardware-configuration.nix
 
 > [!IMPORTANT]
 > Before installing anything, you will need to back up your existing configuration:
 >
 > - `~/.ssh` keys
-> - Firefox profile
-> - `nm-cli` connections
+> - Firefox profile directory
 > - `/etc/fstab`
-> - Syncthing `.config`
-> - VM images
+> - `nm-cli` connections (if applicable)
+> - VM images (if applicable)
 
-## Todo
+## Post-install
 
-- git credentials - gcm + passphrase in git config?
-- phase out startingpoint
-- script to install nixos from commandline (and try myself also)
-- DND on timer
-
-## Stuff to configure manually after install
-
-- update `hardware-configuration.nix` with `nixos-generate-config`
-- Telegram login
-- Git?
+- Update `hardware-configuration.nix` with `nixos-generate-config`, then push
+- Logins:
+  - Tailscale
+  - Telegram
+  - Whatsapp
 - Syncthing folders, add to server
-- Tailscale login
 - Obsidian select vault
 - Nautilus bookmarks
-- whatsapp login
+- Git?
 
 ## Notes
 

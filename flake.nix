@@ -18,7 +18,7 @@
           specialArgs = { inherit hostname; };
           modules = let file = n: ./hosts/${hostname}/${n}.nix; in [
             ./common/system.nix # Common config
-            (file "config") # Machine specific config
+            (file "system") # Machine specific config
             (file "hardware-configuration")
             home-manager.nixosModules.home-manager
             {
@@ -27,7 +27,7 @@
               home-manager.users.user = { ... }: {
                 imports = [
                   ./common/home.nix
-                  ./hosts/${hostname}/home.nix
+                  (file "home")
                 ];
               };
             }
