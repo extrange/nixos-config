@@ -45,6 +45,7 @@
       (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
       open-sans
       source-sans
+      jetbrains-mono # has ligatures
 
       # Command line
       bat
@@ -86,6 +87,7 @@
       which
       xz
       yq-go # yaml processer https://github.com/mikefarah/yq
+      yt-dlp
       zip
       zstd
     ];

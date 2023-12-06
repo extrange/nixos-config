@@ -17,7 +17,7 @@ Each host has 3 files:
 
 ## Post-install
 
-- Update `hardware-configuration.nix` with `nixos-generate-config`, then push
+- git clone `nixos-config`
 - Logins:
   - Tailscale
   - Telegram
@@ -29,6 +29,6 @@ Each host has 3 files:
 
 ## Notes
 
-`nixos-rebuild switch --flake .#hostname` will not allow access untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname` instead.
+`nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname` instead.
 
 [work around]: https://discourse.nixos.org/t/dirty-nixos-rebuild-build-flake-issues/30078/2

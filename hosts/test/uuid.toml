@@ -1,0 +1,4 @@
+luks = "e7b98338-a0d6-4375-9806-6722486c4f3a"
+boot = "4df1deb3-7342-4eb2-9107-c9e91111d23e"
+root = "a6041803-0b57-48b1-91bb-b38f9a706cfa"
+swap = "e8d16e87-a448-4f17-863c-7dbdbae6c95f"
