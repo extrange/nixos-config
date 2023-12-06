@@ -50,6 +50,8 @@
       # Command line
       bat
       btop
+      btrfs-progs
+      cryptsetup
       dnsutils # `dig` + `nslookup` 
       ethtool
       file
