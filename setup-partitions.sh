@@ -96,6 +96,8 @@ do_install() {
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
+    set +x
+
     clear
     lsblk
     cat <<EOF
