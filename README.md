@@ -1,5 +1,7 @@
 # My NixOS Configuration
 
+![](./a.mp4)
+
 Each host has 3 files:
 
 - home.nix
