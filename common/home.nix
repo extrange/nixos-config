@@ -32,6 +32,7 @@
       syncthing
       telegram-desktop
       whatsapp-for-linux
+      vlc
       vscode
 
       # Gnome Extensions

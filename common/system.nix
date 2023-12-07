@@ -92,7 +92,11 @@
   security.pam.services.sddm.enableGnomeKeyring = true;
 
   environment.gnome.excludePackages = with pkgs.gnome; [
+    epiphany # browser
+    geary # mail reader
     gnome-shell-extensions # This seems to remove default extensions
+    pkgs.gnome-tour
+    totem # video player
   ];
 
   # Allow unfree packages

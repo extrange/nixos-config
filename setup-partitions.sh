@@ -90,9 +90,8 @@ do_install() {
     git clone https://github.com/extrange/nixos-config /mnt/etc/nixos/nixos-config
     chown -R 1000 /mnt/etc/nixos/nixos-config
 
-    # Generate config
-    # TODO how to get script initially
-    printf "Generating nixos configurations..."
+    # Generate hardware config
+    printf "Generating hardware-configuration.nix..."
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
