@@ -6,26 +6,35 @@ set -euo pipefail
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Check arguments
-if [[ "$#" -ne 1 ]]; then
-    printf "Usage: ./install.sh <path-to-install-disk>"
-    exit
-fi
-
 # Check if we are running as root
 if [[ "$EUID" -ne 0 ]]; then
     printf "Please run as root\n"
     exit 1
 fi
 
-target=$1
+read -rp "Enter target disk (e.g. /dev/sda): " target
 
 if [[ ! -b "$target" ]]; then
-    printf "%s is not a valid block device\n" "$target"
+    printf "'%s' is not a valid block device, aborting\n" "$target"
     exit 1
 fi
 
-printf "\n${RED}### By continuing, all data in %s will be deleted! ###\n\n${NC}" "$target"
+# Only accept disks
+DEVICE_TYPE=$(lsblk -n -o TYPE "$target")
+
+if [[ ! "$DEVICE_TYPE" =~ "disk" ]]; then
+    printf "'%s' is not a disk, aborting\n" "$target"
+    exit
+fi
+
+# Install git if not already available
+if ! command -v git; then
+    nix-env -f '<nixpkgs>' -iA git
+fi
+
+printf "This script will setup a primary Btrfs partition with swap over a LUKS2 encrypted LVM.\n\n"
+
+printf "${RED}All data in %s will be deleted!\n\n${NC}" "$target"
 
 read -rp "To continue, enter YES in caps: " confirm && [[ $confirm == 'YES' ]] || exit 1
 
@@ -57,7 +66,7 @@ cryptsetup luksOpen "$primary" crypted
 # LVM: Create physical volumes, volume groups and logical volumes
 pvcreate /dev/mapper/crypted
 vgcreate vg /dev/mapper/crypted
-lvcreate -l 8G -n swap vg
+lvcreate -L 8G -n swap vg # 8GB of swap
 lvcreate -l '100%FREE' -n nixos vg
 
 # Format disks
@@ -77,9 +86,29 @@ mkdir -p /mnt/boot && mount /dev/disk/by-label/boot /mnt/boot
 # Activate swap
 swapon /dev/vg/swap
 
-# Generate config
-# Will /mnt/etc be preserved post-install?
-nixos-generate-config --root /mnt
+# Pull latest config
+git clone https://github.com/extrange/nixos-config /mnt/etc
 
-# Install nixos
-nixos-install
+# Generate config
+# TODO Will /mnt/etc be preserved post-install?
+# TODO Need to add the luks filesystem too - --no-filesystems? Then use labels? Basically, how to get it to work on new computers?
+# TODO do we git clone the config to /mnt/etc, run nixos-generate-config --no-filesystems to overwrite the existing hardware-configuration, then add the boot.initrd.luks.devices lines?
+printf "Generating nixos configurations..."
+nixos-generate-config --root /mnt
+rm /mnt/etc/nixos/configuration.nix
+
+lsblk
+
+cat <<EOF
+Disk partitioning complete!
+
+Next, move hardware-configuration.nix to the appropriate host directory, e.g.
+
+mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/hosts/<HOSTNAME>
+
+Then, install nixos with:
+
+nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
+
+Finally, don't forget to push the new hardware configuration.
+EOF
