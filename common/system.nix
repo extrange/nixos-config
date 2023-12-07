@@ -11,6 +11,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Primary LUKS partition
+  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
+
   # networking.hostName = specialArgs.hostname;
   networking.hostName = specialArgs.hostname;
   networking.networkmanager.enable = true;
@@ -72,7 +75,7 @@
   users.users.user = {
     isNormalUser = true;
     description = "user";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm"];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
     packages = [ ];
   };
 

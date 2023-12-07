@@ -60,7 +60,7 @@ boot="${target}1"
 primary="${target}2"
 
 # Setup luks on primary partition
-cryptsetup luksFormat "$primary" # will prompt for password
+cryptsetup luksFormat "$primary" --label=primary # will prompt for password
 cryptsetup luksOpen "$primary" crypted
 
 # LVM: Create physical volumes, volume groups and logical volumes
@@ -87,11 +87,10 @@ mkdir -p /mnt/boot && mount /dev/disk/by-label/boot /mnt/boot
 swapon /dev/vg/swap
 
 # Pull latest config
-git clone https://github.com/extrange/nixos-config /mnt/etc
+git clone https://github.com/extrange/nixos-config /mnt/etc/nixos/nixos-config
 
 # Generate config
 # TODO Will /mnt/etc be preserved post-install?
-# TODO Need to add the luks filesystem too - --no-filesystems? Then use labels? Basically, how to get it to work on new computers?
 # TODO do we git clone the config to /mnt/etc, run nixos-generate-config --no-filesystems to overwrite the existing hardware-configuration, then add the boot.initrd.luks.devices lines?
 printf "Generating nixos configurations..."
 nixos-generate-config --root /mnt
