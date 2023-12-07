@@ -28,6 +28,7 @@
       gnome-extension-manager
       moonlight-qt
       obsidian
+      obs-studio
       syncthing
       telegram-desktop
       whatsapp-for-linux
@@ -55,6 +56,7 @@
       dnsutils # `dig` + `nslookup` 
       ethtool
       file
+      ffmpeg
       fzf
       git
       gh
