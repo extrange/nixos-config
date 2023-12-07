@@ -15,6 +15,8 @@ Each host has 3 files:
 > - `nm-cli` connections (if applicable)
 > - VM images (if applicable)
 
+In general, while it is possible for configuration to be very specific (e.g. icon sizes in Nautilus), it is better to prefer defaults as far as possible. This reduces the potential surface of things breaking as updates/changes happen, and lets me focus more on the overall architecture.
+
 ## Install
 
 ```bash
@@ -39,6 +41,6 @@ Push hardware-config changes to git
 
 ## Notes
 
-`nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname` instead.
+- `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname` instead.
 
 [work around]: https://discourse.nixos.org/t/dirty-nixos-rebuild-build-flake-issues/30078/2
