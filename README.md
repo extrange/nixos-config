@@ -18,10 +18,11 @@ Each host has 3 files:
 ## Install
 
 ```bash
-curl https://raw.githubusercontent.com/extrange/nixos-config/main/setup-partitions.sh -o setup.sh
-chmod +x setup.sh
-sudo ./setup.sh
+sudo -i
+source <(curl -s https://raw.githubusercontent.com/extrange/nixos-config/main/setup-partitions.sh)
 ```
+
+Note: `curl ... | bash` doesn't work as `read` does not have access to the terminal.
 
 ## Post-install
 
