@@ -113,6 +113,7 @@ sudo nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
 
 Finally, don't forget to push the new hardware configuration.
 EOF
+    return 0
 }
 
 do_install
