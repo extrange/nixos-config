@@ -15,9 +15,18 @@ Each host has 3 files:
 > - `nm-cli` connections (if applicable)
 > - VM images (if applicable)
 
+## Install
+
+```bash
+curl https://raw.githubusercontent.com/extrange/nixos-config/main/setup-partitions.sh -o setup.sh
+chmod +x setup.sh
+sudo ./setup.sh
+```
+
 ## Post-install
 
-- git clone `nixos-config`
+Push hardware-config changes to git
+
 - Logins:
   - Tailscale
   - Telegram
