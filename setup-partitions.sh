@@ -96,8 +96,8 @@ do_install() {
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
+    clear
     lsblk
-
     cat <<EOF
 Disk partitioning complete!
 
@@ -111,7 +111,6 @@ sudo nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
 
 Finally, don't forget to push the new hardware configuration.
 EOF
-    exit
 }
 
 do_install
