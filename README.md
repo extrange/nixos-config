@@ -1,6 +1,8 @@
 # My NixOS Configuration
 
-![](./a.mp4)
+
+https://github.com/extrange/nixos-config/assets/29305375/d6c1ed13-6e20-4f08-81ee-dac268ea39cf
+
 
 Each host has 3 files:
 
