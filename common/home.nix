@@ -36,6 +36,7 @@
       vscode
 
       # Gnome Extensions
+      gnomeExtensions.blur-my-shell
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.fullscreen-avoider
@@ -140,6 +141,11 @@
       custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
     };
 
+    # Show thumbnails on SSH drives
+    "org/gnome/nautilus/preferences" = {
+      show-image-thumbnails = "always";
+    };
+
     "org/gnome/shell" = {
       # Setup dash shortcuts
       favorite-apps = [
@@ -153,6 +159,7 @@
 
       # Enable extensions
       enabled-extensions = [
+        "blur-my-shell@aunetx"
         "clipboard-indicator@tudmotu.com"
         "dash-to-dock@micxgx.gmail.com"
         "fullscreen-avoider@noobsai.github.com"
@@ -160,6 +167,13 @@
         "Vitals@CoreCoding.com"
       ];
 
+    };
+
+    # Background
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///home/user/.config/background";
+      picture-uri-dark = "file:///home/user/.config/background";
+      picture-options = "zoom";
     };
 
     "org/gnome/shell/extensions/dash-to-dock" = {
@@ -170,8 +184,11 @@
       use-system-font = false;
       custom-font = "JetBrainsMonoNL Nerd Font 12";
     };
+  };
 
-
+  home.file.".config/background" = {
+    source = ./background;
+    force = true;
   };
 
   programs.git = {

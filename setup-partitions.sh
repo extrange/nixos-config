@@ -95,7 +95,11 @@ do_install() {
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
+    # Stop echoing
     set +x
+
+    # Don't drop out of root shell on errors
+    set +e
 
     clear
     lsblk
@@ -104,11 +108,11 @@ Disk partitioning complete!
 
 Next, move hardware-configuration.nix to the appropriate host directory, e.g.
 
-sudo mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<HOSTNAME>
+mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<HOSTNAME>
 
 Then, install nixos with:
 
-sudo nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
+nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
 
 Finally, don't forget to push the new hardware configuration.
 EOF
