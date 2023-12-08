@@ -35,6 +35,9 @@
     LC_TELEPHONE = "en_SG.UTF-8";
     LC_TIME = "en_SG.UTF-8";
   };
+  programs.hyprland.enable = true;
+  # Optional, hint electron apps to use wayland:
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;

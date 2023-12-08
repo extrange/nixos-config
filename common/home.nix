@@ -27,6 +27,7 @@
       firefox
       gnome-extension-manager
       moonlight-qt
+      kitty
       obsidian
       obs-studio
       syncthing
@@ -34,6 +35,10 @@
       whatsapp-for-linux
       vlc
       vscode
+
+      # Hyprland TEMP
+      grim
+      slurp
 
       # Gnome Extensions
       gnomeExtensions.blur-my-shell
