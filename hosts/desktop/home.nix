@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   dconf.settings = with lib.hm.gvariant; {
@@ -27,4 +27,8 @@
     source = ./monitors.xml;
     force = true; # overwrite existing
   };
+
+  home.packages = with pkgs; [
+    nvtop
+  ];
 }

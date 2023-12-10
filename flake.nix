@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, ... }:
 
     let
       mkHost = hostname:
@@ -20,6 +24,7 @@
             ./common/system.nix # Common config
             (file "system") # Machine specific config
             (file "hardware-configuration")
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

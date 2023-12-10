@@ -102,8 +102,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.variables.EDITOR = "vim";
-
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";

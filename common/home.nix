@@ -1,9 +1,14 @@
 { config, pkgs, lib, ... }:
 
 {
+
   home.username = "user";
   home.homeDirectory = "/home/user";
   fonts.fontconfig.enable = true;
+  home.sessionVariables = {
+    EDITOR = "vim";
+    NNN_PLUG="p:preview-tui";
+  };
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
@@ -24,16 +29,21 @@
   home.packages = with pkgs;
     [
       # Desktop programs
+      calibre
       firefox
+      gimp
       gnome-extension-manager
+      jellyfin-media-player
+      libreoffice
       moonlight-qt
-      obsidian
       obs-studio
+      obsidian
       syncthing
       telegram-desktop
-      whatsapp-for-linux
       vlc
       vscode
+      whatsapp-for-linux
+      zoom-us
 
       # Gnome Extensions
       gnomeExtensions.blur-my-shell
@@ -57,20 +67,23 @@
       cryptsetup
       dnsutils # `dig` + `nslookup` 
       ethtool
-      file
       ffmpeg
+      file
       fzf
-      git
       gh
+      git
+      hunspell # libreoffice spellcheck
+      hunspellDicts.en-us
       iftop
       iotop
       ipcalc
       iperf3
       jq # Command-line JSON processor
+      libheif
       libva-utils # vaainfo, check on VAAPI (hw acceleration)
       lm_sensors # for `sensors` command
-      lsof
       lsd # ls replacement with icons
+      lsof
       lsscsi
       ltrace # library call monitoring
       mtr # ping + tracert TUI
@@ -78,11 +91,11 @@
       nil # Nix language server for vscode
       nixpkgs-fmt # Nix formatter
       nmap
-      nnn
       p7zip
       parted
       pciutils # lspci
       ripgrep # recursively searches directories for a regex pattern
+      smartmontools
       socat
       strace # system call monitoring
       sysstat
@@ -98,9 +111,21 @@
       zstd
     ];
 
+  programs.nnn = {
+    enable = true;
+    package = pkgs.nnn.override ({ withNerdIcons = true; });
+    plugins.src = (pkgs.fetchFromGitHub {
+      owner = "jarun";
+      repo = "nnn";
+      rev = "v4.0";
+      sha256 = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
+    }) + "/plugins";
+  };
+
   programs.bash.shellAliases = {
     ls = "lsd";
     grep = "grep --color=auto";
+    nnn = "nnn -ae";
   };
 
   dconf.settings = with lib.hm.gvariant; {
