@@ -7,7 +7,7 @@
   fonts.fontconfig.enable = true;
   home.sessionVariables = {
     EDITOR = "vim";
-    NNN_PLUG="p:preview-tui";
+    NNN_PLUG = "p:preview-tui";
   };
 
   # link the configuration file in current directory to the specified location in home directory
@@ -61,13 +61,14 @@
       jetbrains-mono # has ligatures
 
       # Command line
+      age
       bat
       btop
       btrfs-progs
       cryptsetup
       dnsutils # `dig` + `nslookup` 
       ethtool
-      ffmpeg
+      (ffmpeg.override { withFdkAac = true; withUnfree = true; })
       file
       fzf
       gh
