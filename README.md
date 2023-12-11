@@ -15,9 +15,8 @@ An encrypted root + swap ([LVM over LUKS]) will be setup by default.
 > [!IMPORTANT]
 > Before installing anything, you will need to back up your existing configuration:
 >
-> - `~/.ssh` keys
 > - Firefox profile directory
-> - `/etc/fstab`
+> - `/etc/fstab` (if applicable)
 > - `nm-cli` connections (if applicable)
 > - VM images (if applicable)
 
@@ -35,11 +34,12 @@ Follow the necessary instructions, then reboot.
 ## Post Install
 
 - Set user password: `su -c  'passwd user' root`
+- Connect to Wifi
 - Pull Firefox profile
 - Login to `git`
 - `ssh-keygen` and `ssh-copy-id` SSH key to `server` and remove old key
 - `git push` changes to `hardware-configuration.nix`
-- Setup logins:
+- Setup logins (these can't be declaratively set yet)
   - Tailscale
   - Telegram
   - Whatsapp
@@ -51,13 +51,17 @@ Follow the necessary instructions, then reboot.
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
 - I decided against using `sops-nix` or `agenix` to manage secrets, the reason being that if I am already able to transfer a secret out-of-band (the private key), then I might as well have already sent any other information over the same channel.
+  - This applies even if you use [NixOps] to provision systems - when deploying on a new machine, the private key must still somehow be transferred to it.
   - Also, setting up authentication for `git`, Tailscale and so on isn't very onerous, and also helps me to remember to tidy the configuration.
 
 ## Resources
 
 - Dotfiles: [dmadisetti], [Electrostasy], [reckenrode]
 - Hyprland configs: [yurihikari], [Waayway]
+- [Handling Secrets in NixOS][secrets]
 
+[secrets]: https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
+[NixOps]: https://christine.website/blog/nixos-encrypted-secrets-2021-01-20/
 [Waayway]: https://github.com/Waayway/hyprland-waayway
 [yurihikari]: https://github.com/yurihikari/garuda-sway-config
 [electrostasy]: https://github.com/Electrostasy/dots
