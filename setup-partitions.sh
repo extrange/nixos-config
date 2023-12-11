@@ -98,8 +98,8 @@ do_install() {
     # Stop echoing
     set +x
 
-    # Don't drop out of root shell on errors
-    set +e
+    # Don't drop out of root shell on errors, allow unbound variables otherwise tab expansion will fail
+    set +eu
 
     clear
     lsblk

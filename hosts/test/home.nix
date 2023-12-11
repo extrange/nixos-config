@@ -13,4 +13,8 @@
       sources = [ (mkTuple [ "xkb" "us" ]) ];
     };
   };
+
+  home.file.".config/gtk-3.0/bookmarks" = {
+    source = ./bookmarks;
+  };
 }

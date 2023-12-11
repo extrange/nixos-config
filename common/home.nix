@@ -217,6 +217,18 @@
     force = true;
   };
 
+  programs.ssh.matchBlocks = {
+    server = {
+      hostname = "ssh.nicholaslyz.com";
+      port = 39483;
+      user = "user";
+    };
+    chanel = {
+      hostname = "chanel-server.tail14cd7.ts.net";
+      user = "chanel";
+    };
+  };
+
   programs.git = {
     enable = true;
     userEmail = "29305375+extrange@users.noreply.github.com";

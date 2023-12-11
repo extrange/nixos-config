@@ -34,8 +34,10 @@ Follow the necessary instructions, then reboot.
 
 ## Post Install
 
+- Set user password: `su -c  'passwd user' root`
+- Pull Firefox profile
 - Login to `git`
-- `ssh-copy-id` to `server`
+- `ssh-keygen` and `ssh-copy-id` SSH key to `server` and remove old key
 - `git push` changes to `hardware-configuration.nix`
 - Setup logins:
   - Tailscale
