@@ -10,8 +10,6 @@ Each host has 3 files:
 
 An encrypted root + swap ([LVM over LUKS]) will be setup by default.
 
-In general, while it is possible for configuration to be very specific (e.g. icon sizes in Nautilus), it is better to prefer defaults as far as possible. This reduces the potential surface of things breaking as updates/changes happen, and lets me focus more on the overall architecture.
-
 ## Install
 
 > [!IMPORTANT]
@@ -36,6 +34,8 @@ Follow the necessary instructions, then reboot.
 
 ## Post Install
 
+- Login to `git`
+- `ssh-copy-id` to `server`
 - `git push` changes to `hardware-configuration.nix`
 - Setup logins:
   - Tailscale
@@ -48,7 +48,19 @@ Follow the necessary instructions, then reboot.
 
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
+- I decided against using `sops-nix` or `agenix` to manage secrets, the reason being that if I am already able to transfer a secret out-of-band (the private key), then I might as well have already sent any other information over the same channel.
+  - Also, setting up authentication for `git`, Tailscale and so on isn't very onerous, and also helps me to remember to tidy the configuration.
 
+## Resources
+
+- Dotfiles: [dmadisetti], [Electrostasy], [reckenrode]
+- Hyprland configs: [yurihikari], [Waayway]
+
+[Waayway]: https://github.com/Waayway/hyprland-waayway
+[yurihikari]: https://github.com/yurihikari/garuda-sway-config
+[electrostasy]: https://github.com/Electrostasy/dots
+[reckenrode]: https://github.com/reckenrode/nixos-configs
+[dmadisetti]: https://github.com/dmadisetti/.dots
 [work around]: https://discourse.nixos.org/t/dirty-nixos-rebuild-build-flake-issues/30078/2
 [LVM over LUKS]: https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
 [installer]: https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
