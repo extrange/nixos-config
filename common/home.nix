@@ -223,6 +223,9 @@
     userName = "extrange";
   };
 
+  # Use git-credential-oauth as the helper instead of personal access tokens
+  programs.git-credential-oauth.enable = true;
+
   programs.starship = {
     enable = true;
   };
