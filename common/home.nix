@@ -36,6 +36,7 @@
       jellyfin-media-player
       libreoffice
       moonlight-qt
+      mission-center # pretty system monitor
       obs-studio
       obsidian
       syncthing
