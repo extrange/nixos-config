@@ -126,7 +126,7 @@
   programs.bash.shellAliases = {
     ls = "lsd";
     grep = "grep --color=auto";
-    nnn = "nnn -ae";
+    nnn = "nnn -aeH";
   };
 
   dconf.settings = with lib.hm.gvariant; {
@@ -217,15 +217,19 @@
     force = true;
   };
 
-  programs.ssh.matchBlocks = {
-    server = {
-      hostname = "ssh.nicholaslyz.com";
-      port = 39483;
-      user = "user";
-    };
-    chanel = {
-      hostname = "chanel-server.tail14cd7.ts.net";
-      user = "chanel";
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      server = {
+        host = "server ssh.nicholaslyz.com";
+        hostname = "ssh.nicholaslyz.com";
+        port = 39483;
+        user = "user";
+      };
+      chanel = {
+        hostname = "chanel-server.tail14cd7.ts.net";
+        user = "chanel";
+      };
     };
   };
 

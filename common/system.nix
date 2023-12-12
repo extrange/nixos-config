@@ -133,10 +133,15 @@
     };
   };
 
-  # For SSHFS
   programs.ssh = {
     knownHosts = {
-      "ssh.nicholaslyz.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+      "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+
+      "ssh.icybat.com".publicKey = "AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
+
+      "chanel-server.tail14cd7.ts.net".publicKey = "AAAAC3NzaC1lZDI1NTE5AAAAIHXcEkJzqDxVBOZzL9DfSR5nE+D+Hx+ogDM+Pz+Npvf/";
+
+      "chanel-fedora.tail14cd7.ts.net".publicKey = "AAAAC3NzaC1lZDI1NTE5AAAAIH4ETTbz3fgYTc7X5H5diG/tHl8sWcrqLKlqlPvqq7X0";
     };
     extraConfig = ''
       Host ssh.nicholaslyz.com
