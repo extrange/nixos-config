@@ -9,7 +9,7 @@
 
   sops.age.sshKeyPaths = [ "/home/user/.ssh/id_ed25519" ];
   sops.defaultSopsFile = ../secrets.yaml;
-  sops.secrets.userPassword.neededForUsers = true; 
+  sops.secrets.userPassword.neededForUsers = true;
 
   zramSwap.enable = true;
 

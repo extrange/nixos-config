@@ -6,6 +6,8 @@ set -euo pipefail
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+nixos_config_dir=/mnt/home/user/nixos-config
+
 # Check if we are running as root
 if [[ "$EUID" -ne 0 ]]; then
     printf "Please run as root\n"
@@ -27,15 +29,13 @@ if [[ ! "$DEVICE_TYPE" =~ "disk" ]]; then
     exit
 fi
 
-# Install git if not already available
-if ! command -v git; then
-    nix-env -f '<nixpkgs>' -iA git
-fi
+read -rp "Enter target hostname (e.g. desktop): " hostname
 
 # User confirmation
-printf "This script will setup a primary Btrfs partition with swap over a LUKS2 encrypted LVM.\n\n"
+printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM.\n\n"
 printf "${RED}All data in %s will be deleted!\n\n${NC}" "$target"
-read -rp "To continue, enter YES in caps: " confirm && [[ $confirm == 'YES' ]] || exit 1
+printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait for the installation to continue."
+sleep 5
 
 do_install() {
     # Script modified from https://gist.github.com/walkermalling/23cf138432aee9d36cf59ff5b63a2a58
@@ -66,13 +66,11 @@ do_install() {
     # LVM: Create physical volumes, volume groups and logical volumes
     pvcreate /dev/mapper/crypted
     vgcreate vg /dev/mapper/crypted
-    lvcreate -L 8G -n swap vg # 8GB of swap
     lvcreate -l '100%FREE' -n nixos vg
 
     # Format disks
     mkfs.fat -F 32 -n boot "$boot"
     mkfs.btrfs -L nixos /dev/vg/nixos
-    mkswap -L swap /dev/vg/swap
 
     # Create root Btrfs subvolume and mount for installation
     mount /dev/disk/by-label/nixos /mnt
@@ -83,40 +81,43 @@ do_install() {
     # Mount boot
     mkdir -p /mnt/boot && mount /dev/disk/by-label/boot /mnt/boot
 
-    # Activate swap
-    swapon /dev/vg/swap
+    # Install commandline dependencies
+    printf "Installing git and other tools..."
+    nix-env -f '<nixpkgs>' -iA git >/dev/null
 
     # Pull latest config, will be preserved on install
-    git clone https://github.com/extrange/nixos-config /mnt/etc/nixos/nixos-config
-    chown -R 1000 /mnt/etc/nixos/nixos-config
+    git clone https://github.com/extrange/nixos-config "$nixos_config_dir"
+    chown -R 1000 "$nixos_config_dir"
 
     # Generate hardware config
     printf "Generating hardware-configuration.nix..."
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
-    # Stop echoing
-    set +x
-
-    # Don't drop out of root shell on errors, allow unbound variables otherwise tab expansion will fail
-    set +eu
+    # Move hardware config
+    mv /mnt/etc/nixos/hardware-configuration.nix / "$nixos_config_dir"/hosts/"$hostname"
 
     clear
     lsblk
-    cat <<EOF
-Disk partitioning complete!
+    printf "Partitioning complete."
+    echo
 
-Next, move hardware-configuration.nix to the appropriate host directory, e.g.
+    # Copy ssh keys
+    mkdir -p /mnt/home/user/.ssh
+    ssh_keyfile=/etc/mnt/home/user/.ssh/id_ed25519
+    scp -P 39483 user@ssh.nicholaslyz.com:/home/user/keys/"$hostname" "$ssh_keyfile"
+    ln -s "$ssh_keyfile" /home/user/.ssh/id_ed25519 # sops-nix expects key here
 
-mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<HOSTNAME>
+    # Stop echoing
+    set +x
 
-Then, install nixos with:
+    # +e Don't drop out of root shell on errors
+    # +u: Allow unbound variables otherwise tab expansion will fail
+    set +euo pipefail
 
-nixos-install --flake path:/mnt/etc/nixos/nixos-config#<HOSTNAME>
+    # Install
+    nixos-install --flake path:"$nixos_config_dir" #"$hostname"
 
-Finally, don't forget to push the new hardware configuration.
-EOF
-    return 0
 }
 
 do_install

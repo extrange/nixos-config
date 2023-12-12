@@ -25,8 +25,7 @@ Boot into the NixOS [installer].
 Setup partitions:
 
 ```text
-$ sudo -i
-# source <(curl -s https://raw.githubusercontent.com/extrange/nixos-config/main/setup-partitions.sh)
+$ curl -s https://raw.githubusercontent.com/extrange/nixos-config/main/setup.sh | sudo bash -s -- <target disk> <hostname>
 ```
 
 Follow the necessary instructions, then reboot.
@@ -48,10 +47,10 @@ Follow the necessary instructions, then reboot.
 
 ## Notes
 
-- To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i hosts/$(hostname)/id_ed25519) sops secrets.yaml`.
+- To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secrets.yaml`.
 - To add a new key for a host:
-  - First, get the `age` key: `ssh-keygen -y -f hosts/test/id_ed25519 | ssh-to-age`
-  - Update: `SOPS_AGE_KEY=$(ssh-to-age -private-key -i hosts/$(hostname)/id_ed25519) sops updatekeys secrets.yaml` (`$hostname` needs to be that of a key previously used for encryption)
+  - First, get the `age` key from the SSH public key: `ssh-keygen -y -f path/to/public/key | ssh-to-age`
+  - Update: `SOPS_AGE_KEY=$(ssh-to-age -private-key -i path/to/private/key sops updatekeys secrets.yaml` (the private key must have previously used to encrypt the file)
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
 
