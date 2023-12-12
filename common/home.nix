@@ -99,6 +99,8 @@
       ripgrep # recursively searches directories for a regex pattern
       smartmontools
       socat
+      ssh-to-age
+      sops
       strace # system call monitoring
       sysstat
       tree

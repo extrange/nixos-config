@@ -7,6 +7,12 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  sops.age.sshKeyPaths = [ "/home/user/.ssh/id_ed25519" ];
+  sops.defaultSopsFile = ../secrets.yaml;
+  sops.secrets.userPassword.neededForUsers = true; 
+
+  zramSwap.enable = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -63,20 +69,16 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.user = {
-    isNormalUser = true;
-    description = "user";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
-    packages = [ ];
+  users = {
+    mutableUsers = false;
+    users.user = {
+      isNormalUser = true;
+      description = "user";
+      extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
+      hashedPasswordFile = config.sops.secrets.userPassword.path;
+    };
   };
 
   # Enable automatic login for the user.
@@ -104,7 +106,7 @@
 
   services.tailscale = {
     enable = true;
-    useRoutingFeatures = "client";
+    useRoutingFeatures = "client"; # allow using exit node
   };
 
   services.keyd = {

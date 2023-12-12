@@ -48,11 +48,12 @@ Follow the necessary instructions, then reboot.
 
 ## Notes
 
+- To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i hosts/$(hostname)/id_ed25519) sops secrets.yaml`.
+- To add a new key for a host:
+  - First, get the `age` key: `ssh-keygen -y -f hosts/test/id_ed25519 | ssh-to-age`
+  - Update: `SOPS_AGE_KEY=$(ssh-to-age -private-key -i hosts/$(hostname)/id_ed25519) sops updatekeys secrets.yaml` (`$hostname` needs to be that of a key previously used for encryption)
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
-- I decided against using `sops-nix` or `agenix` to manage secrets, the reason being that if I am already able to transfer a secret out-of-band (the private key), then I might as well have already sent any other information over the same channel.
-  - This applies even if you use [NixOps] to provision systems - when deploying on a new machine, the private key must still somehow be transferred to it.
-  - Also, setting up authentication for `git`, Tailscale and so on isn't very onerous, and also helps me to remember to tidy the configuration.
 
 ## Resources
 
