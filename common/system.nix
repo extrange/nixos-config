@@ -133,6 +133,21 @@
     };
   };
 
+  # For SSHFS
+  programs.ssh = {
+    knownHosts = {
+      "ssh.nicholaslyz.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+    };
+    extraConfig = ''
+      Host ssh.nicholaslyz.com
+        HostName ssh.nicholaslyz.com
+        Port 39483
+        User user
+        IdentityFile /home/user/.ssh/id_ed25519
+    '';
+  };
+
+
   # Save space
   boot.loader.systemd-boot.configurationLimit = 10;
   # boot.loader.grub.configurationLimit = 10;

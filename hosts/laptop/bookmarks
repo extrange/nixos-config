@@ -1,2 +1,2 @@
-sftp://server/home/user workspace
-sftp://server/mnt/storage storage
+file:///mnt/workspace workspace
+file:///mnt/storage storage

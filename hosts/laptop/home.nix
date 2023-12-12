@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
 
@@ -10,5 +10,7 @@
 
   home.file.".config/gtk-3.0/bookmarks" = {
     source = ./bookmarks;
+    force = true;
   };
+
 }
