@@ -43,12 +43,14 @@ Reboot.
   - Whatsapp
 - Syncthing: configure folders, add device to server
 - GSConnect pairing
+- VSCode login (note: due to [automatic login], the keyring is not unlocked. However, it is possible to use a insecure storage and disable the [password].)
 
 ## Notes
 
 - To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secrets.yaml`.
 - To add a new key for a host:
   - First, get the `age` key from the SSH public key: `ssh-keygen -y -f path/to/public/key | ssh-to-age`
+  - Add the key to `.sops.yaml`
   - Update: `SOPS_AGE_KEY=$(ssh-to-age -private-key -i path/to/private/key sops updatekeys secrets.yaml` (the private key must have previously used to encrypt the file)
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
@@ -69,3 +71,5 @@ Reboot.
 [work around]: https://discourse.nixos.org/t/dirty-nixos-rebuild-build-flake-issues/30078/2
 [LVM over LUKS]: https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS
 [installer]: https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
+[automatic login]: https://askubuntu.com/questions/1352398/asking-for-password-when-i-open-vscode-for-the-first-time
+[password]: https://askubuntu.com/questions/24770/gnome-keyring-keeps-asking-for-a-password-that-doesnt-exist/24773#24773
