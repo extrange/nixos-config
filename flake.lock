@@ -52,10 +52,27 @@
         "type": "github"
       }
     },
+    "nnn": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1702044526,
+        "narHash": "sha256-56WWUQSTRNiY1CyvcZ4tIMBg5+P+YD+bJ9yri9fMzIk=",
+        "owner": "jarun",
+        "repo": "nnn",
+        "rev": "5595d93d29d2474338a9f601d713d395a07a6029",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jarun",
+        "repo": "nnn",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "nnn": "nnn",
         "sops-nix": "sops-nix"
       }
     },

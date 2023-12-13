@@ -11,9 +11,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nnn = {
+      url = "github:jarun/nnn";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, self, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, nnn, self, ... }:
 
     let
       mkHost = hostname:
@@ -27,7 +31,10 @@
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
+              home-manager.extraSpecialArgs = {
+                inherit nnn;
+              };
+              home-manager. useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.user = { ... }: {
                 imports = [
