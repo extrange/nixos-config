@@ -22,21 +22,19 @@ An encrypted root + swap ([LVM over LUKS]) will be setup by default.
 
 Boot into the NixOS [installer].
 
-Setup partitions:
-
 ```text
-$ curl -s https://raw.githubusercontent.com/extrange/nixos-config/main/setup.sh | sudo bash -s -- <target disk> <hostname>
+$ sudo -i
+# source <(curl -s https://raw.githubusercontent.com/extrange/nixos-config/main/setup.sh)
 ```
 
-Follow the necessary instructions, then reboot.
+Enter SSH login details when prompted.
+
+Reboot.
 
 ## Post Install
 
-- Set user password: `su -c  'passwd user' root`
-- Connect to Wifi
 - Pull Firefox profile
 - Login to `git`
-- `ssh-keygen` and `ssh-copy-id` SSH key to `server` and remove old key
 - `git push` changes to `hardware-configuration.nix`
 - Setup logins (these can't be declaratively set yet)
   - Tailscale

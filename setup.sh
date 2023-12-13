@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+clear
 
 # https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 nixos_config_dir=/mnt/home/user/nixos-config
+KNOWN_HOSTS="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
 
 # Check if we are running as root
 if [[ "$EUID" -ne 0 ]]; then
@@ -32,18 +33,34 @@ fi
 read -rp "Enter target hostname (e.g. desktop): " hostname
 
 # User confirmation
-printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM.\n\n"
-printf "${RED}All data in %s will be deleted!\n\n${NC}" "$target"
-printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait for the installation to continue."
+printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM."
+echo
+echo
+printf "${RED}All data in %s will be deleted!${NC}" "$target"
+echo
+echo
+printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue."
+echo
 sleep 5
 
 do_install() {
+    set -euo pipefail
+
     # Script modified from https://gist.github.com/walkermalling/23cf138432aee9d36cf59ff5b63a2a58
 
-    # Echo commands and print timestamp
-    # https://stackoverflow.com/questions/50989501/bash-highlight-command-before-execution-set-x/62620480#62620480
-    PS4='\033[1;34m$(date +%H:%M:%S):\033[0m '
-    set -x
+    # Install commandline dependencies
+    printf "Installing git and other tools...\n"
+    nix-env -f '<nixpkgs>' -iA git yq-go ssh-to-age sops >/dev/null
+
+    # Clone git repo (required for boot key)
+    mkdir -p /tmp/nixos-config
+    git clone https://github.com/extrange/nixos-config /tmp/nixos-config
+
+    # Copy ssh keys to temp dir before install (used to decrypt boot key)
+    SSH_KEYFILE_TEMP=/tmp/id_ed25519
+    KNOWN_HOSTS_FILE=/tmp/known_hosts
+    echo "$KNOWN_HOSTS" >"$KNOWN_HOSTS_FILE"
+    scp -P 39483 -o UserKnownHostsFile="$KNOWN_HOSTS_FILE" user@ssh.nicholaslyz.com:/home/user/keys/"$hostname" "$SSH_KEYFILE_TEMP"
 
     # Create partition table
     parted -s "$target" -- mklabel gpt
@@ -60,8 +77,13 @@ do_install() {
     primary="${target}2"
 
     # Setup luks on primary partition
-    cryptsetup luksFormat "$primary" --label=primary # will prompt for password
-    cryptsetup luksOpen "$primary" crypted
+    (
+        export SOPS_AGE_KEY
+        SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$SSH_KEYFILE_TEMP")
+        BOOT_KEY=$(sops -d /tmp/nixos-config/secrets.yaml | yq '.boot')
+        echo -n "$BOOT_KEY" | cryptsetup luksFormat --label=primary "$primary" -
+        echo -n "$BOOT_KEY" | cryptsetup luksOpen "$primary" crypted -
+    )
 
     # LVM: Create physical volumes, volume groups and logical volumes
     pvcreate /dev/mapper/crypted
@@ -73,6 +95,8 @@ do_install() {
     mkfs.btrfs -L nixos /dev/vg/nixos
 
     # Create root Btrfs subvolume and mount for installation
+    printf "Waiting 5s for /dev/disk/by-label/nixos to appear...\n"
+    sleep 5 # wait for by-label to become populated
     mount /dev/disk/by-label/nixos /mnt
     btrfs subvolume create /mnt/root
     umount /mnt
@@ -81,43 +105,44 @@ do_install() {
     # Mount boot
     mkdir -p /mnt/boot && mount /dev/disk/by-label/boot /mnt/boot
 
-    # Install commandline dependencies
-    printf "Installing git and other tools..."
-    nix-env -f '<nixpkgs>' -iA git >/dev/null
-
     # Pull latest config, will be preserved on install
     git clone https://github.com/extrange/nixos-config "$nixos_config_dir"
     chown -R 1000 "$nixos_config_dir"
 
     # Generate hardware config
-    printf "Generating hardware-configuration.nix..."
+    printf "Generating hardware-configuration.nix...\n"
     nixos-generate-config --root /mnt
     rm /mnt/etc/nixos/configuration.nix
 
     # Move hardware config
-    mv /mnt/etc/nixos/hardware-configuration.nix / "$nixos_config_dir"/hosts/"$hostname"
+    mv /mnt/etc/nixos/hardware-configuration.nix "$nixos_config_dir"/hosts/"$hostname"
 
     clear
     lsblk
     printf "Partitioning complete."
     echo
 
-    # Copy ssh keys
-    mkdir -p /mnt/home/user/.ssh
-    ssh_keyfile=/etc/mnt/home/user/.ssh/id_ed25519
-    scp -P 39483 user@ssh.nicholaslyz.com:/home/user/keys/"$hostname" "$ssh_keyfile"
-    ln -s "$ssh_keyfile" /home/user/.ssh/id_ed25519 # sops-nix expects key here
+    # Move ssh keyfile to install's user home dir and set permissions
+    SSH_KEYFILE_INSTALL_DIR=/mnt/home/user/.ssh
+    mkdir -p "$SSH_KEYFILE_INSTALL_DIR"
+    mv "$SSH_KEYFILE_TEMP" "$SSH_KEYFILE_INSTALL_DIR"
+    chown 1000:100 "$SSH_KEYFILE_INSTALL_DIR/id_ed25519"
+    chmod 600 "$SSH_KEYFILE_INSTALL_DIR/id_ed25519"
 
-    # Stop echoing
-    set +x
+    # Move keyfile to SOPS expected directory
+    SOPS_SSH_EXPECTED_DIR=/home/user/.ssh
+    mkdir -p "$SOPS_SSH_EXPECTED_DIR"
+    ln -s "$SSH_KEYFILE_INSTALL_DIR/id_ed25519" "$SOPS_SSH_EXPECTED_DIR/id_ed25519"
 
     # +e Don't drop out of root shell on errors
     # +u: Allow unbound variables otherwise tab expansion will fail
     set +euo pipefail
 
     # Install
-    nixos-install --flake path:"$nixos_config_dir" #"$hostname"
+    nixos-install --no-root-passwd --flake path:"$nixos_config_dir#$hostname"
 
 }
 
-do_install
+(
+    do_install
+)
