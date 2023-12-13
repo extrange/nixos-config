@@ -15,6 +15,12 @@ if [[ "$EUID" -ne 0 ]]; then
     exit 1
 fi
 
+# User confirmation
+printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM.\n\n"
+printf "${RED}All data in %s will be deleted!${NC}\n\n" "$target"
+printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
+sleep 5
+
 read -rp "Enter target disk (e.g. /dev/sda): " target
 
 if [[ ! -b "$target" ]]; then
@@ -31,17 +37,6 @@ if [[ ! "$DEVICE_TYPE" =~ "disk" ]]; then
 fi
 
 read -rp "Enter target hostname (e.g. desktop): " hostname
-
-# User confirmation
-printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM."
-echo
-echo
-printf "${RED}All data in %s will be deleted!${NC}" "$target"
-echo
-echo
-printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue."
-echo
-sleep 5
 
 do_install() {
     set -euo pipefail
