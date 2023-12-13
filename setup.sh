@@ -121,7 +121,7 @@ do_install() {
     SSH_KEYFILE_INSTALL_DIR=/mnt/home/user/.ssh
     mkdir -p "$SSH_KEYFILE_INSTALL_DIR"
     mv "$SSH_KEYFILE_TEMP" "$SSH_KEYFILE_INSTALL_DIR"
-    chown 1000:100 "$SSH_KEYFILE_INSTALL_DIR/id_ed25519"
+    chown -R 1000:100 "$SSH_KEYFILE_INSTALL_DIR"
     chmod 600 "$SSH_KEYFILE_INSTALL_DIR/id_ed25519"
 
     # Move keyfile to SOPS expected directory
