@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, specialArgs, pkgs, lib, ... }:
+{ config, pkgs, lib, flake, hostname, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -29,7 +29,7 @@
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
 
   # networking.hostName = specialArgs.hostname;
-  networking.hostName = specialArgs.hostname;
+  networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -170,6 +170,7 @@
 
   # Save space
   boot.loader.systemd-boot.configurationLimit = 10;
+
   # boot.loader.grub.configurationLimit = 10;
   nix.gc = {
     automatic = true;
@@ -177,6 +178,18 @@
     options = "--delete-older-than 1w";
   };
   nix.settings.auto-optimise-store = true;
+
+  # Default frequency is daily
+  system.autoUpgrade = {
+    enable = true;
+    flake = flake.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--no-write-lock-file"
+      "-L" # print build logs
+    ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

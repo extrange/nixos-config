@@ -13,14 +13,14 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, self, ... }:
 
     let
       mkHost = hostname:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux"; # Remove? set modularly
-          specialArgs = { inherit hostname; };
           modules = let file = n: ./hosts/${hostname}/${n}.nix; in [
+            { config._module.args = { flake = self; inherit hostname; }; }
             ./common/system.nix # Common config
             (file "system") # Machine specific config
             (file "hardware-configuration")
