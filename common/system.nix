@@ -11,7 +11,15 @@
   sops.defaultSopsFile = ../secrets.yaml;
   sops.secrets.userPassword.neededForUsers = true;
 
+  # Use zram (for now)
+  #
   zramSwap.enable = true;
+
+  # Decrease shutdown timer to 15s from 90s
+  # See systemd-system.conf(5)
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=15s
+  '';
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
