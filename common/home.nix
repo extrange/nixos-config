@@ -10,21 +10,6 @@
     NNN_PLUG = "p:preview-tui";
   };
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # ''
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs;
     [
@@ -82,6 +67,7 @@
       iperf3
       jq # Command-line JSON processor
       libheif
+      libsecret # for github auth
       libva-utils # vaainfo, check on VAAPI (hw acceleration)
       lm_sensors # for `sensors` command
       lsd # ls replacement with icons
@@ -229,8 +215,9 @@
         port = 39483;
         user = "user";
       };
-      chanel = {
-        hostname = "chanel-server.tail14cd7.ts.net";
+      chanel = let hostname = "chanel-server.tail14cd7.ts.net"; in {
+        host = "chanel ${hostname}";
+        inherit hostname;
         user = "chanel";
       };
     };
@@ -241,9 +228,6 @@
     userEmail = "29305375+extrange@users.noreply.github.com";
     userName = "extrange";
   };
-
-  # Use git-credential-oauth as the helper instead of personal access tokens
-  programs.git-credential-oauth.enable = true;
 
   programs.starship = {
     enable = true;
