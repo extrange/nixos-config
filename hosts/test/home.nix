@@ -14,7 +14,16 @@
     };
   };
 
-  home.file.".config/gtk-3.0/bookmarks" = {
-    source = ./bookmarks;
+  home.file = {
+    # SSHFS shortcuts
+    ".config/gtk-3.0/bookmarks" = {
+      source = ./bookmarks;
+    };
+
+    # Set fractional scaling and monitor position
+    ".config/monitors.xml" = {
+      source = ./monitors.xml;
+      force = true; # overwrite existing
+    };
   };
 }
