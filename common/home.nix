@@ -1,7 +1,7 @@
 { config, pkgs, lib, nnn, ... }:
 
 {
-
+  # General settings
   home.username = "user";
   home.homeDirectory = "/home/user";
   fonts.fontconfig.enable = true;
@@ -10,7 +10,12 @@
     NNN_PLUG = "p:preview-tui";
   };
 
-  # Packages that should be installed to the user profile.
+  # .config files
+  home.file.".config/background" = {
+    source = ./background;
+    force = true;
+  };
+
   home.packages = with pkgs;
     [
       # Desktop programs
@@ -27,7 +32,6 @@
       syncthing
       telegram-desktop
       vlc
-      vscode
       whatsapp-for-linux
       zoom-us
 
@@ -101,16 +105,51 @@
       zstd
     ];
 
-  programs.nnn = {
-    enable = true;
-    package = pkgs.nnn.override ({ withNerdIcons = true; });
-    plugins.src = "${nnn}/plugins";
-  };
+  # Application-specific config
+  programs = {
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      shellAliases = {
+        ls = "lsd";
+        grep = "grep --color=auto";
+        nnn = "nnn -aeH";
+      };
+    };
 
-  programs.bash.shellAliases = {
-    ls = "lsd";
-    grep = "grep --color=auto";
-    nnn = "nnn -aeH";
+    home-manager.enable = true;
+
+    git = {
+      enable = true;
+      userEmail = "29305375+extrange@users.noreply.github.com";
+      userName = "extrange";
+    };
+
+    nnn = {
+      enable = true;
+      package = pkgs.nnn.override ({ withNerdIcons = true; });
+      plugins.src = "${nnn}/plugins";
+    };
+
+    starship.enable = true;
+
+    ssh = {
+      enable = true;
+      # ~.ssh/config
+      matchBlocks = let hostname = "ssh.nicholaslyz.com"; in {
+        server = {
+          host = "server ${hostname}";
+          inherit hostname;
+          port = 39483;
+          user = "user";
+        };
+        chanel = let hostname = "chanel-server.tail14cd7.ts.net"; in {
+          host = "chanel ${hostname}";
+          inherit hostname;
+          user = "chanel";
+        };
+      };
+    };
   };
 
   dconf.settings = with lib.hm.gvariant; {
@@ -196,47 +235,8 @@
     };
   };
 
-  home.file.".config/background" = {
-    source = ./background;
-    force = true;
-  };
-
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      server = {
-        host = "server ssh.nicholaslyz.com";
-        hostname = "ssh.nicholaslyz.com";
-        port = 39483;
-        user = "user";
-      };
-      chanel = let hostname = "chanel-server.tail14cd7.ts.net"; in {
-        host = "chanel ${hostname}";
-        inherit hostname;
-        user = "chanel";
-      };
-    };
-  };
-
-  programs.git = {
-    enable = true;
-    userEmail = "29305375+extrange@users.noreply.github.com";
-    userName = "extrange";
-  };
-
-  programs.starship = {
-    enable = true;
-  };
-
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-  };
-
   # Run as user, ivo possible permission issues if run as system
   services.syncthing.enable = true;
 
-
   home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
 }

@@ -2,42 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, flake, hostname, ... }:
+{ config, pkgs, lib, self, hostname, ... }:
 
 {
+  # Nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nixpkgs.config.allowUnfree = true;
 
+  # sops-nix
   sops.age.sshKeyPaths = [ "/home/user/.ssh/id_ed25519" ];
   sops.defaultSopsFile = ../secrets.yaml;
   sops.secrets.userPassword.neededForUsers = true;
 
-  # Use zram (for now)
-  #
-  zramSwap.enable = true;
-
-  # Decrease shutdown timer to 15s from 90s
-  # See systemd-system.conf(5)
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=15s
-  '';
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Primary LUKS partition
-  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
-
-  # networking.hostName = specialArgs.hostname;
-  networking.hostName = hostname;
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
+  # i8n
   time.timeZone = "Asia/Singapore";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_SG.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_SG.UTF-8";
     LC_IDENTIFICATION = "en_SG.UTF-8";
@@ -50,25 +29,39 @@
     LC_TIME = "en_SG.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Extend sudo timeout to 30min
-  security.sudo.extraConfig = "Defaults timestamp_timeout=30";
-
+  # Core system
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
+  zramSwap.enable = true;
   # Virtualization
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
-  # Enable sound with pipewire.
+  # System misc config
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=15s
+  '';
+  security.sudo.extraConfig = "Defaults timestamp_timeout=30";
+
+  # Network
+  networking.hostName = hostname;
+  networking.networkmanager.enable = true;
+
+  # Display
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Display: enable automatic login for the user.
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "user";
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
+  # Sound
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -89,14 +82,6 @@
     };
   };
 
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "user";
-
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
-
   # Fix login keyring
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -109,43 +94,43 @@
     totem # video player
   ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  services = {
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "client"; # allow using exit node
-  };
+    tailscale = {
+      enable = true;
+      useRoutingFeatures = "client"; # allow using exit node
+    };
 
-  services.keyd = {
-    enable = true;
-    keyboards = {
-      default = {
-        ids = [ "*" ];
-        settings = {
-          control = {
-            z = "C-/";
-            x = "C-b";
-            c = "C-i";
-            v = "C-.";
-            t = "C-k";
-            w = "C-,";
-            # Pressing shift enters a new layer
-            shift = "layer(control_shift)";
-          };
-          # We inherit from the C-S (ctrl+shift) layer
-          # This preserves existing ctrl+shift combinations
-          "control_shift:C-S" = {
-            t = "C-S-k";
+    keyd = {
+      enable = true;
+      keyboards = {
+        default = {
+          ids = [ "*" ];
+          settings = {
+            control = {
+              z = "C-/";
+              x = "C-b";
+              c = "C-i";
+              v = "C-.";
+              t = "C-k";
+              w = "C-,";
+              # Pressing shift enters a new layer
+              shift = "layer(control_shift)";
+            };
+            # We inherit from the C-S (ctrl+shift) layer
+            # This preserves existing ctrl+shift combinations
+            "control_shift:C-S" = {
+              t = "C-S-k";
+            };
           };
         };
       };
     };
   };
 
-  # Applies to user as well
   programs.ssh = {
     knownHosts = {
+      # User SSH references this
       "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
       "ssh.icybat.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
@@ -157,7 +142,7 @@
       "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     };
 
-    # Used when root is running ssh for SSHFS
+    # Required for SSHFS (SSH run as root)
     extraConfig = ''
       Host ssh.nicholaslyz.com
         HostName ssh.nicholaslyz.com
@@ -168,21 +153,21 @@
   };
 
 
-  # Save space
+  # Optimization
   boot.loader.systemd-boot.configurationLimit = 10;
-
-  # boot.loader.grub.configurationLimit = 10;
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 1w";
   };
   nix.settings.auto-optimise-store = true;
+  nix.optimise.automatic = true;
 
-  # Default frequency is daily
+  # Autoupgrades
   system.autoUpgrade = {
+    # Default frequency is daily
     enable = true;
-    flake = flake.outPath;
+    flake = self.outPath;
     flags = [
       "--update-input"
       "nixpkgs"
@@ -198,5 +183,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
