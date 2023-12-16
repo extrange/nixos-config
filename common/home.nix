@@ -20,6 +20,7 @@
     [
       # Desktop programs
       calibre
+      discord
       firefox
       gimp
       gnome-extension-manager
