@@ -1,8 +1,23 @@
 # My NixOS Configuration
 
-![](./screenshot.jpg)
+![screenshot](./screenshot.jpg)
 
 Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
+
+<details>
+<summary>Todo</summary>
+
+- [ ] Test: override ffmpeg back to without lib_fdkaac (probably override config?)
+- [ ] Gnome DND on timer
+- [ ] Background change on morning and night with randomization of wallpapers (choose wallpapers first)
+- [ ] Desktop: see if vscode insiders fixes blurry issue
+- [ ] automated updates: move to git, autodeployment
+- [ ] nnn: cd on quit, fzf-like search
+- [ ] Default applications for PDF, text files
+- [ ] Hyprland
+- [ ] Impermanence module
+
+</details>
 
 ## Configuration
 
@@ -74,7 +89,6 @@ Once installation is completed successfully, reboot.
 - [Comparison of `git-crypt`, `agenix` and `sops-nix`][secrets]
 
 [secrets]: https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
-[NixOps]: https://christine.website/blog/nixos-encrypted-secrets-2021-01-20/
 [Waayway]: https://github.com/Waayway/hyprland-waayway
 [yurihikari]: https://github.com/yurihikari/garuda-sway-config
 [electrostasy]: https://github.com/Electrostasy/dots
