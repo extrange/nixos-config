@@ -26,12 +26,13 @@
       gnome-extension-manager
       jellyfin-media-player
       libreoffice
-      moonlight-qt
       mission-center # pretty system monitor
+      moonlight-qt
       obs-studio
       obsidian
       syncthing
       telegram-desktop
+      ungoogled-chromium
       vlc
       whatsapp-for-linux
       zoom-us
