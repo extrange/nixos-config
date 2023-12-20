@@ -16,6 +16,11 @@
     force = true;
   };
 
+  home.file.".config/whatsapp-for-linux/settings.conf" = {
+    source = ./.config/whatsapp-for-linux/settings.conf;
+    force = true;
+  };
+
   home.packages = with pkgs;
     [
       # Desktop programs
