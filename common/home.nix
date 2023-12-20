@@ -204,7 +204,7 @@
         "org.gnome.Console.desktop"
         "obsidian.desktop"
         "org.gnome.Nautilus.desktop"
-        "telegram.desktop"
+        "org.telegram.desktop.desktop"
         "code.desktop"
       ];
 
