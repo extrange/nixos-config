@@ -120,7 +120,7 @@
       shellAliases = {
         ls = "lsd";
         grep = "grep --color=auto";
-        nnn = "nnn -aeH";
+        n = "nnn -ae";
       };
     };
 
