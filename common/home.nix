@@ -120,8 +120,10 @@
       shellAliases = {
         ls = "lsd";
         grep = "grep --color=auto";
-        n = "nnn -ae";
+        # TODO fix this alias being overridden by quetcd.bash_sh_zsh
+        nnn = "nnn -ae"; # Can't alias nnn as n, otherwise cd on quit doesn't work
       };
+      bashrcExtra = builtins.readFile "${nnn}/misc/quitcd/quitcd.bash_sh_zsh";
     };
 
     home-manager.enable = true;
