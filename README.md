@@ -4,21 +4,6 @@
 
 Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
 
-<details>
-<summary>Todo</summary>
-
-- [ ] Test: override ffmpeg back to without lib_fdkaac (probably override config?)
-- [ ] Gnome DND on timer
-- [ ] Background change on morning and night with randomization of wallpapers (choose wallpapers first)
-- [ ] Desktop: see if vscode insiders fixes blurry issue
-- [ ] automated updates: move to git, autodeployment
-- [ ] nnn: cd on quit, fzf-like search
-- [ ] Default applications for PDF, text files
-- [ ] Hyprland
-- [ ] Impermanence module
-
-</details>
-
 ## Configuration
 
 Each host configuration is specified by the following files in `hosts/${hostname}`:
