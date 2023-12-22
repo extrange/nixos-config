@@ -12,7 +12,7 @@
 
   # .config files
   home.file.".config/background" = {
-    source = ./background;
+    source = ./.config/background;
     force = true;
   };
 
@@ -211,8 +211,9 @@
         "org.gnome.Console.desktop"
         "obsidian.desktop"
         "org.gnome.Nautilus.desktop"
-        "org.telegram.desktop.desktop"
         "code.desktop"
+        "org.telegram.desktop.desktop"
+        "com.github.eneshecan.WhatsAppForLinux.desktop"
       ];
 
       # Enable extensions
