@@ -222,6 +222,7 @@
         "dash-to-dock@micxgx.gmail.com"
         "fullscreen-avoider@noobsai.github.com"
         "gsconnect@andyholmes.github.io"
+        "tailscale-status@maxgallup.github.com"
         "Vitals@CoreCoding.com"
       ];
 
