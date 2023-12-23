@@ -11,15 +11,25 @@
   };
 
   # .config files
-  home.file.".config/background" = {
-    source = ./.config/background;
-    force = true;
+  home.file = {
+
+    ".config/background" = {
+      source = ./.config/background;
+      force = true;
+    };
+
+    ".config/whatsapp-for-linux/settings.conf" = {
+      source = ./.config/whatsapp-for-linux/settings.conf;
+      force = true;
+    };
+
+    # SSHFS bookmarks
+    ".config/gtk-3.0/bookmarks" = {
+      source = ./bookmarks;
+      force = true;
+    };
   };
 
-  home.file.".config/whatsapp-for-linux/settings.conf" = {
-    source = ./.config/whatsapp-for-linux/settings.conf;
-    force = true;
-  };
 
   home.packages = with pkgs;
     [

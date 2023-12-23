@@ -28,11 +28,6 @@
       source = ./monitors.xml;
       force = true; # overwrite existing
     };
-    # nfs bookmarks
-    ".config/gtk-3.0/bookmarks" = {
-      source = ./bookmarks;
-      force = true;
-    };
   };
 
   home.packages = with pkgs; [
