@@ -103,6 +103,7 @@
       p7zip
       parted
       pciutils # lspci
+      poppler_utils # pdftocairo, pdftoppm for pdf to image rendering
       ripgrep # recursively searches directories for a regex pattern
       smartmontools
       socat
