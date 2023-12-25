@@ -21,6 +21,8 @@ printf "${RED}All data in %s will be deleted!${NC}\n\n" "$target"
 printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
 sleep 5
 
+printf "Available disks:\n\n%s\n\n" "$(lsblk -o NAME,SIZE,MODEL,TYPE | grep -Ei 'disk|type')"
+
 read -rp "Enter target disk (e.g. /dev/sda): " target
 
 if [[ ! -b "$target" ]]; then
@@ -68,8 +70,8 @@ do_install() {
     # Create primary partition
     parted -s "$target" -- mkpart primary 512MiB 100%
 
-    boot="${target}1"
-    primary="${target}2"
+    boot=$(lsblk "${target}" -lno path | sed -n 2p)
+    primary=$(lsblk "${target}" -lno path | sed -n 3p)
 
     # Setup luks on primary partition
     (
