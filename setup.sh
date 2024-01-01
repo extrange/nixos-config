@@ -17,13 +17,14 @@ fi
 
 # User confirmation
 printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM.\n\n"
-printf "${RED}All data in %s will be deleted!${NC}\n\n" "$target"
-printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
-sleep 5
 
 printf "Available disks:\n\n%s\n\n" "$(lsblk -o NAME,SIZE,MODEL,TYPE | grep -Ei 'disk|type')"
 
 read -rp "Enter target disk (e.g. /dev/sda): " target
+
+printf "\n\n${RED}All data in %s will be deleted!${NC}\n\n" "$target"
+printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
+sleep 5
 
 if [[ ! -b "$target" ]]; then
     printf "'%s' is not a valid block device, aborting\n" "$target"
