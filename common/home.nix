@@ -37,18 +37,20 @@
       calibre
       discord
       firefox
+      kdenlive
       gimp
       gnome-extension-manager
       jellyfin-media-player
       libreoffice
       mission-center # pretty system monitor
       moonlight-qt
+      mpv # required for smplayer
       obs-studio
       obsidian
+      smplayer
       syncthing
       telegram-desktop
       ungoogled-chromium
-      vlc
       whatsapp-for-linux
       zoom-us
 
