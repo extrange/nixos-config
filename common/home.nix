@@ -47,6 +47,7 @@
       mpv # required for smplayer
       obs-studio
       obsidian
+      pdfarranger
       smplayer
       syncthing
       telegram-desktop
