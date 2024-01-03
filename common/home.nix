@@ -37,10 +37,10 @@
       calibre
       discord
       firefox
-      kdenlive
       gimp
       gnome-extension-manager
       jellyfin-media-player
+      kdenlive
       libreoffice
       mission-center # pretty system monitor
       moonlight-qt
@@ -51,6 +51,7 @@
       syncthing
       telegram-desktop
       ungoogled-chromium
+      vscode
       whatsapp-for-linux
       zoom-us
 
