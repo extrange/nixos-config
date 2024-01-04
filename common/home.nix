@@ -40,7 +40,6 @@
       gimp
       gnome-extension-manager
       jellyfin-media-player
-      kdenlive
       libreoffice
       mission-center # pretty system monitor
       moonlight-qt
@@ -49,6 +48,7 @@
       obsidian
       pdfarranger
       smplayer
+      shotcut
       syncthing
       telegram-desktop
       ungoogled-chromium
