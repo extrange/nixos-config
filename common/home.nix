@@ -35,6 +35,7 @@
     [
       # Desktop programs
       calibre
+      davinci-resolve
       discord
       firefox
       gimp
@@ -48,7 +49,6 @@
       obsidian
       pdfarranger
       smplayer
-      shotcut
       syncthing
       telegram-desktop
       ungoogled-chromium

@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
@@ -14,13 +15,15 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/14f0667a-c2b5-4ed7-8142-36ef1541382c";
+    {
+      device = "/dev/disk/by-uuid/14f0667a-c2b5-4ed7-8142-36ef1541382c";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/CAF4-8230";
+    {
+      device = "/dev/disk/by-uuid/CAF4-8230";
       fsType = "vfat";
     };
 

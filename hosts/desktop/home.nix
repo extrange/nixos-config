@@ -1,6 +1,12 @@
 { lib, pkgs, ... }:
 
 {
+  
+  # For Davinci resolve
+  home.sessionVariables = {
+    ROC_ENABLE_PRE_VEGA = "1";
+  };
+
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/mutter" = {
       # Fractional scaling
@@ -32,5 +38,6 @@
 
   home.packages = with pkgs; [
     nvtop
+    clinfo # Check OpenCL
   ];
 }
