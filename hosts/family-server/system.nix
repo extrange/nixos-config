@@ -7,6 +7,9 @@
   systemd.services."getty@tty1".enable = lib.mkForce true;
   systemd.services."autovt@tty1".enable = lib.mkForce true;
 
+  # No disk encryption
+  boot.initrd.luks.devices = lib.mkForce {};
+
   # Users allowed to SSH into this served
   users.users."user".openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
