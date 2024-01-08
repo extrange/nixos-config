@@ -65,8 +65,19 @@
         };
     in
     {
-      nixosConfigurations = with builtins; mapAttrs
+      nixosConfigurations = with builtins; (mapAttrs
         (hostname: _: mkHost hostname)
-        (readDir ./hosts);
+        (readDir ./hosts)) // {
+
+        # Build ISO with
+        # nix build .#nixosConfigurations.iso.config.system.build.isoImage
+        iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            # Use latest kernel for wifi drivers
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix")
+          ];
+        };
+      };
     };
 }
