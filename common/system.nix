@@ -80,7 +80,7 @@
 
   users = {
     mutableUsers = false;
-    users.user = {
+    users."user" = {
       isNormalUser = true;
       description = "user";
       extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
