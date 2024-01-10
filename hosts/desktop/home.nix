@@ -1,7 +1,11 @@
 { lib, pkgs, ... }:
 
 {
-  
+  home.packages = with pkgs; [
+    nvtop
+    clinfo # Check OpenCL
+  ];
+
   # For Davinci resolve
   home.sessionVariables = {
     ROC_ENABLE_PRE_VEGA = "1";
@@ -36,8 +40,4 @@
     };
   };
 
-  home.packages = with pkgs; [
-    nvtop
-    clinfo # Check OpenCL
-  ];
 }
