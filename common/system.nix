@@ -15,7 +15,7 @@
   sops.secrets.userPassword.neededForUsers = true;
 
   # https://github.com/Mic92/sops-nix/issues/427
-  sops.gnupg.sshKeyPaths = [];
+  sops.gnupg.sshKeyPaths = [ ];
 
   # i8n
   time.timeZone = "Asia/Singapore";
@@ -81,8 +81,10 @@
 
   programs.ssh = {
     knownHosts = {
-      # User SSH references this
+      # User SSH client references this
       "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+
+      "192.168.1.82,family-server".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOreujIuA7XmkluU/U8r2Zjjx+Mv1nprYEFXRLj1rwM5";
 
       "ssh.icybat.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
 

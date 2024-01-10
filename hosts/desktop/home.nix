@@ -4,7 +4,7 @@
   imports = [ ../../graphical/home.nix ];
 
   home.packages = with pkgs; [
-      davinci-resolve
+    davinci-resolve
     nvtop
     clinfo # Check OpenCL
   ];
