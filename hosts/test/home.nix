@@ -15,12 +15,6 @@
   };
 
   home.file = {
-    # SSHFS shortcuts
-    ".config/gtk-3.0/bookmarks" = {
-      source = ./bookmarks;
-      force = true;
-    };
-
     # Set fractional scaling and monitor position
     ".config/monitors.xml" = {
       source = ./monitors.xml;
