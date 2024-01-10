@@ -13,12 +13,10 @@
 
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
   };
 
-  # Need to chown this directory while mounted, on first creation
-  fileSystems."/mnt/storage" = {
+  # If a folder in /mnt is used it is owned by root
+  fileSystems."/home/user/software" = {
     device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
     fsType="btrfs";
     options = [
@@ -31,42 +29,4 @@
     ];
   };
 
-  # Enable wifi temporarily
-
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtl8821cu
-  ];
-
-  sops.secrets = {
-    wifi = { };
-  };
-
-  networking.networkmanager.ensureProfiles = {
-    environmentFiles = [ config.sops.secrets.wifi.path ];
-    profiles = {
-      home-wifi = {
-        connection = {
-          id = "home-wifi";
-          type = "wifi";
-          interface-name = "wlp0s29u1u4i2";
-        };
-        wifi = {
-          mode = "infrastructure";
-          ssid = "$home_wifi_ssid";
-        };
-        wifi-security = {
-          auth-alg = "open";
-          key-mgmt = "wpa-psk";
-          psk = "$home_wifi_psk";
-        };
-        ipv4 = {
-          method = "auto";
-        };
-        ipv6 = {
-          addr-gen-mode = "default";
-          method = "auto";
-        };
-      };
-    };
-  };
 }
