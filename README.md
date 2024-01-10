@@ -48,7 +48,9 @@ Once installation is completed successfully, reboot.
 ## Post Install
 
 - `git push` changes to `hardware-configuration.nix` for the respective host
-  - May need to add the host's key to Github if new
+  - If necessary, add the new key to Github
+- Update `known_hosts` for other devices to be able to connect
+  - NixOS generates new host keys everytime a host is provisioned, and I do not declaratively configure them
 - Pull Firefox profile
 - Setup logins (these can't be declaratively set)
   - Tailscale (Auth Key max expiry is 90 days)
