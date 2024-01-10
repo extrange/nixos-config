@@ -48,6 +48,7 @@ Once installation is completed successfully, reboot.
 ## Post Install
 
 - `git push` changes to `hardware-configuration.nix` for the respective host
+  - May need to add the host's key to Github if new
 - Pull Firefox profile
 - Setup logins (these can't be declaratively set)
   - Tailscale (Auth Key max expiry is 90 days)

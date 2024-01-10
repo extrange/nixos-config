@@ -1,6 +1,7 @@
 { pkgs, lib, config, ... }:
 
 {
+  imports = [ ../../graphical/system.nix];
 
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver

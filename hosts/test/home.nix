@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-
+  imports = [ ../../graphical/home.nix ];
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/desktop/session" = {
       # Don't dim screen
