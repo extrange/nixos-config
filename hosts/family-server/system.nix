@@ -17,6 +17,7 @@
     settings.KbdInteractiveAuthentication = false;
   };
 
+  # Need to chown this directory while mounted, on first creation
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
     fsType="btrfs";
@@ -24,6 +25,8 @@
       "subvol=root"
       "nofail"
       "noatime"
+      "nosuid"
+      "nodev"
       "compress-force=zstd"
     ];
   };
