@@ -18,7 +18,7 @@
   # If a folder in /mnt is used it is owned by root
   fileSystems."/home/user/software" = {
     device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
-    fsType="btrfs";
+    fsType = "btrfs";
     options = [
       "subvol=root"
       "nofail"
@@ -29,4 +29,9 @@
     ];
   };
 
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /home/user/software *(rw,all_squash,anonuid=1000,anongid=1000)
+  '';
+  networking.firewall.allowedTCPPorts = [ 2049 ];
 }
