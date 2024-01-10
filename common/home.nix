@@ -41,6 +41,7 @@
       ltrace # library call monitoring
       mtr # ping + tracert TUI
       neofetch
+      nfs-utils
       nil # Nix language server for vscode
       nixpkgs-fmt # Nix formatter
       nmap
