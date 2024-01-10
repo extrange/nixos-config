@@ -74,8 +74,13 @@
         iso = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            # Use latest kernel for wifi drivers
-            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix")
+            # Add wifi driver
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ({ pkgs, lib, config, ... }: {
+              boot.extraModulePackages = with config.boot.kernelPackages; [
+                rtl8821cu
+              ];
+            })
           ];
         };
       };
