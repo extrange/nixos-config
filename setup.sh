@@ -8,6 +8,7 @@ NC='\033[0m' # No Color
 
 nixos_config_dir=/mnt/home/user/nixos-config
 KNOWN_HOSTS="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
+REPO="git@github.com:extrange/nixos-config.git"
 
 # Check if we are running as root
 if [[ "$EUID" -ne 0 ]]; then
@@ -52,7 +53,7 @@ do_install() {
 
     # Clone git repo (required for boot key)
     mkdir -p /tmp/nixos-config
-    git clone https://github.com/extrange/nixos-config /tmp/nixos-config
+    git clone "$REPO" /tmp/nixos-config
 
     # Copy ssh keys to temp dir before install (used to decrypt boot key)
     SSH_KEYFILE_TEMP=/tmp/id_ed25519
@@ -104,7 +105,7 @@ do_install() {
     mkdir -p /mnt/boot && mount /dev/disk/by-label/boot /mnt/boot
 
     # Pull latest config, will be preserved on install
-    git clone https://github.com/extrange/nixos-config "$nixos_config_dir"
+    git clone "$REPO" "$nixos_config_dir"
     chown -R 1000 "$nixos_config_dir"
 
     # Generate hardware config
