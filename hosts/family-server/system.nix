@@ -57,7 +57,7 @@
     shares = {
       software = {
         path = "/home/user/software";
-        browseable = "yes";
+        browsable = "yes";
         writable = "yes";
         "guest ok" = "yes";
         "acl allow execute always" = "yes";
