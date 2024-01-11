@@ -61,6 +61,7 @@
         "read only" = "no";
         "guest ok" = "yes";
         "acl allow execute always" = "yes";
+        "force user" = "user";
       };
     };
   };
