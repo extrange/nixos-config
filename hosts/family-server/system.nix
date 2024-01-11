@@ -29,9 +29,40 @@
     ];
   };
 
+  # NFS
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
     /home/user/software *(rw,all_squash,anonuid=1000,anongid=1000)
   '';
   networking.firewall.allowedTCPPorts = [ 2049 ];
+
+  # Samba
+  networking.firewall.allowPing = true;
+  services.samba-wsdd = {
+    # make shares visible for windows 10 clients
+    enable = true;
+    openFirewall = true;
+  };
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    openFirewall = true;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = family-server
+      netbios name = family-server
+      security = user 
+      use sendfile = yes
+    '';
+    shares = {
+      software = {
+        path = "/home/user/software";
+        browseable = "yes";
+        writable = "yes";
+        "guest ok" = "yes";
+        "acl allow execute always" = "yes";
+        public = "yes";
+      };
+    };
+  };
 }
