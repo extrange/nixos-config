@@ -1,7 +1,10 @@
 { pkgs, lib, config, ... }:
 
 {
-  imports = [ ../../graphical/system.nix];
+  imports = [ ../../graphical/system.nix ];
+
+  # Required since LUKS is being used
+  services.btrfs.autoScrub.fileSystems = [ "/" ];
 
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
