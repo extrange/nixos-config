@@ -52,17 +52,15 @@
       server string = family-server
       netbios name = family-server
       security = user 
-      use sendfile = yes
       map to guest = bad user
     '';
     shares = {
       software = {
         path = "/home/user/software";
-        browsable = "yes";
-        writable = "yes";
+        browseable = "yes";
+        "read only" = "no";
         "guest ok" = "yes";
         "acl allow execute always" = "yes";
-        public = "yes";
       };
     };
   };
