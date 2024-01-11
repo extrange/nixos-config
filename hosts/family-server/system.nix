@@ -53,6 +53,7 @@
       netbios name = family-server
       security = user 
       use sendfile = yes
+      map to guest = bad user
     '';
     shares = {
       software = {
