@@ -117,17 +117,17 @@
   nix.optimise.automatic = true;
 
   # Autoupgrades
-  system.autoUpgrade = {
-    # Default frequency is daily
-    enable = true;
-    flake = self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--no-write-lock-file"
-      "-L" # print build logs
-    ];
-  };
+  # system.autoUpgrade = {
+  #   # Default frequency is daily
+  #   enable = true;
+  #   flake = self.outPath;
+  #   flags = [
+  #     "--update-input"
+  #     "nixpkgs"
+  #     "--no-write-lock-file"
+  #     "-L" # print build logs
+  #   ];
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
