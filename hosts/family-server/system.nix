@@ -15,6 +15,11 @@
     enable = true;
   };
 
+  # GPU passthrough
+  boot.kernelParams = [ "intel_iommu=on" ];
+
+
+  # Shared folder
   # If a folder in /mnt is used it is owned by root
   fileSystems."/home/user/software" = {
     device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
