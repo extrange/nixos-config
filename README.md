@@ -69,7 +69,7 @@ Once installation is completed successfully, reboot.
   - Update: `SOPS_AGE_KEY=$(ssh-to-age -private-key -i path/to/private/key sops updatekeys secrets.yaml` (the private key must have previously used to encrypt the file)
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
-- To fix the [`TypeError: BootSpec.__init__() missing 1 required positional argument`][bootspec-error], delete all old generations with `nix-collect-garbage -d`, then run `nix-store --gc` and reboot.
+- To fix the [`TypeError: BootSpec.__init__() missing 1 required positional argument`][bootspec-error], delete [symlinks to older generations] in `/nix/var/nix/profiles`, then rerun `nixos-rebuild switch`.
 
 ## Resources
 
@@ -77,6 +77,7 @@ Once installation is completed successfully, reboot.
 - Hyprland configs: [yurihikari], [Waayway]
 - [Comparison of `git-crypt`, `agenix` and `sops-nix`][secrets]
 
+[symlinks to older generations]: https://discourse.nixos.org/t/list-and-delete-nixos-generations/29637/6
 [bootspec-error]: https://discourse.nixos.org/t/typeerror-bootspec-init-missing-1-required-positional-argument-initrdsecrets/38008
 [secrets]: https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
 [Waayway]: https://github.com/Waayway/hyprland-waayway
