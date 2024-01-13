@@ -37,7 +37,7 @@
   # See latest kernels here
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/kernel/kernels-org.json
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";

@@ -45,6 +45,7 @@
       nil # Nix language server for vscode
       nixpkgs-fmt # Nix formatter
       nmap
+      ntfs3g
       p7zip
       parted
       pciutils # lspci
@@ -62,6 +63,7 @@
       usbutils # lsusb
       vim
       which
+      wget2
       xz
       yq-go # yaml processer https://github.com/mikefarah/yq
       yt-dlp
