@@ -7,6 +7,14 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV server"
 
   ];
+
+  mountOptions = [
+    "nofail"
+    "noatime"
+    "nosuid"
+    "nodev"
+    "compress-force=zstd"
+  ];
 in
 {
   # No disk encryption
@@ -31,14 +39,14 @@ in
   fileSystems."/home/user/software" = {
     device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
     fsType = "btrfs";
-    options = [
-      "subvol=root"
-      "nofail"
-      "noatime"
-      "nosuid"
-      "nodev"
-      "compress-force=zstd"
-    ];
+    options = [ "subvol=root" ] ++ mountOptions;
+  };
+
+  # VM Storage
+  fileSystems."/mnt/vm-storage" = {
+    device = "/dev/disk/by-uuid/1b4fda7c-1f93-4edb-8749-a0415ce87360";
+    fsType = "btrfs";
+    options = [ "subvol=root" ] ++ mountOptions;
   };
 
   # NFS
