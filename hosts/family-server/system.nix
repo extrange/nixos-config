@@ -16,8 +16,10 @@
   };
 
   # GPU passthrough
-  boot.kernelParams = [ "intel_iommu=on" ];
-
+  boot.kernelParams = [ "intel_iommu=on" "vfio-pci.ids=10de:1b80" ];
+  boot.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+  boot.initrd.kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
 
   # Shared folder
   # If a folder in /mnt is used it is owned by root
