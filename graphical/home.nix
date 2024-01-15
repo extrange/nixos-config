@@ -2,6 +2,7 @@
 { config, pkgs, lib, nnn, ... }:
 {
   home.packages = with pkgs; [
+    audacity
     calibre
     discord
     firefox
