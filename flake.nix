@@ -18,17 +18,18 @@
   };
 
   outputs = { nixpkgs, home-manager, sops-nix, nnn, self, ... }:
-
+    with builtins;
     let
       mkHost = hostname:
         nixpkgs.lib.nixosSystem {
 
-          system = "x86_64-linux"; # Remove? set modularly
+          system = "x86_64-linux";
 
           modules =
             let
-              host = n: ./hosts/${hostname}/${n}.nix;
-              common = n: ./common/${n}.nix;
+              getHostConfig = n: ./hosts/${hostname}/${n}.nix;
+              commonSystemConfig = filter (n:  ".nix" n) (attrNames (readDir ./common));
+              commonHomeConfig = 2;
             in
             [
               # External modules
@@ -37,35 +38,27 @@
 
               # Inputs, module options
               { config._module.args = { inherit hostname self; }; }
-              {
-                home-manager.extraSpecialArgs = {
-                  inherit nnn;
-                };
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-              }
 
-              # System
-              (common "system")
-              (common "system-overrides")
-              (host "system")
-              (host "hardware-configuration")
+              # Host-specific
+              (getHostConfig "system")
+              (getHostConfig "hardware-configuration")
 
-              # Home
+              # Home Manager
               {
-                home-manager.users.user = { ... }: {
-                  imports = [
-                    (common "home")
-                    (common "home-overrides")
-                    (host "home")
-                  ];
+                home-manager = {
+                  users.user = { ... }: {
+                    imports = [ (getHostConfig "home") ] ++ commonHomeConfig;
+                  };
+                  extraSpecialArgs = { inherit nnn; };
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
                 };
               }
-            ];
+            ] ++ commonSystemConfig;
         };
     in
     {
-      nixosConfigurations = with builtins; (mapAttrs
+      nixosConfigurations = (mapAttrs
         (hostname: _: mkHost hostname)
         (readDir ./hosts)) // {
 
@@ -74,7 +67,7 @@
         iso = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            # Add wifi driver
+            # Add rtl8821cu wifi driver
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             ({ pkgs, lib, config, ... }: {
               boot.extraModulePackages = with config.boot.kernelPackages; [
