@@ -1,3 +1,4 @@
-{...}:
+{ ... }:
 {
+  home-manager.users.user = { };
 }

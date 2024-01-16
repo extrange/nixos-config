@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 {
-  imports = [ ../../graphical/system.nix ];
+  graphical = true;
 
   # For davinci resolve
   hardware.opengl.extraPackages = with pkgs; [

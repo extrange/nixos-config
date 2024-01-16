@@ -19,43 +19,25 @@
 
   outputs = { nixpkgs, home-manager, sops-nix, nnn, self, ... }:
     with builtins;
+
     let
-      mkHost = hostname:
-        nixpkgs.lib.nixosSystem {
+      hasSuffix = nixpkgs.lib.hasSuffix;
 
-          system = "x86_64-linux";
+      join = nixpkgs.lib.path.subpath.join;
 
-          modules =
-            let
-              getHostConfig = n: ./hosts/${hostname}/${n}.nix;
-              commonSystemConfig = filter (n:  ".nix" n) (attrNames (readDir ./common));
-              commonHomeConfig = 2;
-            in
-            [
-              # External modules
-              sops-nix.nixosModules.sops
-              home-manager.nixosModules.home-manager
+      getNixFilesInDir = d: map (p: join [ d p ]) (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
 
-              # Inputs, module options
-              { config._module.args = { inherit hostname self; }; }
-
-              # Host-specific
-              (getHostConfig "system")
-              (getHostConfig "hardware-configuration")
-
-              # Home Manager
-              {
-                home-manager = {
-                  users.user = { ... }: {
-                    imports = [ (getHostConfig "home") ] ++ commonHomeConfig;
-                  };
-                  extraSpecialArgs = { inherit nnn; };
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                };
-              }
-            ] ++ commonSystemConfig;
-        };
+      mkHost = hostname: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          { config._module.args = { inherit hostname self nnn; }; }
+        ]
+        ++ (getNixFilesInDir ./common)
+        ++ (getNixFilesInDir ./common-opt)
+        ++ (getNixFilesInDir ./hosts/${hostname});
+      };
     in
     {
       nixosConfigurations = (mapAttrs

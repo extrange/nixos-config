@@ -8,6 +8,7 @@ let
 
   ];
 
+  # Common mount options for local drives
   mountOptions = [
     "nofail"
     "noatime"
@@ -19,6 +20,11 @@ in
 {
   # No disk encryption
   boot.initrd.luks.devices = lib.mkForce { };
+
+  # Required for USB wifi dongle
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    rtl8821cu
+  ];
 
   # Users allowed to SSH into this server
   users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
@@ -48,6 +54,13 @@ in
     fsType = "btrfs";
     options = [ "subvol=root" ] ++ mountOptions;
   };
+
+  # BtrFS autoscrub
+  services.btrfs.autoScrub.fileSystems = lib.mkForce [
+    "/"
+    "/home/user/software"
+    "/mnt/vm-storage"
+  ];
 
   # NFS
   services.nfs.server.enable = true;

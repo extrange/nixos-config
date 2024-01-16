@@ -1,3 +1,4 @@
+# Packages and options for graphical systems
 { config, pkgs, lib, self, hostname, ... }:
 {
 

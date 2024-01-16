@@ -116,6 +116,9 @@
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
 
+  # Filesystems not detected automatically since LUKS is being used
+  services.btrfs.autoScrub.fileSystems = [ "/" ];
+
   # Autoupgrades
   # system.autoUpgrade = {
   #   # Default frequency is daily
