@@ -23,16 +23,14 @@
     let
       hasSuffix = nixpkgs.lib.hasSuffix;
 
-      join = nixpkgs.lib.path.subpath.join;
-
-      getNixFilesInDir = d: map (p: join [ d p ]) (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
+      getNixFilesInDir = d: map (p: d + "/${p}") (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
 
       mkHost = hostname: nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
-          { config._module.args = { inherit hostname self nnn; }; }
+          { config._module.args = { inherit hostname self nnn home-manager; }; }
         ]
         ++ (getNixFilesInDir ./common)
         ++ (getNixFilesInDir ./common-opt)
@@ -42,9 +40,10 @@
     {
       nixosConfigurations = (mapAttrs
         (hostname: _: mkHost hostname)
+        # Get hostnames by reading folder name in hosts/
         (readDir ./hosts)) // {
 
-        # Build ISO with
+        # Build ISO with:
         # nix build .#nixosConfigurations.iso.config.system.build.isoImage
         iso = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

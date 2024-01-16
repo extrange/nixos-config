@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, home-manager, ... }:
 
 {
   home-manager.users.user = {
@@ -13,7 +13,7 @@
       ROC_ENABLE_PRE_VEGA = "1";
     };
 
-    dconf.settings = with lib.hm.gvariant; {
+    dconf.settings = with home-manager.lib.hm.gvariant; {
       "org/gnome/mutter" = {
         # Fractional scaling
         experimental-features = [ "scale-monitor-framebuffer" ];

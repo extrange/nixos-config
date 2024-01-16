@@ -18,13 +18,19 @@ let
   ];
 in
 {
-  # No disk encryption
-  boot.initrd.luks.devices = lib.mkForce { };
+  wifi = {
+    enable = false;
+    interface-name = "wlp0s29u1u4i2";
+  };
 
   # Required for USB wifi dongle
   boot.extraModulePackages = with config.boot.kernelPackages; [
     rtl8821cu
   ];
+
+  # No disk encryption
+  boot.initrd.luks.devices = lib.mkForce { };
+
 
   # Users allowed to SSH into this server
   users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
