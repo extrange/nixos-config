@@ -23,7 +23,7 @@ with lib;
       profiles = {
         home-wifi = {
           connection = {
-            id = "home-wifi";
+            id = "$home_wifi_ssid";
             type = "wifi";
             interface-name = config.wifi.interface-name;
           };
@@ -73,7 +73,6 @@ with lib;
             addr-gen-mode = "default";
             method = "auto";
           };
-          proxy = { };
         };
       };
     };
