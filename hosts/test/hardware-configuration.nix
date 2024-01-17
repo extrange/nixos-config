@@ -14,13 +14,23 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6eb86424-ccc0-42ed-a7b3-13e0b321b281";
+    { device = "/dev/disk/by-uuid/3629c236-54b6-43ed-a4f0-6d471ba9f9fa";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
+  fileSystems."/mnt/storage" =
+    { device = "systemd-1";
+      fsType = "autofs";
+    };
+
+  fileSystems."/mnt/workspace" =
+    { device = "systemd-1";
+      fsType = "autofs";
+    };
+
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B989-B646";
+    { device = "/dev/disk/by-uuid/B9E2-9387";
       fsType = "vfat";
     };
 
@@ -32,6 +42,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
