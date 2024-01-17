@@ -1,6 +1,12 @@
-{ lib, pkgs, home-manager, ... }:
-
+{ config, pkgs, lib, home-manager, ... }:
 {
+  graphical = true;
+
+  # For davinci resolve
+  hardware.opengl.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
+
   home-manager.users.user = {
     home.packages = with pkgs; [
       davinci-resolve
@@ -43,3 +49,4 @@
     };
   };
 }
+ 

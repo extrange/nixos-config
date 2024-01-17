@@ -24,9 +24,9 @@ in
   };
 
   # Required for USB wifi dongle
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    rtl8821cu
-  ];
+  # boot.extraModulePackages = with config.boot.kernelPackages; [
+  #   rtl8821cu
+  # ];
 
   # No disk encryption
   boot.initrd.luks.devices = lib.mkForce { };

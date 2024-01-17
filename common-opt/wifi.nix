@@ -1,7 +1,16 @@
-# Import this to enable wifi temporarily
 { config, lib, ... }:
 with lib;
 {
+  options.wifi = {
+    enable = mkEnableOption "wifi profiles";
+    interface-name = mkOption {
+      type = types.nonEmptyStr;
+      description = "Wifi interface name";
+      example = "wlp1s0";
+      default = null;
+    };
+  };
+
   config = mkIf config.wifi.enable {
 
     sops.secrets = {
@@ -16,7 +25,7 @@ with lib;
           connection = {
             id = "home-wifi";
             type = "wifi";
-            inherit interface-name;
+            interface-name = config.wifi.interface-name;
           };
           wifi = {
             mode = "infrastructure";
@@ -41,7 +50,7 @@ with lib;
             id = "Wireless@SGx";
             uuid = "0182a38c-8ad0-4c9e-a438-e631f591eedf";
             type = "wifi";
-            inherit interface-name;
+            interface-name = config.wifi.interface-name;
           };
           wifi = {
             mode = "infrastructure";
