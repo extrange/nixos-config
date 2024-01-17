@@ -1,5 +1,6 @@
 { config, pkgs, home-manager, lib, ... }:
 {
+  graphical = true;
   services.keyd.enable = lib.mkForce false;
 
   home-manager.users.user = {

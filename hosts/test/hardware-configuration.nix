@@ -19,16 +19,6 @@
       options = [ "subvol=root" ];
     };
 
-  fileSystems."/mnt/storage" =
-    { device = "systemd-1";
-      fsType = "autofs";
-    };
-
-  fileSystems."/mnt/workspace" =
-    { device = "systemd-1";
-      fsType = "autofs";
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/B9E2-9387";
       fsType = "vfat";
