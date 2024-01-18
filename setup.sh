@@ -87,7 +87,9 @@ do_install() {
 
     # Wipe disk first to prevent any issues arising later
     printf "Wiping disk..."
-    vgremove -ff "$(vgdisplay -c | cut -d: -f1)"
+    if [[ -z $(vgs) ]]; then
+        vgremove -ff "$(vgdisplay -c | cut -d: -f1)"
+    fi
     wipefs --all "$target"
     printf "done.\n"
 
