@@ -79,7 +79,7 @@ do_install() {
     # Add server and github to known hosts
     KNOWN_HOSTS_FILE=/tmp/known_hosts
     echo "$SERVER_KEY" >"$KNOWN_HOSTS_FILE"
-    echo "$GITHUB_KEY" >"$KNOWN_HOSTS_FILE"
+    echo "$GITHUB_KEY" >>"$KNOWN_HOSTS_FILE"
 
     # Copy ssh keys to temp dir before install (used to decrypt boot key)
     SSH_KEYFILE_TEMP=/tmp/id_ed25519
