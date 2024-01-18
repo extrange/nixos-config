@@ -25,7 +25,6 @@
         dnsutils # `dig` + `nslookup` 
         ethtool
         # ffmpeg - use the option `ffmpegCustom` instead
-        (ffmpeg.override { withFdkAac = true; withUnfree = true; })
         file
         fzf
         gh
