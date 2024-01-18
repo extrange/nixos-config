@@ -52,13 +52,13 @@ while true; do
 
 done
 
+read -rp "Enter target hostname (e.g. desktop): " hostname
+
 printf "\n\n${RED}All data in %s will be deleted!${NC}\n\n" "$target"
 
 printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
 
 sleep 5
-
-read -rp "Enter target hostname (e.g. desktop): " hostname
 
 do_install() {
     set -euo pipefail
