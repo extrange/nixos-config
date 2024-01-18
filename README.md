@@ -16,6 +16,8 @@ They also inherit configurations from `common/`.
 
 See available options in `common-opt`.
 
+When adding a new host, generate its SSH keypair in `server`'s `/home/user/keys` directory: `ssh-keygen -t ed25519 -f <hostname>`
+
 ## Install
 
 An encrypted root ([LVM over LUKS]) with zram will be setup. Root account is disabled.

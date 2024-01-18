@@ -131,7 +131,11 @@ do_install() {
 
     # Pull latest config, will be preserved on install
     git clone "$REPO" "$nixos_config_dir"
-    git remote set-url origin "$REPO_SSH"
+    (
+        # Change repo url to SSH so that we can push after install
+        cd "$nixos_config_dir"
+        git remote set-url origin "$REPO_SSH"
+    )
     chown -R 1000 "$nixos_config_dir"
 
     # Generate hardware config
