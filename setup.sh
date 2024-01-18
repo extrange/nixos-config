@@ -85,7 +85,13 @@ do_install() {
     SSH_KEYFILE_TEMP=/tmp/id_ed25519
     scp -P 39483 -o UserKnownHostsFile="$KNOWN_HOSTS_FILE" user@ssh.nicholaslyz.com:/home/user/keys/"$hostname" "$SSH_KEYFILE_TEMP"
 
+    # Wipe disk first to prevent any issues arising later
+    printf "Wiping disk..."
+    wipefs --all "$target"
+    printf "done.\n"
+
     # Create partition table
+    printf "Creating partitions..."
     parted -s "$target" -- mklabel gpt
 
     # Create boot partition
@@ -98,7 +104,9 @@ do_install() {
 
     boot=$(lsblk "${target}" -lno path | sed -n 2p)
     primary=$(lsblk "${target}" -lno path | sed -n 3p)
+    printf "done.\n"
 
+    printf "Creating LVM..."
     if [[ "$LUKS" == 1 ]]; then
         # Setup LUKS on primary partition (LVM is put over later)
         # https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system
@@ -115,12 +123,13 @@ do_install() {
         vgcreate vg /dev/mapper/crypted
     else
         # LVM: Mark primary partition as a pv and add to the 'vg' volume group
-        yes | pvcreate -ff "$primary" # Force removal of old VGs
+        pvcreate -f "$primary" # Force removal of old VGs
         vgcreate vg "$primary"
     fi
 
     # Create 1 logical volume spanning the whole volume group 'vg'
-    lvcreate -l '100%FREE' -n nixos vg
+    lvcreate -y -l '100%FREE' -n nixos vg
+    printf "done.\n"
 
     # Format disks
     mkfs.fat -F 32 -n boot "$boot"
