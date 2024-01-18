@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-clear
-
 # https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 nixos_config_dir=/mnt/home/user/nixos-config
 KNOWN_HOSTS="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
+
+# Use SSH url so that pushing via public key works
 REPO="git@github.com:extrange/nixos-config.git"
 
 # Check if we are running as root
@@ -17,28 +17,43 @@ if [[ "$EUID" -ne 0 ]]; then
 fi
 
 # User confirmation
-printf "This script will setup a primary Btrfs partition over a LUKS2 encrypted LVM.\n\n"
+printf "This script will setup a primary Btrfs partition over LVM.\n\n"
+
+printf "Do you want to also setup LVM on LUKS?"
+select yn in "Yes" "No"; do
+    case $yn in
+    Yes)
+        LUKS=1
+        break
+        ;;
+    No)
+        LUKS=0
+        break
+        ;;
+    esac
+done
 
 printf "Available disks:\n\n%s\n\n" "$(lsblk -o NAME,SIZE,MODEL,TYPE | grep -Ei 'disk|type')"
 
-read -rp "Enter target disk (e.g. /dev/sda): " target
+while true; do
+    read -rp "Enter target disk (e.g. /dev/sda): " target
+
+    # Only accept disks
+    DEVICE_TYPE=$(lsblk -n -o TYPE "$target")
+
+    if [[ ! -b "$target" ]] || [[ ! "$DEVICE_TYPE" =~ "disk" ]]; then
+        printf "'%s' is not a valid block device/disk.\n\n" "$target"
+    else
+        break
+    fi
+
+done
 
 printf "\n\n${RED}All data in %s will be deleted!${NC}\n\n" "$target"
+
 printf "Press \033[1mCtrl+C\033[0m now to abort this script, or wait 5s for the installation to continue.\n\n"
+
 sleep 5
-
-if [[ ! -b "$target" ]]; then
-    printf "'%s' is not a valid block device, aborting\n" "$target"
-    exit 1
-fi
-
-# Only accept disks
-DEVICE_TYPE=$(lsblk -n -o TYPE "$target")
-
-if [[ ! "$DEVICE_TYPE" =~ "disk" ]]; then
-    printf "'%s' is not a disk, aborting\n" "$target"
-    exit
-fi
 
 read -rp "Enter target hostname (e.g. desktop): " hostname
 
@@ -75,18 +90,26 @@ do_install() {
     boot=$(lsblk "${target}" -lno path | sed -n 2p)
     primary=$(lsblk "${target}" -lno path | sed -n 3p)
 
-    # Setup luks on primary partition
-    (
-        export SOPS_AGE_KEY
-        SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$SSH_KEYFILE_TEMP")
-        BOOT_KEY=$(sops -d /tmp/nixos-config/secrets.yaml | yq '.boot')
-        echo -n "$BOOT_KEY" | cryptsetup luksFormat --label=primary "$primary" -
-        echo -n "$BOOT_KEY" | cryptsetup luksOpen "$primary" crypted -
-    )
+    if [[ "$LUKS" == 1 ]]; then
+        # Setup LUKS on primary partition (LVM is put over later)
+        # https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system
+        (
+            export SOPS_AGE_KEY
+            SOPS_AGE_KEY=$(ssh-to-age -private-key -i "$SSH_KEYFILE_TEMP")
+            BOOT_KEY=$(sops -d /tmp/nixos-config/secrets.yaml | yq '.boot')
+            echo -n "$BOOT_KEY" | cryptsetup luksFormat --label=primary "$primary" -
+            echo -n "$BOOT_KEY" | cryptsetup luksOpen "$primary" crypted -
+        )
+        # LVM: Mark unlocked crypted partition as a pv and add to the 'vg' volume group
+        pvcreate /dev/mapper/crypted
+        vgcreate vg /dev/mapper/crypted
+    else
+        # LVM: Mark primary partition as a pv and add to the 'vg' volume group
+        pvcreate "$primary"
+        vgcreate vg "$primary"
+    fi
 
-    # LVM: Create physical volumes, volume groups and logical volumes
-    pvcreate /dev/mapper/crypted
-    vgcreate vg /dev/mapper/crypted
+    # Create 1 logical volume spanning the whole volume group 'vg'
     lvcreate -l '100%FREE' -n nixos vg
 
     # Format disks
