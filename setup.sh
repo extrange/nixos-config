@@ -102,12 +102,13 @@ do_install() {
             echo -n "$BOOT_KEY" | cryptsetup luksFormat --label=primary "$primary" -
             echo -n "$BOOT_KEY" | cryptsetup luksOpen "$primary" crypted -
         )
+
         # LVM: Mark unlocked crypted partition as a pv and add to the 'vg' volume group
         pvcreate /dev/mapper/crypted
         vgcreate vg /dev/mapper/crypted
     else
         # LVM: Mark primary partition as a pv and add to the 'vg' volume group
-        pvcreate "$primary"
+        yes | pvcreate -ff "$primary" # Force removal of old VGs
         vgcreate vg "$primary"
     fi
 
