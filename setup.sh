@@ -7,8 +7,10 @@ NC='\033[0m' # No Color
 nixos_config_dir=/mnt/home/user/nixos-config
 KNOWN_HOSTS="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
 
-# Use SSH url so that pushing via public key works
-REPO="git@github.com:extrange/nixos-config.git"
+# Can't use SSH URLs as authentication required
+# We change the remote URL later
+REPO="https://github.com/extrange/nixos-config.git"
+REPO_SSH="git@github.com:extrange/nixos-config.git"
 
 # Check if we are running as root
 if [[ "$EUID" -ne 0 ]]; then
@@ -19,7 +21,7 @@ fi
 # User confirmation
 printf "This script will setup a primary Btrfs partition over LVM.\n\n"
 
-printf "Do you want to also setup LVM on LUKS?"
+printf "Do you want to also setup LVM on LUKS?\n"
 select yn in "Yes" "No"; do
     case $yn in
     Yes)
@@ -129,6 +131,7 @@ do_install() {
 
     # Pull latest config, will be preserved on install
     git clone "$REPO" "$nixos_config_dir"
+    git remote set-url origin "$REPO_SSH"
     chown -R 1000 "$nixos_config_dir"
 
     # Generate hardware config
