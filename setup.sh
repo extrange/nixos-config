@@ -5,7 +5,8 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 nixos_config_dir=/mnt/home/user/nixos-config
-KNOWN_HOSTS="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
+SERVER_KEY="ssh.nicholaslyz.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV"
+GITHUB_KEY="github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
 
 # Can't use SSH URLs as authentication required
 # We change the remote URL later
@@ -69,13 +70,19 @@ do_install() {
     nix-env -f '<nixpkgs>' -iA git yq-go ssh-to-age sops >/dev/null
 
     # Clone git repo (required for boot key)
-    mkdir -p /tmp/nixos-config
+    if [[ -d /tmp/nixos-config ]]; then
+        rm -rf /tmp/nixos-config
+    fi
+    mkdir /tmp/nixos-config
     git clone "$REPO" /tmp/nixos-config
+
+    # Add server and github to known hosts
+    KNOWN_HOSTS_FILE=/tmp/known_hosts
+    echo "$SERVER_KEY" >"$KNOWN_HOSTS_FILE"
+    echo "$GITHUB" >"$KNOWN_HOSTS_FILE"
 
     # Copy ssh keys to temp dir before install (used to decrypt boot key)
     SSH_KEYFILE_TEMP=/tmp/id_ed25519
-    KNOWN_HOSTS_FILE=/tmp/known_hosts
-    echo "$KNOWN_HOSTS" >"$KNOWN_HOSTS_FILE"
     scp -P 39483 -o UserKnownHostsFile="$KNOWN_HOSTS_FILE" user@ssh.nicholaslyz.com:/home/user/keys/"$hostname" "$SSH_KEYFILE_TEMP"
 
     # Create partition table
