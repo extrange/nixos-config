@@ -1,4 +1,4 @@
-{ pkgs, lib, config,... }:
+{ pkgs, lib, config, ... }:
 with lib;
 {
   options.ffmpegCustom = mkOption {
@@ -8,9 +8,10 @@ with lib;
     default = true;
   };
 
-  config = mkIf config.ffmpegCustom {
-    home-manager.users.user.home.packages = with pkgs; [
-      (ffmpeg.override { withFdkAac = true; withUnfree = true; })
-    ];
+  config = {
+    home-manager.users.user.home.packages = with pkgs; [ ]
+      ++ (optional config.ffmpegCustom (ffmpeg.override { withFdkAac = true; withUnfree = true; }))
+      ++ (optional (!config.ffmpegCustom) ffmpeg)
+    ;
   };
 }
