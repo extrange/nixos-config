@@ -9,9 +9,13 @@ with lib;
   };
 
   config = {
-    home-manager.users.user.home.packages = with pkgs; [ ]
-      ++ (optional config.ffmpegCustom (ffmpeg.override { withFdkAac = true; withUnfree = true; }))
-      ++ (optional (!config.ffmpegCustom) ffmpeg)
-    ;
+    home-manager.users.user.home.packages = with pkgs; [
+      (
+        if config.ffmpegCustom then
+          ffmpeg.override { withFdkAac = true; withUnfree = true; }
+        else
+          ffmpeg
+      )
+    ];
   };
 }
