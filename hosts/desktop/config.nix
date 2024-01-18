@@ -9,7 +9,8 @@
 
   home-manager.users.user = {
     home.packages = with pkgs; [
-      davinci-resolve
+      # TODO fix URL malformed error with overlays
+      # davinci-resolve
       nvtop
       clinfo # Check OpenCL
     ];

@@ -85,7 +85,7 @@
       # Hostnames given here are their Tailscale MagicDNS names
       "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
-      "192.168.1.238,family-server".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBvoJfBrYy0N8r9eDwoG5w2YgXSRTZFNlBAX7nDZNhw";
+      "192.168.1.238,family-server".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7MT+3VHbkXr/nj6Z/a3WGrPy8W4eWa81vgtOKOs2Qc";
 
       "ssh.icybat.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
 
