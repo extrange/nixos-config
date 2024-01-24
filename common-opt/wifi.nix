@@ -55,14 +55,14 @@ with lib;
           wifi = {
             mode = "infrastructure";
             ssid = "Wireless@SGx";
+            security = "802-11-wireless-security";
           };
           wifi-security = {
-            auth-alg = "open";
             key-mgmt = "wpa-eap";
           };
           "802-1x" = {
             eap = "peap;";
-            identity = "essa-2eOQO0KdD0Hvl7vs8w-X-lk@singtel-wsg";
+            identity = "essa-U9szNymmc7ReVA5ewbKqtdxQJQ@singtel-wsg";
             password = "$wireless_sgx";
             phase2-auth = "mschapv2";
           };
@@ -70,7 +70,7 @@ with lib;
             method = "auto";
           };
           ipv6 = {
-            addr-gen-mode = "default";
+            addr-gen-mode = "stable-privacy";
             method = "auto";
           };
         };
