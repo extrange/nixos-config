@@ -23,6 +23,7 @@
         btrfs-progs
         cryptsetup
         dnsutils # `dig` + `nslookup` 
+        duperemove
         ethtool
         # ffmpeg - use the option `ffmpegCustom` instead
         file
