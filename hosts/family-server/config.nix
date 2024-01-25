@@ -104,4 +104,24 @@ in
       };
     };
   };
+
+  # Zellij terminal multiplexer
+  home-manager.users.user = {
+
+    programs.zellij = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
+    # initExtra only for interactive
+    # Do not run in VSCode
+    programs.bash.initExtra = (lib.mkOrder 200 ''
+      export ZELLIJ_AUTO_ATTACH=true
+      export ZELLIJ_AUTO_EXIT=true
+
+      if [[ -z $VSCODE_INJECTION ]]; then
+        eval "$(zellij setup --generate-auto-start bash)"
+      fi
+    '');
+  };
 }
