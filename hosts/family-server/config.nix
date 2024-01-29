@@ -61,6 +61,13 @@ in
     options = [ "subvol=root" ] ++ mountOptions;
   };
 
+  # Deduplication
+  services.beesd.filesystems = {
+    software = {
+      spec = "LABEL=software";
+    };
+  };
+
   # BtrFS autoscrub
   services.btrfs.autoScrub.fileSystems = lib.mkForce [
     "/"
