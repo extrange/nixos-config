@@ -21,6 +21,7 @@
         bat
         btop
         btrfs-progs
+        compsize
         cryptsetup
         dnsutils # `dig` + `nslookup` 
         ethtool
