@@ -34,10 +34,14 @@ in
 
   # Users allowed to SSH into this server
   users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
-  users.users."root".openssh.authorizedKeys.keys = authorizedKeys;
+  users.users."root".openssh.authorizedKeys.keys = authorizedKeys; # allow root login for virt-manager/qemu kvm access
 
   services.openssh = {
     enable = true;
+    settings = {
+      # Prevent SSH connections from timing out prematurely
+      ClientAliveInterval = 15;
+    };
   };
 
   # GPU passthrough
@@ -68,7 +72,7 @@ in
 
       # Explanation of .beeshome/beesstats.txt
       # https://github.com/Zygo/bees/issues/66#issuecomment-403306685
-      hashTableSizeMB = 4096; 
+      hashTableSizeMB = 4096;
     };
   };
 
