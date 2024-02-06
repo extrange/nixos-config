@@ -65,7 +65,10 @@ in
   services.beesd.filesystems = {
     software = {
       spec = "LABEL=software";
-      hashTableSizeMB = 4096;
+
+      # Explanation of .beeshome/beesstats.txt
+      # https://github.com/Zygo/bees/issues/66#issuecomment-403306685
+      hashTableSizeMB = 4096; 
     };
   };
 
