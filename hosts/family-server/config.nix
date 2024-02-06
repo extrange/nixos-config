@@ -121,6 +121,7 @@ in
       settings = {
         pane_frames = false;
         ui.pane_frames.hide_session_name = true;
+        mouse_mode = false; # Mouse mode messes up copy/paste over SSH
       };
     };
 
