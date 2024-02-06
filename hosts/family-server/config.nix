@@ -65,7 +65,7 @@ in
   services.beesd.filesystems = {
     software = {
       spec = "LABEL=software";
-      hashTableSizeMB = 2048;
+      hashTableSizeMB = 4096;
     };
   };
 
