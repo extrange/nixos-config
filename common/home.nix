@@ -25,6 +25,7 @@
         cryptsetup
         dnsutils # `dig` + `nslookup` 
         ethtool
+        exiftool
         # ffmpeg - use the option `ffmpegCustom` instead
         file
         fzf

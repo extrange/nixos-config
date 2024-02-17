@@ -13,6 +13,7 @@
       # davinci-resolve
       nvtop
       clinfo # Check OpenCL
+      rpi-imager
     ];
 
     # For Davinci resolve
