@@ -4,7 +4,7 @@
   graphical = true;
   wifi = {
     enable = true;
-    interface-name = "wlp1s0";
+    interface-name = "wlp0s20f3";
   };
 
   # Allow TZ to be set automatically
