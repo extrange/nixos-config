@@ -10,9 +10,14 @@
   # Allow TZ to be set automatically
   time.timeZone = lib.mkForce null;
 
+  # Intel GPU
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
     intel-compute-runtime
+  ];
+
+  boot.kernelParams = [
+    # "usbcore.quirks=2386:433b:bk" # Touchscreen
   ];
 
   home-manager.users.user = {
