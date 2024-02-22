@@ -21,6 +21,12 @@
   ];
 
   home-manager.users.user = {
+
+    home.packages = with pkgs; [
+      gnome.gnome-power-manager
+      powertop
+    ];
+
     dconf.settings = with home-manager.lib.hm.gvariant; {
       "org/gnome/desktop/interface" = {
         show-battery-percentage = true;
