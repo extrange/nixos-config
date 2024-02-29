@@ -43,6 +43,7 @@
         libva-utils # vaainfo, check on VAAPI (hw acceleration)
         lm_sensors # for `sensors` command
         lsd # ls replacement with icons
+        lshw
         lsof
         lsscsi
         ltrace # library call monitoring
