@@ -9,10 +9,10 @@
 
   home-manager.users.user = {
     home.packages = with pkgs; [
-      # TODO fix URL malformed error with overlays
-      davinci-resolve
-      nvtop
+      android-tools
       clinfo # Check OpenCL
+      davinci-resolve # TODO fix URL malformed error with overlays
+      nvtop
       rpi-imager
     ];
 
