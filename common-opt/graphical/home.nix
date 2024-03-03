@@ -5,6 +5,7 @@ with lib;
   config = mkIf config.graphical {
     home-manager.users.user = {
       home.packages = with pkgs; [
+        android-tools
         audacity
         calibre
         discord

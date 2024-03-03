@@ -9,7 +9,6 @@
 
   home-manager.users.user = {
     home.packages = with pkgs; [
-      android-tools
       clinfo # Check OpenCL
       davinci-resolve # TODO fix URL malformed error with overlays
       nvtop
