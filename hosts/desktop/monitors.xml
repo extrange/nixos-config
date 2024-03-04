@@ -7,7 +7,7 @@
             <primary>yes</primary>
             <monitor>
                 <monitorspec>
-                    <connector>DP-1</connector>
+                    <connector>DP-2</connector>
                     <vendor>DEL</vendor>
                     <product>DELL P2715Q</product>
                     <serial>32R1F4AP116L</serial>
