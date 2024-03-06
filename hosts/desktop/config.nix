@@ -39,6 +39,17 @@
         autoconnect = [ "qemu+ssh://root@server/system" ];
         uris = [ "qemu+ssh://root@server/system" ];
       };
+
+      # Vitals
+      "org/gnome/shell/extensions/vitals" = lib.mkForce {
+        hot-sensors = [
+          "_processor_usage_"
+          "_memory_usage_"
+          "_temperature_processor_0_"
+          "_temperature_amdgpu_edge_"
+          "__network-rx_max__"
+        ];
+      };
     };
 
     home.file = {
