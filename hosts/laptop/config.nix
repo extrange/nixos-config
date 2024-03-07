@@ -38,6 +38,19 @@
       # Auto TZ
       "org/gnome/desktop/datetime" = { automatic-timezone = true; };
       "org/gnome/system/location" = { enabled = true; };
+
+      # Vitals
+      "org/gnome/shell/extensions/vitals" = lib.mkForce {
+        hot-sensors = [
+          "_processor_usage_"
+          "_memory_usage_"
+          "__temperature_max__"
+          "__network-rx_max__"
+          "_battery_rate_"
+          "_battery_time_left_"
+        ];
+      };
+
     };
   };
 }
