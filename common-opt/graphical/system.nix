@@ -77,27 +77,25 @@ with lib;
       sshfs # Can't be in user
     ];
 
+    # Docs: https://github.com/rvaiya/keyd/blob/master/docs/keyd.scdoc
     services.keyd = {
       enable = true;
       keyboards = {
         default = {
           ids = [ "*" ];
           settings = {
+            # This is a special layer name
             control = {
+              # These changes also apply to control + shift
+              # Meaning of z = "C-/": z (when Ctrl is pressed) is mapped to Control + /
               z = "C-/";
               x = "C-b";
               c = "C-i";
               v = "C-.";
               t = "C-k";
               w = "C-,";
-              # Pressing shift enters a new layer
-              shift = "layer(control_shift)";
             };
-            # We inherit from the C-S (ctrl+shift) layer
-            # This preserves existing ctrl+shift combinations
-            "control_shift:C-S" = {
-              t = "C-S-k";
-            };
+            # Laptop fn key issue: wait for https://github.com/rvaiya/keyd/issues/638 to be pushed to NixOS
           };
         };
       };
