@@ -95,7 +95,6 @@ with lib;
               t = "C-k";
               w = "C-,";
             };
-            # Laptop fn key issue: wait for https://github.com/rvaiya/keyd/issues/638 to be pushed to NixOS
           };
         };
       };

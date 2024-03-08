@@ -20,6 +20,19 @@
     # "usbcore.quirks=2386:433b:bk" # Touchscreen
   ];
 
+  # Swap fn behavior on mediakeys
+  services.keyd.keyboards.default.settings = {
+    main = {
+      sleep = "f1";
+      brightnessdown = "f3";
+      brightnessup = "f4";
+
+      f1 = "sleep";
+      f3 = "brightnessdown";
+      f4 = "brightnessup";
+    };
+  };
+
   home-manager.users.user = {
 
     home.packages = with pkgs; [
@@ -50,7 +63,7 @@
           "_battery_time_left_"
         ];
       };
-
     };
+
   };
 }
