@@ -130,6 +130,10 @@
           };
         };
       };
+
+      zoxide = {
+        enable = true;
+      };
     };
 
     # Run as user, ivo possible permission issues if run as system
