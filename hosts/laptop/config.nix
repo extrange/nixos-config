@@ -46,6 +46,7 @@
       };
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-to-click = true;
+        natural-scroll = false;
       };
 
       # Auto TZ
