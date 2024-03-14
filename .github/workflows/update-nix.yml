@@ -24,7 +24,7 @@ jobs:
         run: nix flake update
 
       - name: Run tests for all hosts
-        run: nix flake check --no-build
+        run: nix flake check --no-build path:.
 
       - name: Open a pull request
         id: cpr
