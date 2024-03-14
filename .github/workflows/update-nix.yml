@@ -24,7 +24,7 @@ jobs:
 
       - name: Open a pull request
         id: cpr
-        uses: peter-evans/create-pull-request@v5 # TODO dependabot should catch this
+        uses: peter-evans/create-pull-request@v6 # TODO dependabot should catch this
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           commit-message: "create-pull-request: update flake.nix"
