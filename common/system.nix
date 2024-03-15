@@ -124,7 +124,7 @@
     enable = true;
     flake = "github:extrange/nixos-config";
     dates = "*-*-* 00:05:00";
-    operation = [ "switch" ]; # Upgrade immediately
+    operation = "switch";  # Upgrade immediately
     persistent = true;
     flags = [ "-L" ]; # Print full build logs on stderr
   };
