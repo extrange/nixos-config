@@ -1,12 +1,11 @@
-name: Update and test Nix flake
+name: Update Nix flake.lock, test & commit
 on:
   schedule:
-    - cron: "0 0 * * 0" # 00:00 every Sunday
+    - cron: "0 0 * * *" # 00:00 daily
   workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   update-flake:
@@ -14,8 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 0
 
       - name: Set up Nix
         uses: cachix/install-nix-action@v26
@@ -25,21 +22,9 @@ jobs:
 
       - name: Run tests for all hosts
         run: nix flake check --no-build path:.
-
-      - name: Open a pull request
-        id: cpr
-        uses: peter-evans/create-pull-request@v6 # TODO dependabot should catch this
+      
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-          commit-message: "create-pull-request: update flake.nix"
-          branch: update-nix-flake
-          delete-branch: true
-          title: "Automatically update flake.lock"
-          body: "Automatically update flake.lock and merge if tests pass."
-          labels: auto-merge # This label will be used to identify PRs that should be auto-merged
-
-      - name: Merge the PR
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{steps.cpr.outputs.pull-request-url}}
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          commit_message: "Update flake.lock"
+          skip_dirty_check: false

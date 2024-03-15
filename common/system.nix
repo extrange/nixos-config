@@ -120,17 +120,14 @@
   services.btrfs.autoScrub.fileSystems = [ "/" ];
 
   # Autoupgrades
-  # system.autoUpgrade = {
-  #   # Default frequency is daily
-  #   enable = true;
-  #   flake = self.outPath;
-  #   flags = [
-  #     "--update-input"
-  #     "nixpkgs"
-  #     "--no-write-lock-file"
-  #     "-L" # print build logs
-  #   ];
-  # };
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:extrange/nixos-config";
+    dates = "*-*-* 00:05:00";
+    operation = [ "switch" ]; # Upgrade immediately
+    persistent = true;
+    flags = [ "-L" ]; # Print full build logs on stderr
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
