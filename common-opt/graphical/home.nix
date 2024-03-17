@@ -9,6 +9,7 @@ with lib;
         audacity
         calibre
         discord
+        evtest
         firefox
         gimp
         gnome-extension-manager
