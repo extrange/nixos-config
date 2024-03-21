@@ -126,6 +126,7 @@
     dates = "*-*-* 05:00:00";
     operation = "switch";  # Upgrade immediately
     persistent = true;
+    randomizedDelaySec = "45min";
     flags = [ "-L" ]; # Print full build logs on stderr
   };
 
