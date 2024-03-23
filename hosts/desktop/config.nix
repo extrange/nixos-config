@@ -11,7 +11,7 @@
     home.packages = with pkgs; [
       clinfo # Check OpenCL
       davinci-resolve # TODO fix URL malformed error with overlays
-      nvtop
+      nvtopPackages.amd
       rpi-imager
     ];
 
