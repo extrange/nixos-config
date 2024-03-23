@@ -81,7 +81,7 @@ with lib;
 
         "org/gnome/settings-daemon/plugins/color" = {
           night-light-enabled = true;
-          night-light-temperature = mkUint32 1700;
+          night-light-temperature = mkUint32 1000; # Minimum
         };
 
         "org/gnome/desktop/interface" = {
