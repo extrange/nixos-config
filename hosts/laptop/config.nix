@@ -54,9 +54,9 @@
       "org/gnome/system/location" = { enabled = true; };
 
       # Vitals
-      "org/gnome/shell/extensions/vitals" = lib.mkForce {
+      "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
-          "_processor_usage_"
+          "_system_load_1m_"
           "_memory_usage_"
           "__temperature_max__"
           "__network-rx_max__"
@@ -67,4 +67,10 @@
     };
 
   };
+
+    # Upgrade once a week max
+    system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
+    # Allow at most cores * threads processes to run
+    nix.settings.cores = 2;
+    nix.settings.max-jobs = 2;
 }
