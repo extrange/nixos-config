@@ -106,15 +106,17 @@
     '';
   };
 
-  # Optimization
-  boot.loader.systemd-boot.configurationLimit = 10;
-  nix.gc = {
+  # Optimization: symlink identical files in store
+  # nix.settings.auto-optimise-store = true; # Run during every build, may slow down builds
+  nix.optimise.automatic = true; # Run daily at 0345
+
+  # Save space
+  boot.loader.systemd-boot.configurationLimit = 10; # Only saves space in /boot
+  nix.gc = { # Deletes old generations
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
-  nix.settings.auto-optimise-store = true;
-  nix.optimise.automatic = true;
 
   # Filesystems not detected automatically since LUKS is being used
   services.btrfs.autoScrub.fileSystems = [ "/" ];

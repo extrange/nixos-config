@@ -10,7 +10,7 @@
   home-manager.users.user = {
     home.packages = with pkgs; [
       clinfo # Check OpenCL
-      davinci-resolve # TODO fix URL malformed error with overlays
+      davinci-resolve
       nvtopPackages.amd
       rpi-imager
     ];

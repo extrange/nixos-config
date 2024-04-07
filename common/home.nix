@@ -24,11 +24,13 @@
         compsize
         cryptsetup
         dnsutils # `dig` + `nslookup` 
+        duf
         ethtool
         exiftool
         # ffmpeg - use the option `ffmpegCustom` instead
         file
         fzf
+        gdu # ncdu-like
         gh
         git
         hunspell # libreoffice spellcheck
@@ -86,6 +88,7 @@
         enableCompletion = true;
         shellAliases = {
           ls = "lsd";
+          df = "duf";
           grep = "grep --color=auto";
           # TODO fix this alias being overridden by quitcd.bash_sh_zsh
           nnn = "nnn -ae";
