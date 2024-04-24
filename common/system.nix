@@ -52,6 +52,9 @@
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=15s
   '';
+  systemd.user.extraConfig = ''
+    DefaultTimeoutStopSec=15s
+  '';
   security.sudo.extraConfig = "Defaults timestamp_timeout=30";
   systemd.services."getty@tty1".enable = true;
   systemd.services."autovt@tty1".enable = true;
