@@ -24,6 +24,7 @@
         compsize
         cryptsetup
         dnsutils # `dig` + `nslookup` 
+        dmidecode
         duf
         ethtool
         exiftool
