@@ -17,21 +17,31 @@
   ];
 
   boot.kernelParams = [
-    # "usbcore.quirks=2386:433b:bk" # Touchscreen
+    # Fixes issue with laptop not sleeping
+    # Note: flashing red light appears with deep, not with s2idle
+    # Check type of sleep with cat /sys/power/mem_sleep
+    #
+    # If issue still persists, consider patching kernel to show s2idle wakeup reasons:
+    # https://web.archive.org/web/20230614200306/https://01.org/blogs/qwang59/2020/linux-s0ix-troubleshooting
+    "mem_sleep_default=deep"
+    
+    # Touchscreen: Disabled, as not required for now
+    # "usbcore.quirks=2386:433b:bk"
   ];
 
   # Swap fn behavior on mediakeys
-  services.keyd.keyboards.default.settings = {
-    main = {
-      sleep = "f1";
-      brightnessdown = "f3";
-      brightnessup = "f4";
+  # NO LONGER NECESSARY: Set in Bios Mediakey behavior instead
+  # services.keyd.keyboards.default.settings = {
+  #   main = {
+  #     sleep = "f1";
+  #     brightnessdown = "f3";
+  #     brightnessup = "f4";
 
-      f1 = "sleep";
-      f3 = "brightnessdown";
-      f4 = "brightnessup";
-    };
-  };
+  #     f1 = "sleep";
+  #     f3 = "brightnessdown";
+  #     f4 = "brightnessup";
+  #   };
+  # };
 
   home-manager.users.user = {
 
