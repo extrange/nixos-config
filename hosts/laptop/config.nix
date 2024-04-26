@@ -24,30 +24,35 @@
     # If issue still persists, consider patching kernel to show s2idle wakeup reasons:
     # https://web.archive.org/web/20230614200306/https://01.org/blogs/qwang59/2020/linux-s0ix-troubleshooting
     "mem_sleep_default=deep"
-    
+
     # Touchscreen: Disabled, as not required for now
     # "usbcore.quirks=2386:433b:bk"
   ];
 
-  # Swap fn behavior on mediakeys
-  # NO LONGER NECESSARY: Set in Bios Mediakey behavior instead
-  # services.keyd.keyboards.default.settings = {
-  #   main = {
-  #     sleep = "f1";
-  #     brightnessdown = "f3";
-  #     brightnessup = "f4";
-
-  #     f1 = "sleep";
-  #     f3 = "brightnessdown";
-  #     f4 = "brightnessup";
-  #   };
-  # };
+  # Settings to allow remotely building on server
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "ssh.nicholaslyz.com"; # This has a special 
+      system = "x86_64-linux";
+      protocol = "ssh";
+      maxJobs = 2;
+      speedFactor = 2;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    }
+  ];
+  nix.extraOptions = ''
+    	  builders-use-substitutes = true
+    	'';
 
   home-manager.users.user = {
 
     home.packages = with pkgs; [
       gnome.gnome-power-manager
       powertop
+      (telegram-desktop.overrideAttrs {
+        version = "4.16.6";
+      })
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
@@ -78,9 +83,24 @@
 
   };
 
-    # Upgrade once a week max
-    system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
-    # Allow at most cores * threads processes to run
-    nix.settings.cores = 2;
-    nix.settings.max-jobs = 2;
+  # Upgrade once a week max
+  system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
+  # Allow at most cores * threads processes to run
+  nix.settings.cores = 2;
+  nix.settings.max-jobs = 2;
+
+  # Swap fn behavior on mediakeys
+  # NO LONGER NECESSARY: Set in Bios Mediakey behavior instead
+  # services.keyd.keyboards.default.settings = {
+  #   main = {
+  #     sleep = "f1";
+  #     brightnessdown = "f3";
+  #     brightnessup = "f4";
+
+  #     f1 = "sleep";
+  #     f3 = "brightnessdown";
+  #     f4 = "brightnessup";
+  #   };
+  # };
+
 }

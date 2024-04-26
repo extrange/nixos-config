@@ -84,7 +84,7 @@
 
   programs.ssh = {
     knownHosts = {
-      # User's SSH client references this file.
+      # Added to /etc/ssh/ssh_known_hosts (global)
       # Hostnames given here are their Tailscale MagicDNS names
       "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
@@ -99,7 +99,8 @@
       "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     };
 
-    # Required for SSHFS (SSH run as root)
+    # Required for SSHFS (SSH client run as root)
+    # Otherwise, the root's IdentityFile is used (/root/.ssh)
     extraConfig = ''
       Host ssh.nicholaslyz.com
         HostName ssh.nicholaslyz.com
