@@ -1,6 +1,7 @@
 { pkgs, lib, config, home-manager, ... }:
 
 {
+  buildRemote = true;
   graphical = true;
   wifi = {
     enable = true;
@@ -28,22 +29,6 @@
     # Touchscreen: Disabled, as not required for now
     # "usbcore.quirks=2386:433b:bk"
   ];
-
-  # Settings to allow remotely building on server
-  nix.distributedBuilds = true;
-  nix.buildMachines = [
-    {
-      hostName = "ssh.nicholaslyz.com"; # This has a special 
-      system = "x86_64-linux";
-      protocol = "ssh";
-      maxJobs = 2;
-      speedFactor = 2;
-      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-    }
-  ];
-  nix.extraOptions = ''
-    	  builders-use-substitutes = true
-    	'';
 
   home-manager.users.user = {
 
@@ -88,19 +73,4 @@
   # Allow at most cores * threads processes to run
   nix.settings.cores = 2;
   nix.settings.max-jobs = 2;
-
-  # Swap fn behavior on mediakeys
-  # NO LONGER NECESSARY: Set in Bios Mediakey behavior instead
-  # services.keyd.keyboards.default.settings = {
-  #   main = {
-  #     sleep = "f1";
-  #     brightnessdown = "f3";
-  #     brightnessup = "f4";
-
-  #     f1 = "sleep";
-  #     f3 = "brightnessdown";
-  #     f4 = "brightnessup";
-  #   };
-  # };
-
 }

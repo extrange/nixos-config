@@ -1,5 +1,6 @@
 { config, pkgs, lib, home-manager, ... }:
 {
+  buildRemote = true;
   graphical = true;
 
   # For davinci resolve
