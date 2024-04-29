@@ -35,9 +35,6 @@
     home.packages = with pkgs; [
       gnome.gnome-power-manager
       powertop
-      (telegram-desktop.overrideAttrs {
-        version = "4.16.6";
-      })
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
