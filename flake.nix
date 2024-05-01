@@ -15,9 +15,12 @@
       url = "github:jarun/nnn";
       flake = false;
     };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, nnn, self, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, nnn, nixos-hardware, self, ... }:
     with builtins;
 
     let
@@ -54,6 +57,44 @@
               boot.extraModulePackages = with config.boot.kernelPackages; [
                 rtl8821cu
               ];
+            })
+          ];
+        };
+
+        # Raspberry Pi 4
+        
+        # Build ISO with:
+        # NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build .#nixosConfigurations.iso_aarch64.config.system.build.sdImage --impure
+        
+        # Note: host requires boot.bimfmt.emulatedSystems with aarch64-linux
+        # Install with https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi
+        iso_aarch64 = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ("${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
+            ({ config, pkgs, ... }: {
+
+              # Output as .img instead of .zst
+              sdImage.compressImage = false;
+
+              users = {
+                users."user" = {
+                  isNormalUser = true;
+                  extraGroups = [ "networkmanager" "wheel" ];
+                  initialHashedPassword = "$y$j9T$hWEXk9oQI3QFayjWyBZep0$xc3zAKoSt4jGvuxrcVMphXKM8b8wlcY61i/R99.pKQ6";
+
+                  # Allow desktop to SSH in by default. Password login is still enabled.
+                  openssh.authorizedKeys.keys = [
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyJ0LttXH9j3Ql7J1ccJbhLWdYhYn24qR6a8ur72hVi user@desktop"
+                  ];
+
+                  packages = with pkgs; [
+                      moonlight-qt
+                  ];
+                };
+              };
+
+              services.openssh.enable = true;
             })
           ];
         };

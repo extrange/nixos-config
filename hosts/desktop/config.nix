@@ -8,6 +8,9 @@
     rocmPackages.clr.icd
   ];
 
+  # Allow compiling rpi4 iso
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   home-manager.users.user = {
     home.packages = with pkgs; [
       clinfo # Check OpenCL
