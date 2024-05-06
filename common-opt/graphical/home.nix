@@ -141,7 +141,9 @@ with lib;
           picture-options = "zoom";
         };
 
+        # Dash-to-dock
         "org/gnome/shell/extensions/dash-to-dock" = {
+          transparency-mode = "DYNAMIC";
           show-trash = false;
         };
 
