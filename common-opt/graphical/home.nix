@@ -76,7 +76,10 @@ with lib;
           # Remap capslock to backspace
           xkb-options = [ "terminate:ctrl_alt_bksp" "caps:backspace" ];
           # Set Dvorak keyboard layout
-          sources = [ (mkTuple [ "xkb" "us+dvorak" ]) ];
+          sources = [
+            (mkTuple [ "xkb" "us+dvorak" ])
+            (mkTuple [ "xbk" "us" ])
+          ];
         };
 
         "org/gnome/settings-daemon/plugins/color" = {
