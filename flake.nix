@@ -62,40 +62,26 @@
         };
 
         # Raspberry Pi 4
-        
-        # Build ISO with:
-        # NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build .#nixosConfigurations.iso_aarch64.config.system.build.sdImage --impure
-        
-        # Note: host requires boot.bimfmt.emulatedSystems with aarch64-linux
-        # Install with https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi
         iso_aarch64 = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
+
+            # Build sdcard image with:
+            # NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build .#nixosConfigurations.iso_aarch64.config.system.build.sdImage --impure
+            # Note: host requires boot.bimfmt.emulatedSystems with aarch64-linux
+
+            # Install with https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi
+            # Needed to provide the system.build.sdImage target
             ("${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
-            ({ config, pkgs, ... }: {
 
-              # Output as .img instead of .zst
-              sdImage.compressImage = false;
+            # Actual configuration
+            # Build remotely with:
+            # nixos-rebuild --target-host user@192.168.1.30 --flake path:.#iso_aarch64 --use-remote-sudo  switch
+            ./rpi4/config.nix
 
-              users = {
-                users."user" = {
-                  isNormalUser = true;
-                  extraGroups = [ "networkmanager" "wheel" ];
-                  initialHashedPassword = "$y$j9T$hWEXk9oQI3QFayjWyBZep0$xc3zAKoSt4jGvuxrcVMphXKM8b8wlcY61i/R99.pKQ6";
-
-                  # Allow desktop to SSH in by default. Password login is still enabled.
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyJ0LttXH9j3Ql7J1ccJbhLWdYhYn24qR6a8ur72hVi user@desktop"
-                  ];
-
-                  packages = with pkgs; [
-                      moonlight-qt
-                  ];
-                };
-              };
-
-              services.openssh.enable = true;
-            })
+            # HW support
+            nixos-hardware.nixosModules.raspberry-pi-4
+            
           ];
         };
       };
