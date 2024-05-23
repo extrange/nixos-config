@@ -14,6 +14,7 @@ with lib;
         gimp
         gnome-extension-manager
         jellyfin-media-player
+        kid3
         libreoffice
         mission-center # pretty system monitor
         moonlight-qt
