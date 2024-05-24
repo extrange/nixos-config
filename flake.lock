@@ -70,11 +70,11 @@
     "nnn": {
       "flake": false,
       "locked": {
-        "lastModified": 1715991224,
-        "narHash": "sha256-MZMIrLWtcUbFZjsst3kXIAczYsPq9u5WAFcSHOJsde4=",
+        "lastModified": 1716512522,
+        "narHash": "sha256-Jj5HWW/0zC+DRDX1JfILHhKTBm0DjxNnSS+pMkT6aw0=",
         "owner": "jarun",
         "repo": "nnn",
-        "rev": "e27d05955251fbea2dea6d0710f1b0bc1121196e",
+        "rev": "0f10bd6cdcf210ed3e5cd4d3e0b5fe580818b586",
         "type": "github"
       },
       "original": {
