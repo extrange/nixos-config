@@ -18,6 +18,7 @@ with lib;
         kid3
         kubectl
         libreoffice
+        minikube
         mission-center # pretty system monitor
         moonlight-qt
         mpv # required for smplayer
