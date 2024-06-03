@@ -16,6 +16,7 @@ with lib;
         gnome-extension-manager
         jellyfin-media-player
         kid3
+        kubectl
         libreoffice
         mission-center # pretty system monitor
         moonlight-qt
