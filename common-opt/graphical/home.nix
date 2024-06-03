@@ -7,6 +7,7 @@ with lib;
       home.packages = with pkgs; [
         android-tools
         audacity
+        awscli2
         calibre
         discord
         evtest
