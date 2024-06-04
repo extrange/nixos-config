@@ -7,7 +7,6 @@ with lib;
       home.packages = with pkgs; [
         android-tools
         audacity
-        awscli2
         calibre
         discord
         evtest
@@ -16,9 +15,7 @@ with lib;
         gnome-extension-manager
         jellyfin-media-player
         kid3
-        kubectl
         libreoffice
-        minikube
         mission-center # pretty system monitor
         moonlight-qt
         mpv # required for smplayer

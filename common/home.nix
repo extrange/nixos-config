@@ -18,18 +18,19 @@
     home.packages = with pkgs;
       [
         age
+        awscli2
         bat
         btop
         btrfs-progs
         compsize
         cryptsetup
-        dnsutils # `dig` + `nslookup` 
         dmidecode
+        dnsutils # `dig` + `nslookup` 
         duf
         ethtool
         exiftool
-        # ffmpeg - use the option `ffmpegCustom` instead
         file
+        # ffmpeg - use the option `ffmpegCustom` instead
         fzf
         gdu # ncdu-like
         gh
@@ -42,6 +43,7 @@
         ipcalc
         iperf3
         jq # Command-line JSON processor
+        kubectl
         libheif
         libsecret # for github auth
         libva-utils # vaainfo, check on VAAPI (hw acceleration)
@@ -51,6 +53,7 @@
         lsof
         lsscsi
         ltrace # library call monitoring
+        minikube
         mtr # ping + tracert TUI
         neofetch
         nfs-utils
@@ -65,8 +68,8 @@
         ripgrep # recursively searches directories for a regex pattern
         smartmontools
         socat
-        ssh-to-age
         sops
+        ssh-to-age
         strace # system call monitoring
         syncthing
         sysstat
@@ -74,8 +77,8 @@
         unzip
         usbutils # lsusb
         vim
-        which
         wget2
+        which
         xz
         yq-go # yaml processer https://github.com/mikefarah/yq
         yt-dlp
