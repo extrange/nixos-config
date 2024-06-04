@@ -43,14 +43,19 @@
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
   zramSwap.enable = true;
 
-  # Virtualization
+  # Libvirt
   virtualisation.libvirtd.enable = true;
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
+
+  # Docker/Kubernetes
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # System misc config
   systemd.extraConfig = ''
