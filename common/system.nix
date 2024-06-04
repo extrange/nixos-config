@@ -69,7 +69,7 @@
     users."user" = {
       isNormalUser = true;
       description = "user";
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
+      extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" "docker" ];
       hashedPasswordFile = config.sops.secrets.userPassword.path;
     };
   };
