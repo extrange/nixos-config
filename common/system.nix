@@ -45,7 +45,10 @@
 
   # Virtualization
   virtualisation.libvirtd.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -117,7 +120,8 @@
 
   # Save space
   boot.loader.systemd-boot.configurationLimit = 10; # Only saves space in /boot
-  nix.gc = { # Deletes old generations
+  nix.gc = {
+    # Deletes old generations
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
@@ -131,7 +135,7 @@
     enable = true;
     flake = "github:extrange/nixos-config";
     dates = "*-*-* 05:00:00";
-    operation = "switch";  # Upgrade immediately
+    operation = "switch"; # Upgrade immediately
     persistent = true;
     randomizedDelaySec = "45min";
     flags = [ "-L" ]; # Print full build logs on stderr
