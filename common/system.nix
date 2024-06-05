@@ -109,7 +109,7 @@
     };
 
     # Required for SSHFS (SSH client run as root)
-    # Otherwise, the root's IdentityFile is used (/root/.ssh)
+    # Otherwise, the root's IdentityFile is used (/root/.ssh) which is not recognized
     extraConfig = ''
       Host ssh.nicholaslyz.com
         HostName ssh.nicholaslyz.com
