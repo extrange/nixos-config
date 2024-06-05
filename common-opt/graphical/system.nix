@@ -78,6 +78,16 @@ with lib;
       sshfs # Can't be in user
     ];
 
+    system.userActivationScripts = {
+      # pub key is required for seahorse to autoadd to ssh-agent
+      # ssh-agent is used by vscode to forward ssh credentials to remote machines
+      generateSshPubKeyFile = {
+        text = ''
+          ${pkgs.openssh}/bin/ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
+        '';
+      };
+    };
+
     # Docs: https://github.com/rvaiya/keyd/blob/master/docs/keyd.scdoc
     services.keyd = {
       enable = true;
