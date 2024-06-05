@@ -119,11 +119,12 @@
 
       ssh = {
         enable = true;
+
         # ~.ssh/config
-        matchBlocks = let hostname = "ssh.nicholaslyz.com"; in {
+        matchBlocks = {
 
           # This is so I don't have to specify the port my server listens on
-          server = {
+          server = let hostname = "ssh.nicholaslyz.com"; in {
             host = "server ${hostname}";
             inherit hostname;
             port = 39483;

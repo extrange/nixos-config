@@ -16,9 +16,10 @@ with lib;
     systemd.services."getty@tty1".enable = lib.mkForce false;
     systemd.services."autovt@tty1".enable = lib.mkForce false;
 
-    # Fix login keyring
+    # Note: with autologin, the 'login' keyring will still require unlock when applications request access
+    # Without autologin, it will automatically be unlocked, but ether way you need to enter a password once
+    # https://askubuntu.com/questions/918712/the-login-keyring-did-not-get-unlocked-when-you-logged-into-your-computer
     services.gnome.gnome-keyring.enable = true;
-    security.pam.services.sddm.enableGnomeKeyring = true;
 
     environment.gnome.excludePackages = with pkgs.gnome; [
       epiphany # browser

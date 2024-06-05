@@ -38,12 +38,6 @@
         sleep-inactive-ac-type = "nothing";
       };
 
-      # QEMU config
-      "org/virt-manager/virt-manager/connections" = {
-        autoconnect = [ "qemu+ssh://root@server/system" ];
-        uris = [ "qemu+ssh://root@server/system" ];
-      };
-
       # Vitals
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [

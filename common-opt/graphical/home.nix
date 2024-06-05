@@ -68,6 +68,13 @@ with lib;
       };
 
       dconf.settings = with home-manager.lib.hm.gvariant; {
+
+        # Virt-manager connections
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = [ "qemu+ssh://root@server/system" ];
+          uris = [ "qemu+ssh://root@server/system" ];
+        };
+
         "org/gnome/mutter" = {
           # Snap windows to top/horizontal edges
           edge-tiling = true;
