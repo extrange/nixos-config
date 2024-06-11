@@ -30,6 +30,10 @@
     # "usbcore.quirks=2386:433b:bk"
   ];
 
+  environment.variables = {
+    AWS_PROFILE = "default";
+  };
+
   home-manager.users.user = {
 
     home.packages = with pkgs; [
