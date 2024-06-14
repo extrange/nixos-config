@@ -9,16 +9,14 @@ with lib;
         audacity
         calibre
         discord
-        evtest
         firefox
         gimp
         gnome-extension-manager
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
         jellyfin-media-player
-        kid3
+        kid3 # audio file tagger
         libreoffice
-        mission-center # pretty system monitor
         moonlight-qt
         mpv # required for smplayer
         obs-studio
