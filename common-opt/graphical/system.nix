@@ -117,5 +117,8 @@ with lib;
       enable = true;
       enableNotifications = true;
     };
+
+    # Enable sysrq
+    boot.kernel.sysctl."kernel.sysrq" = 1;
   };
 }
