@@ -13,6 +13,8 @@ with lib;
         firefox
         gimp
         gnome-extension-manager
+        hunspell # libreoffice spellcheck
+        hunspellDicts.en-us
         jellyfin-media-player
         kid3
         libreoffice

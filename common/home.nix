@@ -35,9 +35,6 @@
         gdu # ncdu-like
         gh
         git
-        helix
-        hunspell # libreoffice spellcheck
-        hunspellDicts.en-us
         iftop
         iotop
         ipcalc
