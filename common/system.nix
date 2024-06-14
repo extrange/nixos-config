@@ -41,6 +41,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
+
+  # We use zram for (and instead of) swap, Fedora does it also
+  # https://fedoraproject.org/wiki/Changes/SwapOnZRAM
   zramSwap.enable = true;
 
   # Libvirt
