@@ -61,9 +61,5 @@
 
   # Upgrade once a week max
   system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
-  # Allow at most cores * threads processes to run
-  nix.settings.cores = 4;
-  nix.settings.max-jobs = 2;
-
 }
  

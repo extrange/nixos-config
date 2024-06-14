@@ -110,5 +110,12 @@ with lib;
         };
       };
     };
+
+    # Early OOM Killer - Fedora uses it
+    # https://fedoraproject.org/wiki/Changes/EnableEarlyoom
+    services.earlyoom = {
+      enable = true;
+      enableNotifications = true;
+    };
   };
 }
