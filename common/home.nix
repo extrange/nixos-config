@@ -18,6 +18,7 @@
     home.packages = with pkgs;
       [
         age
+        aria2c
         awscli2
         bat
         btop
@@ -74,7 +75,6 @@
         unzip
         usbutils # lsusb
         vim
-        wget2
         which
         xz
         yq-go # yaml processer https://github.com/mikefarah/yq
