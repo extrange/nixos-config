@@ -46,6 +46,9 @@
   # https://fedoraproject.org/wiki/Changes/SwapOnZRAM
   zramSwap.enable = true;
 
+  # Enable btrfs compression on /
+  fileSystems."/".options = [ "compress=zstd" ];
+
   # Libvirt
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
