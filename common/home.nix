@@ -18,7 +18,7 @@
     home.packages = with pkgs;
       [
         age
-        aria2c
+        aria2
         awscli2
         bat
         btop
