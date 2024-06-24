@@ -23,6 +23,7 @@ with lib;
         obsidian
         pdfarranger
         smplayer
+        subsonic
         telegram-desktop
         ungoogled-chromium
         vscode
