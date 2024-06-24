@@ -113,6 +113,7 @@ with lib;
 
     # Early OOM Killer - Fedora uses it
     # https://fedoraproject.org/wiki/Changes/EnableEarlyoom
+    # Without this, desktop hangs occur in cases of high memory pressure
     services.earlyoom = {
       enable = true;
       enableNotifications = true;

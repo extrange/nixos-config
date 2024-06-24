@@ -17,6 +17,9 @@
     intel-compute-runtime
   ];
 
+  # Increase zram to 100% of RAM
+  zramSwap.memoryPercent = 100;
+
   boot.kernelParams = [
     # Fixes issue with laptop not sleeping
     # Note: flashing red light appears with deep, not with s2idle
