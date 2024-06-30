@@ -67,6 +67,7 @@
           "_battery_rate_"
           "_battery_time_left_"
         ];
+        show-battery = true;
       };
 
       # Increase screen blank timeout (seconds)
