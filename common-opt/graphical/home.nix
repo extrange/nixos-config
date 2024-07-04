@@ -17,6 +17,7 @@ with lib;
         jellyfin-media-player
         kid3 # audio file tagger
         libreoffice
+        microsoft-edge
         moonlight-qt
         mpv # required for smplayer
         obs-studio
