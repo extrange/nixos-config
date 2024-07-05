@@ -40,6 +40,8 @@
   boot.supportedFilesystems = [ "ntfs" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Encryption is enabled by default. Individual devices override this
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
 
   # We use zram for (and instead of) swap, Fedora does it also
