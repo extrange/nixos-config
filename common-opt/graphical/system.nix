@@ -72,8 +72,6 @@ with lib;
         } // options;
       };
 
-    services.btrfs.autoScrub.enable = true;
-
     environment.systemPackages = with pkgs; [
       sshfs # Can't be in user
     ];

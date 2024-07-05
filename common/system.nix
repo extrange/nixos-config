@@ -138,8 +138,13 @@
     options = "--delete-older-than 7d";
   };
 
-  # Filesystems not detected automatically since LUKS is being used
-  services.btrfs.autoScrub.fileSystems = [ "/" ];
+  services.btrfs.autoScrub = {
+    enable = true;
+
+    # Filesystems not detected automatically since LUKS is being used
+    fileSystems = [ "/" ];
+  };
+
 
   # Autoupgrades
   system.autoUpgrade = {
