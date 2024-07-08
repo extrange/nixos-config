@@ -65,14 +65,22 @@
     };
   };
 
-  # System misc config
+  # Decrease systemd shutdown timer duration
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=15s
   '';
   systemd.user.extraConfig = ''
     DefaultTimeoutStopSec=15s
   '';
-  security.sudo.extraConfig = "Defaults timestamp_timeout=30";
+
+  # Fix long timeout for user-manager.service
+  systemd.slices.user.sliceConfig = {
+    # Check with systemctl cat user.slice
+    DefaultTimeoutStopSec = "15s"; 
+  };
+
+  security.sudo.extraConfig = "Defaults timestamp_timeout=30"; # 30 mins
+
   systemd.services."getty@tty1".enable = true;
   systemd.services."autovt@tty1".enable = true;
 

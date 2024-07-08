@@ -21,11 +21,11 @@ with lib;
     # https://askubuntu.com/questions/918712/the-login-keyring-did-not-get-unlocked-when-you-logged-into-your-computer
     services.gnome.gnome-keyring.enable = true;
 
-    environment.gnome.excludePackages = with pkgs.gnome; [
+    environment.gnome.excludePackages = with pkgs; [
       epiphany # browser
       geary # mail reader
-      gnome-shell-extensions # This seems to remove default extensions
-      pkgs.gnome-tour
+      gnome.gnome-shell-extensions # This seems to remove default extensions
+      gnome-tour
       totem # video player
     ];
 
