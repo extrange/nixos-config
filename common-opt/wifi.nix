@@ -18,60 +18,63 @@ with lib;
     };
 
     # Generate using https://github.com/janik-haag/nm2nix
-    networking.networkmanager.ensureProfiles = {
-      environmentFiles = [ config.sops.secrets.wifi.path ];
-      profiles = {
-        home-wifi = {
-          connection = {
-            id = "$home_wifi_ssid";
-            type = "wifi";
-            interface-name = config.wifi.interface-name;
+    networking.networkmanager = {
+      enable = true;
+      ensureProfiles = {
+        environmentFiles = [ config.sops.secrets.wifi.path ];
+        profiles = {
+          home-wifi = {
+            connection = {
+              id = "$home_wifi_ssid";
+              type = "wifi";
+              interface-name = config.wifi.interface-name;
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = "$home_wifi_ssid";
+            };
+            wifi-security = {
+              auth-alg = "open";
+              key-mgmt = "wpa-psk";
+              psk = "$home_wifi_psk";
+            };
+            ipv4 = {
+              method = "auto";
+            };
+            ipv6 = {
+              addr-gen-mode = "default";
+              method = "auto";
+            };
           };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "$home_wifi_ssid";
-          };
-          wifi-security = {
-            auth-alg = "open";
-            key-mgmt = "wpa-psk";
-            psk = "$home_wifi_psk";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "default";
-            method = "auto";
-          };
-        };
 
-        "Wireless@SGx" = {
-          connection = {
-            id = "Wireless@SGx";
-            uuid = "0182a38c-8ad0-4c9e-a438-e631f591eedf";
-            type = "wifi";
-            interface-name = config.wifi.interface-name;
-          };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "Wireless@SGx";
-            security = "802-11-wireless-security";
-          };
-          wifi-security = {
-            key-mgmt = "wpa-eap";
-          };
-          "802-1x" = {
-            eap = "peap;";
-            identity = "essa-U9szNymmc7ReVA5ewbKqtdxQJQ@singtel-wsg";
-            password = "$wireless_sgx";
-            phase2-auth = "mschapv2";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "stable-privacy";
-            method = "auto";
+          "Wireless@SGx" = {
+            connection = {
+              id = "Wireless@SGx";
+              uuid = "0182a38c-8ad0-4c9e-a438-e631f591eedf";
+              type = "wifi";
+              interface-name = config.wifi.interface-name;
+            };
+            wifi = {
+              mode = "infrastructure";
+              ssid = "Wireless@SGx";
+              security = "802-11-wireless-security";
+            };
+            wifi-security = {
+              key-mgmt = "wpa-eap";
+            };
+            "802-1x" = {
+              eap = "peap;";
+              identity = "essa-U9szNymmc7ReVA5ewbKqtdxQJQ@singtel-wsg";
+              password = "$wireless_sgx";
+              phase2-auth = "mschapv2";
+            };
+            ipv4 = {
+              method = "auto";
+            };
+            ipv6 = {
+              addr-gen-mode = "stable-privacy";
+              method = "auto";
+            };
           };
         };
       };

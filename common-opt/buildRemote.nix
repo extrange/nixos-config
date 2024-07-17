@@ -9,13 +9,14 @@ with lib;
   };
 
   config = mkIf config.buildRemote {
+    nix.settings.max-jobs = 0; # Never build locally
     nix.distributedBuilds = true;
     nix.buildMachines = [
       {
         hostName = "ssh.nicholaslyz.com"; # Specified in programs.ssh.extraConfig
         system = "x86_64-linux";
         protocol = "ssh";
-        maxJobs = 2;
+        maxJobs = 4;
         speedFactor = 2;
         supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       }

@@ -4,12 +4,15 @@
   graphical = true;
 
   # For davinci resolve
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
   ];
 
   # Allow compiling rpi4 iso
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  # Allow cachix use when building rpi4 image
+  nix.settings.trusted-users = [ "user" ];
 
   home-manager.users.user = {
     home.packages = with pkgs; [
