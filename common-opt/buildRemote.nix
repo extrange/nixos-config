@@ -9,7 +9,10 @@ with lib;
   };
 
   config = mkIf config.buildRemote {
-    nix.settings.max-jobs = 0; # Never build locally
+    # Never build locally
+    # Override with --max-jobs 1
+    nix.settings.max-jobs = 0;
+
     nix.distributedBuilds = true;
     nix.buildMachines = [
       {
@@ -21,6 +24,10 @@ with lib;
         supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
       }
     ];
+
+    # Tell remote machines to fetch their own build substitutes
+    # instead of waiting for this host to upload them.
+    # https://nix.dev/manual/nix/2.18/command-ref/conf-file.html#conf-builders-use-substitutes
     nix.extraOptions = ''
       	  builders-use-substitutes = true
       	'';

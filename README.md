@@ -65,7 +65,7 @@ _Currently not working - GPU driver issues (`Qt Fatal: Could not open display`).
 For the initial build, build locally on another build host:
 
 ```sh
-NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build path:.#nixosConfigurations.rpi4.config.system.build.sdImage --impure
+NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build path:.#nixosConfigurations.rpi4.config.system.build.sdImage --impure --max-jobs 1
 ```
 
 _Note: the build host requires `boot.binfmt.emulatedSystems = [ "aarch64-linux" ]` set._
