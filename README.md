@@ -58,6 +58,30 @@ Once installation is completed successfully, reboot.
 - GSConnect pairing
 - VSCode settings sync (note: due to [automatic login], the keyring is not unlocked. However, it is possible to use a insecure storage and disable the [password].)
 
+## Raspberry Pi 4
+
+_Currently not working - GPU driver issues (`Qt Fatal: Could not open display`)._
+
+For the initial build, build locally on another build host:
+
+```sh
+NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build path:.#nixosConfigurations.rpi4.config.system.build.sdImage --impure
+```
+
+_Note: the build host requires `boot.binfmt.emulatedSystems = [ "aarch64-linux" ]` set._
+
+[`dd` the image to the sdcard](https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi.html):
+
+```sh
+sudo dd if=<path-to-img> of=/dev/sdX bs=4096 conv=fsync status=progress
+```
+
+Subsequent builds can be pushed to the pi remotely:
+
+```sh
+nixos-rebuild --target-host user@192.168.1.30 --flake path:.#rpi4 --use-remote-sudo switch
+```
+
 ## Notes
 
 - To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secrets.yaml`.
@@ -68,6 +92,7 @@ Once installation is completed successfully, reboot.
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
 - To fix the [`TypeError: BootSpec.__init__() missing 1 required positional argument`][bootspec-error], delete [symlinks to older generations] in `/nix/var/nix/profiles`, then rerun `nixos-rebuild switch`.
+- To evaluate the value of a configuration option, do `nix eval path:.<path-to-expression>` e.g. `nix eval path:.#nixosConfigurations.rpi4.config.networking.hostName`.
 
 ## Resources
 

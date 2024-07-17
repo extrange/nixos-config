@@ -46,9 +46,10 @@
         # Get hostnames by reading folder name in hosts/
         (readDir ./hosts)) // {
 
-        # Build ISO with:
-        # nix build .#nixosConfigurations.iso.config.system.build.isoImage
-        iso = nixpkgs.lib.nixosSystem {
+        # ISO installer image with USB wifi driver support
+        # Build with:
+        # nix build .#nixosConfigurations.iso-wifi.config.system.build.isoImage
+        iso-wifi = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             # Add rtl8821cu wifi driver
@@ -62,40 +63,21 @@
         };
 
         # Raspberry Pi 4
-        
-        # Build ISO with:
-        # NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build .#nixosConfigurations.iso_aarch64.config.system.build.sdImage --impure
-        
-        # Note: host requires boot.bimfmt.emulatedSystems with aarch64-linux
-        # Install with https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi
-        iso_aarch64 = nixpkgs.lib.nixosSystem {
+        rpi4 = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
+
+            # Needed to provide the system.build.sdImage target, also sets some defaults
             ("${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
-            ({ config, pkgs, ... }: {
 
-              # Output as .img instead of .zst
-              sdImage.compressImage = false;
+            sops-nix.nixosModules.sops
+            ./common-opt/wifi.nix
 
-              users = {
-                users."user" = {
-                  isNormalUser = true;
-                  extraGroups = [ "networkmanager" "wheel" ];
-                  initialHashedPassword = "$y$j9T$hWEXk9oQI3QFayjWyBZep0$xc3zAKoSt4jGvuxrcVMphXKM8b8wlcY61i/R99.pKQ6";
+            ./rpi4/config.nix
 
-                  # Allow desktop to SSH in by default. Password login is still enabled.
-                  openssh.authorizedKeys.keys = [
-                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyJ0LttXH9j3Ql7J1ccJbhLWdYhYn24qR6a8ur72hVi user@desktop"
-                  ];
-
-                  packages = with pkgs; [
-                      moonlight-qt
-                  ];
-                };
-              };
-
-              services.openssh.enable = true;
-            })
+            # HW support
+            # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
+            nixos-hardware.nixosModules.raspberry-pi-4
           ];
         };
       };
