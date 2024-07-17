@@ -11,8 +11,7 @@
   # Allow compiling rpi4 iso
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  # Allow cachix use when building rpi4 image
-  nix.settings.trusted-users = [ "user" ];
+  nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
 
   home-manager.users.user = {
     home.packages = with pkgs; [

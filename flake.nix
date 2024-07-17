@@ -1,8 +1,16 @@
 {
   description = "My NixOS Config";
 
+  nixConfig = {
+    extra-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
+    extra-trusted-public-keys = [
+      "raspberry-pi-nix.cachix.org-1:WmV2rdSangxW0rZjY/tBvBDSaNFQ3DyEQsVw8EvHn9o="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +28,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, nnn, nixos-hardware, self, ... }:
+  outputs = { nixpkgs, home-manager, sops-nix, nnn, nixos-hardware, self, raspberry-pi-nix, ... }:
     with builtins;
 
     let
@@ -67,17 +75,14 @@
           system = "aarch64-linux";
           modules = [
 
-            # Needed to provide the system.build.sdImage target, also sets some defaults
-            ("${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
-
             sops-nix.nixosModules.sops
             ./common-opt/wifi.nix
 
+            # https://github.com/nix-community/raspberry-pi-nix
+            raspberry-pi-nix.nixosModules.raspberry-pi
+
             ./rpi4/config.nix
 
-            # HW support
-            # https://github.com/NixOS/nixos-hardware/tree/master/raspberry-pi/4
-            nixos-hardware.nixosModules.raspberry-pi-4
           ];
         };
       };

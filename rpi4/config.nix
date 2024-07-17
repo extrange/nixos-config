@@ -1,4 +1,3 @@
-# Config: https://wiki.nixos.org/wiki/NixOS_on_ARM/Raspberry_Pi_4
 ({ config, pkgs, lib, ... }: {
 
   networking.hostName = "pi";
@@ -11,31 +10,36 @@
 
   # Workaround for modprobe: FATAL: Module sun4i-drm not found
   # https://github.com/NixOS/nixpkgs/issues/154163
-  nixpkgs.overlays = [
-    (final: super: {
-      makeModulesClosure = x:
-        super.makeModulesClosure (x // { allowMissing = true; });
-    })
-  ];
+  # nixpkgs.overlays = [
+  #   (final: super: {
+  #     makeModulesClosure = x:
+  #       super.makeModulesClosure (x // { allowMissing = true; });
+  #   })
+  # ];
 
   # GPU
   # hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-  # hardware.raspberry-pi."4".fkms-3d.enable = true;
+  # # hardware.raspberry-pi."4".kms-3d.enable = true;
+  # hardware.raspberry-pi.config.
 
   # Fix slow build times
   boot.supportedFilesystems.zfs = lib.mkForce false;
 
   # Desktop
-  # services.xserver = {
-  #   enable = true;
-  #   displayManager.lightdm.enable = true;
-  #   desktopManager.gnome.enable = true;
-  # };
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
+
+  # Options: https://github.com/nix-community/raspberry-pi-nix/blob/master/rpi/default.nix
+  # libcamera build keeps failing
+  raspberry-pi-nix.libcamera-overlay.enable = false;
 
   # Sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  boot.kernelParams = [ "snd_bcm2835.enable_hdmi=1" ];
+  # sound.enable = true;
+  # hardware.pulseaudio.enable = true;
+  # boot.kernelParams = [ "snd_bcm2835.enable_hdmi=1" ];
 
   nix.settings.trusted-users = [ "root" "@wheel" ];
 
@@ -55,6 +59,8 @@
 
       packages = with pkgs; [
         moonlight-qt
+        wpa_supplicant
+        glxinfo
       ];
     };
   };

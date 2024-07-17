@@ -76,7 +76,7 @@
   # Fix long timeout for user-manager.service
   systemd.slices.user.sliceConfig = {
     # Check with systemctl cat user.slice
-    DefaultTimeoutStopSec = "15s"; 
+    DefaultTimeoutStopSec = "15s";
   };
 
   security.sudo.extraConfig = "Defaults timestamp_timeout=30"; # 30 mins
@@ -122,6 +122,8 @@
       "chanel-fedora.tail14cd7.ts.net".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4ETTbz3fgYTc7X5H5diG/tHl8sWcrqLKlqlPvqq7X0";
 
       "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+
+      "eu.nixbuild.net".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
     };
 
     # Required for SSHFS (SSH client run as root)
@@ -131,6 +133,12 @@
         HostName ssh.nicholaslyz.com
         Port 39483
         User user
+        IdentityFile /home/user/.ssh/id_ed25519
+
+      Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
         IdentityFile /home/user/.ssh/id_ed25519
     '';
   };
