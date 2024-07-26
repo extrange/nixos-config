@@ -132,6 +132,7 @@ with lib;
             "code.desktop"
             "org.telegram.desktop.desktop"
             "com.github.eneshecan.WhatsAppForLinux.desktop"
+            "discord.desktop"
           ];
 
           # Enable extensions
