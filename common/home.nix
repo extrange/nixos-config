@@ -37,6 +37,7 @@
         gdu # ncdu-like
         gh
         git
+        helm
         iftop
         iotop
         ipcalc
