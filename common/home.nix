@@ -28,6 +28,7 @@
         dmidecode
         dnsutils # `dig` + `nslookup` 
         duf
+        eksctl
         ethtool
         exiftool
         file
