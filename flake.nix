@@ -71,20 +71,20 @@
         };
 
         # Raspberry Pi 4
-        rpi4 = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = [
+        # rpi4 = nixpkgs.lib.nixosSystem {
+        #   system = "aarch64-linux";
+        #   modules = [
 
-            sops-nix.nixosModules.sops
-            ./common-opt/wifi.nix
+        #     sops-nix.nixosModules.sops
+        #     ./common-opt/wifi.nix
 
-            # https://github.com/nix-community/raspberry-pi-nix
-            raspberry-pi-nix.nixosModules.raspberry-pi
+        #     # https://github.com/nix-community/raspberry-pi-nix
+        #     raspberry-pi-nix.nixosModules.raspberry-pi
 
-            ./rpi4/config.nix
+        #     ./rpi4/config.nix
 
-          ];
-        };
+        #   ];
+        # };
       };
     };
 }
