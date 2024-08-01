@@ -37,13 +37,13 @@
         gdu # ncdu-like
         gh
         git
-        helm
         iftop
         iotop
         ipcalc
         iperf3
         jq # Command-line JSON processor
         kubectl
+        kubernetes-helm
         libheif
         libsecret # for github auth
         libva-utils # vaainfo, check on VAAPI (hw acceleration)
