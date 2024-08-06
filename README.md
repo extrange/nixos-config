@@ -4,6 +4,8 @@
 
 Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
 
+[Useful Commands]
+
 ## Configuration
 
 Host configuration is specified by `*.nix` files in `hosts/${hostname}`, e.g.:
@@ -92,7 +94,6 @@ nixos-rebuild --target-host user@192.168.1.30 --flake path:.#rpi4 --use-remote-s
 - `nixos-rebuild switch --flake .#hostname` will not allow access to untracked files. To [work around] this, do `nixos-rebuild switch --flake path:.#hostname`.
 - Using `read` in `curl ... | bash` doesn't work as `read` does not have access to the terminal, so `source` is used instead.
 - To fix the [`TypeError: BootSpec.__init__() missing 1 required positional argument`][bootspec-error], delete [symlinks to older generations] in `/nix/var/nix/profiles`, then rerun `nixos-rebuild switch`.
-- To evaluate the value of a configuration option, do `nix eval path:.<path-to-expression>` e.g. `nix eval path:.#nixosConfigurations.rpi4.config.networking.hostName`.
 
 ## Resources
 
@@ -113,3 +114,4 @@ nixos-rebuild --target-host user@192.168.1.30 --flake path:.#rpi4 --use-remote-s
 [installer]: https://channels.nixos.org/nixos-23.11/latest-nixos-minimal-x86_64-linux.iso
 [automatic login]: https://askubuntu.com/questions/1352398/asking-for-password-when-i-open-vscode-for-the-first-time
 [password]: https://askubuntu.com/questions/24770/gnome-keyring-keeps-asking-for-a-password-that-doesnt-exist/24773#24773
+[Useful Commands]: useful-commands.md
