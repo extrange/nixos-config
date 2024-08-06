@@ -10,6 +10,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -28,7 +29,8 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, nnn, nixos-hardware, self, raspberry-pi-nix, ... }:
+  # TODO migrate to using @inputs instead
+  outputs = { nixpkgs, nixpkgs-stable, home-manager, sops-nix, nnn, self, ... }:
     with builtins;
 
     let
@@ -41,7 +43,14 @@
         modules = [
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
-          { config._module.args = { inherit hostname self nnn home-manager; }; }
+          {
+            _module.args = {
+              inherit hostname self nnn home-manager nixpkgs-stable; pkgs-stable = import nixpkgs-stable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+            };
+          }
         ]
         ++ (getNixFilesInDir ./common)
         ++ (getNixFilesInDir ./common-opt)

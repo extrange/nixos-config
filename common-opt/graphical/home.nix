@@ -1,5 +1,5 @@
 # Packages and options for graphical systems
-{ config, pkgs, lib, nnn, home-manager, ... }:
+{ config, pkgs, lib, nnn, home-manager, pkgs-stable, ... }:
 with lib;
 {
   config = mkIf config.graphical {
@@ -7,7 +7,19 @@ with lib;
       home.packages = with pkgs; [
         android-tools
         audacity
+        (azuredatastudio.overrideAttrs
+          rec {
+            pname = "azuredatastudio";
+            version = "1.48.1";
+            src = fetchurl {
+              name = "${pname}-${version}.tar.gz";
+              url = "https://download.microsoft.com/download/d/6/f/d6f2673f-5240-4605-8e7d-5b6c49d188e8/azuredatastudio-linux-1.48.1.tar.gz";
+              sha256 = "sha256-JDNdMy0Wk6v2pMKS+NzSbsrffaEG2IneZO+K9pBFX48=";
+            };
+          }
+        )
         calibre
+        dbeaver-bin
         discord
         firefox
         gimp
