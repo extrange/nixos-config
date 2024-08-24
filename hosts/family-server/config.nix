@@ -22,6 +22,10 @@ in
     enable = false;
     interface-name = "wlp0s29u1u4i2";
   };
+  uptime = {
+    enable = true;
+    url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
+  };
 
   # Required for USB wifi dongle
   # boot.extraModulePackages = with config.boot.kernelPackages; [
