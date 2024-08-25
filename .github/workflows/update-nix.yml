@@ -21,13 +21,10 @@ jobs:
         run: nix flake update
 
       - name: Run tests for all hosts
-        # Tested `nix flake check --no-build`:
-        # Will also pick up Obsidian 1.5.3's electron error
         run: nix flake check --accept-flake-config
       
       - name: Build family-server
-        # Tested `nix flake check --no-build`:
-        # Will also pick up Obsidian 1.5.3's electron error
+        # This detects build-time failures, which nix flake check does not
         run: nix build .#nixosConfigurations.family-server.config.system.build.toplevel
 
       - name: Commit
