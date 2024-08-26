@@ -115,6 +115,12 @@ nix eval path:.#nixosConfigurations.desktop.config.system --apply builtins.attrN
 
 # Output:
 [ "activatable", "activatableSystemBuilderCommands", ...]
+
+# Another attribute on the flake output
+nix eval path:.#checks --apply builtins.attrNames
+
+# Output:
+[ "desktop" "family-server" ...]
 ```
 
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
