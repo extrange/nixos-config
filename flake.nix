@@ -58,6 +58,7 @@
       };
     in
     {
+      # https://github.com/NixOS/nix/issues/7165
       checks = {
         x86_64-linux = {
           name = self.nixosConfigurations.desktop.config.system.build.toplevel;
