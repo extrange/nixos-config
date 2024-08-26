@@ -105,6 +105,18 @@ nix eval path:.#nixosConfigurations.rpi4.config.networking.hostName
 "laptop"
 ```
 
+Evaluate the value of a flake, applying a function:
+
+```bash
+nix eval path:.<path-to-expression> -apply <function>
+
+# E.g.
+nix eval path:.#nixosConfigurations.desktop.config.system --apply builtins.attrNames
+
+# Output:
+[ "activatable", "activatableSystemBuilderCommands", ...]
+```
+
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
