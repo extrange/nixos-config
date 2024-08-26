@@ -1,5 +1,7 @@
 # Useful Commands/Tools
 
+[nixpkgs.lib functions](https://teu5us.github.io/nix-lib.html)
+
 Override SHA hash for a package (see also [Overriding]):
 
 ```nix

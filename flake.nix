@@ -35,6 +35,8 @@
 
     let
       hasSuffix = nixpkgs.lib.hasSuffix;
+      mapAttrsToList = nixpkgs.lib.mapAttrsToList;
+      zipAttrsWith = nixpkgs.lib.zipAttrsWith;
 
       getNixFilesInDir = d: map (p: d + "/${p}") (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
 
@@ -56,14 +58,32 @@
         ++ (getNixFilesInDir ./common-opt)
         ++ (getNixFilesInDir ./hosts/${hostname});
       };
+
     in
     {
+      # This builds all derivations here on `nix flake check`.
       # https://github.com/NixOS/nix/issues/7165
+      # How to merge bunch of sets:
+      # { system_x86: some config}, {system_x86: some config}
+      # into: {system_x86: {desktop: config, laptop: config}}
+      checks2 = zipAttrsWith (system: config: {}) (mapAttrsToList
+        (hostname: _:
+          let
+            config = self.nixosConfigurations.${hostname}.config.system.build.toplevel;
+            system = config.system;
+          in
+          {
+            ${system} = config;
+            a = 2;
+          })
+        (readDir ./hosts));
+
       checks = {
         x86_64-linux = {
           name = self.nixosConfigurations.desktop.config.system.build.toplevel;
-        }; 
+        };
       };
+
       nixosConfigurations = (mapAttrs
         (hostname: _: mkHost hostname)
         # Get hostnames by reading folder name in hosts/
