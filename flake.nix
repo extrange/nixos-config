@@ -58,6 +58,11 @@
       };
     in
     {
+      checks = {
+        x86_64-linux = {
+          name = self.nixosConfigurations.desktop.config.system.build.toplevel;
+        }; 
+      };
       nixosConfigurations = (mapAttrs
         (hostname: _: mkHost hostname)
         # Get hostnames by reading folder name in hosts/
