@@ -20,13 +20,9 @@ jobs:
       - name: Update flake.lock file
         run: nix flake update
 
-      - name: Run tests for all hosts
+      - name: Run tests + builds for all hosts
         run: nix flake check --accept-flake-config
       
-      - name: Build family-server
-        # This detects build-time failures, which nix flake check does not
-        run: nix build .#nixosConfigurations.family-server.config.system.build.toplevel
-
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
