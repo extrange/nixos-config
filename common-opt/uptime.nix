@@ -12,8 +12,8 @@ with lib;
     frequency = mkOption {
       type = types.nonEmptyStr;
       description = "Frequency to call the webhook, in systemd calendar format. Default every 5 mins.";
-      example = "*-*-* *:00/5:*";
-      default = "*-*-* *:00/5:*";
+      example = "*-*-* *:00/5:00";
+      default = "*-*-* *:00/5:00";
     };
   };
 
