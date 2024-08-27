@@ -42,10 +42,6 @@
       with nixpkgs.lib;
 
       let
-        # hasSuffix = nixpkgs.lib.hasSuffix;
-        # mapAttrsToList = nixpkgs.lib.mapAttrsToList;
-        # zipAttrsWith = nixpkgs.lib.zipAttrsWith;
-
         getNixFilesInDir = d: map (p: d + "/${p}") (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
 
         mkHost = hostname: nixpkgs.lib.nixosSystem {
@@ -116,22 +112,6 @@
               })
             ];
           };
-
-          # Raspberry Pi 4
-          # rpi4 = nixpkgs.lib.nixosSystem {
-          #   system = "aarch64-linux";
-          #   modules = [
-
-          #     sops-nix.nixosModules.sops
-          #     ./common-opt/wifi.nix
-
-          #     # https://github.com/nix-community/raspberry-pi-nix
-          #     raspberry-pi-nix.nixosModules.raspberry-pi
-
-          #     ./rpi4/config.nix
-
-          #   ];
-          # };
         };
       };
 }
