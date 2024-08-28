@@ -12,16 +12,21 @@ jobs:
   update-flake:
     runs-on: ubuntu-latest
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
         with:
-          root-reserve-mb: 512
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
-          build-mount-path: /nix
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,7 +39,7 @@ jobs:
 
       - name: Run tests + builds for all hosts
         run: nix flake check --accept-flake-config
-      
+
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
