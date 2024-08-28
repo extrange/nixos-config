@@ -40,7 +40,7 @@
   home-manager.users.user = {
 
     home.packages = with pkgs; [
-      gnome.gnome-power-manager
+      gnome-power-manager
       powertop
     ];
 

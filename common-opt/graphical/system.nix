@@ -24,7 +24,7 @@ with lib;
     environment.gnome.excludePackages = with pkgs; [
       epiphany # browser
       geary # mail reader
-      gnome.gnome-shell-extensions # This seems to remove default extensions
+      gnome-shell-extensions # This seems to remove default extensions
       gnome-tour
       totem # video player
     ];
