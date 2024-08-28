@@ -1,5 +1,11 @@
 # Useful Commands/Tools
 
+## Progress Bar Explanation
+
+See [this][nix-progress].
+
+## Commands
+
 [nixpkgs.lib functions](https://teu5us.github.io/nix-lib.html)
 
 Override SHA hash for a package (see also [Overriding]):
@@ -45,6 +51,14 @@ The same thing, but as an [overlay]:
     })
   ];
 }
+```
+
+Allow insecure packages temporarily:
+
+```nix
+# Workaround for Obsidian
+# https://github.com/NixOS/nixpkgs/issues/273611
+nixpkgs.config.permittedInsecurePackages = lib.optional (pkgs.obsidian.version == "1.5.3") "electron-25.9.0";
 ```
 
 [Use a package from a specific version of nixpkgs][specific-package-version]:
@@ -136,3 +150,4 @@ Fix: `sudo chown -R user /nix`.
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
+[nix-progress]: https://github.com/NixOS/nix/issues/3352
