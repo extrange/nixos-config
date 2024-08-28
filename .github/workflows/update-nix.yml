@@ -29,7 +29,7 @@ jobs:
         uses: cachix/install-nix-action@V27
 
       - name: Update flake.lock file
-        run: nix flake update
+        run: nix flake update --accept-flake-config
 
       - name: Run tests + builds for all hosts
         run: nix flake check --accept-flake-config
