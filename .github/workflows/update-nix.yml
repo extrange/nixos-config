@@ -21,6 +21,7 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
+          build-mount-path: /
 
       - name: Checkout code
         uses: actions/checkout@v4
