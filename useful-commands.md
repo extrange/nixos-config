@@ -1,5 +1,9 @@
 # Useful Commands/Tools
 
+## Packaging
+
+[Tutorial][package-tutorial]
+
 ## Progress Bar Explanation
 
 See [this][nix-progress].
@@ -189,3 +193,4 @@ Permanent fix: This was (for me) caused by a `systemd` service running `nix-coll
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
 [nix-progress]: https://github.com/NixOS/nix/issues/3352
 [nix repl]: https://github.com/justinwoo/nix-shorts/blob/master/posts/inspecting-values-with-repl.md
+[package-tutorial]: https://nix-tutorial.gitlabpages.inria.fr/nix-tutorial/first-package.html
