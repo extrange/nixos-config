@@ -26,7 +26,7 @@
         compsize
         cryptsetup
         dmidecode
-        dnsutils # `dig` + `nslookup` 
+        dnsutils # `dig` + `nslookup`
         duf
         eksctl
         ethtool
@@ -65,6 +65,7 @@
         parted
         pciutils # lspci
         poppler_utils # pdftocairo, pdftoppm for pdf to image rendering
+        pre-commit
         ripgrep # recursively searches directories for a regex pattern
         smartmontools
         socat
