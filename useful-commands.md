@@ -139,6 +139,12 @@ nix eval path:.#checks --apply builtins.attrNames
 [ "desktop" "family-server" ...]
 ```
 
+Build a flake and discard the result (useful on a remote system)
+
+```bash
+nix build path:.#nixosConfigurations.<hostname>.config.system.build.toplevel
+```
+
 ## Fixes
 
 Random permission denied errors on remotes, e.g.
