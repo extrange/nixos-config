@@ -64,6 +64,7 @@
       nfs-utils
       nil # Nix language server for vscode
       nixfmt-rfc-style # Nix formatter
+      nixd
       nmap
       ntfs3g
       p7zip
@@ -117,7 +118,7 @@
 
       nnn = {
         enable = true;
-        package = pkgs.nnn.override ({ withNerdIcons = true; });
+        package = pkgs.nnn.override { withNerdIcons = true; };
         plugins.src = "${nnn}/plugins";
       };
 
