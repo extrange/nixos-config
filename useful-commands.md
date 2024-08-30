@@ -1,5 +1,20 @@
 # Useful Commands/Tools
 
+## Setup formatting on a remote
+
+```bash
+nix profile install github:nixos/nixd
+nix profile install github:nixos/nixfmt
+```
+
+Modify the remote's `settings.json` appropriately.
+
+## Flakes
+
+`#` is used to access the outputs of a flake, when referenced from the command line.
+
+E.g. `nixos-rebuild switch --flake path:.#nixosConfigurations`.
+
 ## Packaging
 
 [Tutorial][package-tutorial]
@@ -161,12 +176,14 @@ nix repl --expr '(builtins.getFlake "/home/user/nixos-config")'
       ]
     },
     "nixpkgs": {
-      "expr": "import (builtins.getFlake \"/home/user/nixos-config\").inputs.nixpkgs { }"
+        // An alternative is absolute path, but will require different configuration on the server.
+        // "expr": "import (builtins.getFlake \"/home/user/nixos-config\").inputs.nixpkgs { }"
+        "expr": "import (builtins.getFlake \"github:extrange/nixos-config\").inputs.nixpkgs { }"
     },
     "options": {
-      "all": {
-        "expr": "(builtins.getFlake \"/home/user/nixos-config\").nixosConfigurations.laptop.options"
-      },
+        "all": {
+            "expr": "(builtins.getFlake \"github:extrange/nixos-config\").nixosConfigurations.laptop.options"
+        },
     }
   }
 },
