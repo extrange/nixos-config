@@ -44,7 +44,7 @@ with lib;
     # instead of waiting for this host to upload them.
     # https://nix.dev/manual/nix/2.18/command-ref/conf-file.html#conf-builders-use-substitutes
     nix.extraOptions = ''
-        builders-use-substitutes = true
+      builders-use-substitutes = true
     '';
   };
 }
