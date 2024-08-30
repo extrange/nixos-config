@@ -1,5 +1,12 @@
 # Packages and options for graphical systems
-{ config, pkgs, lib, self, hostname, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  hostname,
+  ...
+}:
 with lib;
 {
   config = mkIf config.graphical {
@@ -28,7 +35,6 @@ with lib;
       gnome-tour
       totem # video player
     ];
-
 
     # Sound
     hardware.pulseaudio.enable = false;

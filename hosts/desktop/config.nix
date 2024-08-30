@@ -1,4 +1,10 @@
-{ config, pkgs, lib, home-manager, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  home-manager,
+  ...
+}:
 {
   buildRemote = true;
   graphical = true;
@@ -64,4 +70,3 @@
   # Upgrade once a week max
   system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
 }
- 

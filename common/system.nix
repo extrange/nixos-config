@@ -2,11 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, self, hostname, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  hostname,
+  ...
+}:
 
 {
   # Nix
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # sops-nix
@@ -95,7 +105,12 @@
     users."user" = {
       isNormalUser = true;
       description = "user";
-      extraGroups = [ "networkmanager" "wheel" "libvirtd" "kvm" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "libvirtd"
+        "kvm"
+      ];
       hashedPasswordFile = config.sops.secrets.userPassword.path;
     };
   };
@@ -164,7 +179,6 @@
     # Filesystems not detected automatically since LUKS is being used
     fileSystems = [ "/" ];
   };
-
 
   # Autoupgrades
   system.autoUpgrade = {

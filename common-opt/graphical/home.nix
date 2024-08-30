@@ -1,5 +1,13 @@
 # Packages and options for graphical systems
-{ config, pkgs, lib, nnn, home-manager, pkgs-stable, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  nnn,
+  home-manager,
+  pkgs-stable,
+  ...
+}:
 with lib;
 {
   config = mkIf config.graphical {
@@ -43,7 +51,12 @@ with lib;
         gnomeExtensions.vitals
 
         # Fonts
-        (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+        (nerdfonts.override {
+          fonts = [
+            "JetBrainsMono"
+            "FiraCode"
+          ];
+        })
         open-sans
         source-sans
         jetbrains-mono # has ligatures
@@ -86,11 +99,20 @@ with lib;
 
         "org/gnome/desktop/input-sources" = {
           # Remap capslock to backspace
-          xkb-options = [ "terminate:ctrl_alt_bksp" "caps:backspace" ];
+          xkb-options = [
+            "terminate:ctrl_alt_bksp"
+            "caps:backspace"
+          ];
           # Set Dvorak keyboard layout
           sources = [
-            (mkTuple [ "xkb" "us+dvorak" ])
-            (mkTuple [ "xbk" "us" ])
+            (mkTuple [
+              "xkb"
+              "us+dvorak"
+            ])
+            (mkTuple [
+              "xbk"
+              "us"
+            ])
           ];
         };
 
@@ -116,7 +138,9 @@ with lib;
           name = "Launch terminal";
         };
         "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          ];
         };
 
         # Show thumbnails on SSH drives

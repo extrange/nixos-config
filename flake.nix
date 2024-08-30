@@ -30,72 +30,80 @@
   };
 
   outputs =
-    { nixpkgs
-    , nixpkgs-stable
-    , home-manager
-    , sops-nix
-    , nnn
-    , self
-    , ...
+    {
+      nixpkgs,
+      nixpkgs-stable,
+      home-manager,
+      sops-nix,
+      nnn,
+      self,
+      ...
     }@inputs:
-      with builtins;
-      with nixpkgs.lib;
+    with builtins;
+    with nixpkgs.lib;
 
-      let
-        getNixFilesInDir = d: map (p: d + "/${p}") (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
+    let
+      getNixFilesInDir = d: map (p: d + "/${p}") (filter (n: hasSuffix ".nix" n) (attrNames (readDir d)));
 
-        mkHost = hostname: nixpkgs.lib.nixosSystem {
+      mkHost =
+        hostname:
+        nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              _module.args = inputs // {
-                inherit hostname;
-                pkgs-stable = import nixpkgs-stable {
-                  system = "x86_64-linux";
-                  config.allowUnfree = true;
+          modules =
+            [
+              sops-nix.nixosModules.sops
+              home-manager.nixosModules.home-manager
+              {
+                _module.args = inputs // {
+                  inherit hostname;
+                  pkgs-stable = import nixpkgs-stable {
+                    system = "x86_64-linux";
+                    config.allowUnfree = true;
+                  };
                 };
-              };
-            }
-          ]
-          ++ (getNixFilesInDir ./common)
-          ++ (getNixFilesInDir ./common-opt)
-          ++ (getNixFilesInDir ./hosts/${hostname});
+              }
+            ]
+            ++ (getNixFilesInDir ./common)
+            ++ (getNixFilesInDir ./common-opt)
+            ++ (getNixFilesInDir ./hosts/${hostname});
         };
 
-      in
-      {
-        # This builds all derivations here on `nix flake check`.
-        # https://github.com/NixOS/nix/issues/7165
-        checks =
-          let
-            # Shape:
-            # [
-            #   {x86_64-linux: {name = desktop; value = desktopConfig;}}
-            #   {x86_64-linux: {name = laptop; value = laptopConfig;}}
-            #   ...
-            # ]
-            systems = mapAttrsToList
-              (hostname: type:
-                let
-                  config = self.nixosConfigurations.${hostname}.config.system.build.toplevel;
-                  system = config.system;
-                in
-                {
-                  ${system} = { name = hostname; value = config; };
-                })
-              (readDir ./hosts);
-          in
+    in
+    {
+      # This builds all derivations here on `nix flake check`.
+      # https://github.com/NixOS/nix/issues/7165
+      checks =
+        let
           # Shape:
-            # {x86_64-linux = {desktop = desktopConfig; laptop: laptopConfig;}}
-          zipAttrsWith (system: listToAttrs) systems;
+          # [
+          #   {x86_64-linux: {name = desktop; value = desktopConfig;}}
+          #   {x86_64-linux: {name = laptop; value = laptopConfig;}}
+          #   ...
+          # ]
+          systems = mapAttrsToList (
+            hostname: type:
+            let
+              config = self.nixosConfigurations.${hostname}.config.system.build.toplevel;
+              system = config.system;
+            in
+            {
+              ${system} = {
+                name = hostname;
+                value = config;
+              };
+            }
+          ) (readDir ./hosts);
+        in
+        # Shape:
+        # {x86_64-linux = {desktop = desktopConfig; laptop: laptopConfig;}}
+        zipAttrsWith (system: listToAttrs) systems;
 
-
-        nixosConfigurations = (mapAttrs
-          (hostname: _: mkHost hostname)
+      nixosConfigurations =
+        (mapAttrs (hostname: _: mkHost hostname)
           # Get hostnames by reading folder name in hosts/
-          (readDir ./hosts)) // {
+          (readDir ./hosts)
+        )
+        // {
 
           # ISO installer image with USB wifi driver support
           # Build with:
@@ -105,13 +113,21 @@
             modules = [
               # Add rtl8821cu wifi driver
               (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
-              ({ pkgs, lib, config, ... }: {
-                boot.extraModulePackages = with config.boot.kernelPackages; [
-                  rtl8821cu
-                ];
-              })
+              (
+                {
+                  pkgs,
+                  lib,
+                  config,
+                  ...
+                }:
+                {
+                  boot.extraModulePackages = with config.boot.kernelPackages; [
+                    rtl8821cu
+                  ];
+                }
+              )
             ];
           };
         };
-      };
+    };
 }

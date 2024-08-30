@@ -1,4 +1,10 @@
-{ config, pkgs, home-manager, lib, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  lib,
+  ...
+}:
 {
   graphical = true;
   services.keyd.enable = lib.mkForce false;
@@ -14,7 +20,12 @@
         # Disable remap capslock to backspace
         xkb-options = [ ];
         # Set US keyboard layout
-        sources = [ (mkTuple [ "xkb" "us" ]) ];
+        sources = [
+          (mkTuple [
+            "xkb"
+            "us"
+          ])
+        ];
       };
     };
 

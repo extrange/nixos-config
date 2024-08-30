@@ -21,14 +21,22 @@ with lib;
         protocol = "ssh";
         maxJobs = 4;
         speedFactor = 2;
-        supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
       }
 
       {
         hostName = "eu.nixbuild.net";
         system = "aarch64-linux";
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
       }
     ];
 
@@ -36,7 +44,7 @@ with lib;
     # instead of waiting for this host to upload them.
     # https://nix.dev/manual/nix/2.18/command-ref/conf-file.html#conf-builders-use-substitutes
     nix.extraOptions = ''
-      	  builders-use-substitutes = true
-      	'';
+        builders-use-substitutes = true
+    '';
   };
 }

@@ -1,4 +1,10 @@
-{ config, specialArgs, pkgs, lib, ... }:
+{
+  config,
+  specialArgs,
+  pkgs,
+  lib,
+  ...
+}:
 let
   authorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
@@ -35,7 +41,6 @@ in
   # No disk encryption
   boot.initrd.luks.devices = lib.mkForce { };
 
-
   # Users allowed to SSH into this server
   users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
   users.users."root".openssh.authorizedKeys.keys = authorizedKeys; # allow root login for virt-manager/qemu kvm access
@@ -49,10 +54,24 @@ in
   };
 
   # GPU passthrough
-  boot.kernelParams = [ "intel_iommu=on" "vfio-pci.ids=10de:1b80" ];
-  boot.kernelModules = [ "vfio_pci" "vfio_iommu_type1" "vfio" ];
-  boot.initrd.kernelModules = [ "vfio_pci" "vfio_iommu_type1" "vfio" ];
-  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "vfio-pci.ids=10de:1b80"
+  ];
+  boot.kernelModules = [
+    "vfio_pci"
+    "vfio_iommu_type1"
+    "vfio"
+  ];
+  boot.initrd.kernelModules = [
+    "vfio_pci"
+    "vfio_iommu_type1"
+    "vfio"
+  ];
+  boot.blacklistedKernelModules = [
+    "nvidia"
+    "nouveau"
+  ];
 
   # Shared folder
   # If a folder in /mnt is used it is owned by root
@@ -109,7 +128,7 @@ in
       workgroup = WORKGROUP
       server string = family-server
       netbios name = family-server
-      security = user 
+      security = user
       map to guest = bad user
     '';
     shares = {
@@ -138,13 +157,15 @@ in
 
     # initExtra only for interactive
     # Do not run in VSCode
-    programs.bash.initExtra = (lib.mkOrder 200 ''
-      export ZELLIJ_AUTO_ATTACH=true
-      export ZELLIJ_AUTO_EXIT=true
+    programs.bash.initExtra = (
+      lib.mkOrder 200 ''
+        export ZELLIJ_AUTO_ATTACH=true
+        export ZELLIJ_AUTO_EXIT=true
 
-      if [[ -z $VSCODE_INJECTION ]]; then
-        eval "$(zellij setup --generate-auto-start bash)"
-      fi
-    '');
+        if [[ -z $VSCODE_INJECTION ]]; then
+          eval "$(zellij setup --generate-auto-start bash)"
+        fi
+      ''
+    );
   };
 }
