@@ -58,7 +58,7 @@
         neofetch
         nfs-utils
         nil # Nix language server for vscode
-        nixpkgs-fmt # Nix formatter
+        nixfmt-rfc-style # Nix formatter
         nmap
         ntfs3g
         p7zip
