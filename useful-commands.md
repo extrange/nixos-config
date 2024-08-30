@@ -139,6 +139,35 @@ nix eval path:.#checks --apply builtins.attrNames
 [ "desktop" "family-server" ...]
 ```
 
+Load a flake into the repl (more info on [nix repl]):
+
+```bash
+nix repl --expr '(builtins.getFlake "/home/user/nixos-config")'
+# Tab completion will work subsequently on attributes of the flake, e.g. inputs/outputs
+```
+
+`nixd` VSCode configuration, which loads all possible options:
+
+```json
+"nix.serverSettings": {
+  "nixd": {
+    "formatting": {
+      "command": [
+        "nixfmt"
+      ]
+    },
+    "nixpkgs": {
+      "expr": "import (builtins.getFlake \"/home/user/nixos-config\").inputs.nixpkgs { }"
+    },
+    "options": {
+      "all": {
+        "expr": "(builtins.getFlake \"/home/user/nixos-config\").nixosConfigurations.laptop.options"
+      },
+    }
+  }
+},
+```
+
 Build a flake and discard the result (useful on a remote system)
 
 ```bash
@@ -159,3 +188,4 @@ Permanent fix: This was (for me) caused by a `systemd` service running `nix-coll
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
 [nix-progress]: https://github.com/NixOS/nix/issues/3352
+[nix repl]: https://github.com/justinwoo/nix-shorts/blob/master/posts/inspecting-values-with-repl.md
