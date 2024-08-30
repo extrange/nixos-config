@@ -74,6 +74,7 @@
         syncthing
         sysstat
         tree
+        treefmt
         unzip
         usbutils # lsusb
         vim
