@@ -168,4 +168,7 @@ in
       ''
     );
   };
+
+  # VSCode Remote Server fix
+  programs.nix-ld.enable = true;
 }
