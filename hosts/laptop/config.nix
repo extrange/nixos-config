@@ -90,4 +90,11 @@
 
   # Upgrade once a week max
   system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
+
+  # Don't upgrade on battery
+  systemd.services.nixos-upgrade = {
+    unitConfig = {
+        ConditionACPower = true;
+    };
+  };
 }
