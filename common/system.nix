@@ -115,6 +115,15 @@
     };
   };
 
+  # Configuration options applied on build-vm
+  virtualisation.vmVariant = {
+    # Override our default password so we can sudo
+    users.users.user = {
+      password = "12345";
+      hashedPasswordFile = lib.mkForce null;
+    };
+  };
+
   services = {
 
     tailscale = {
