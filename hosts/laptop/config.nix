@@ -94,7 +94,7 @@
   # Don't upgrade on battery
   systemd.services.nixos-upgrade = {
     unitConfig = {
-        ConditionACPower = true;
+      ConditionACPower = true;
     };
   };
 }
