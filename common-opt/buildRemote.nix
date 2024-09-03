@@ -19,7 +19,7 @@ with lib;
         hostName = "ssh.nicholaslyz.com"; # Specified in programs.ssh.extraConfig
         system = "x86_64-linux";
         protocol = "ssh";
-        maxJobs = 4;
+        maxJobs = 6;
         speedFactor = 2;
         supportedFeatures = [
           "nixos-test"
