@@ -85,6 +85,7 @@
       unzip
       usbutils # lsusb
       vim
+      wavemon
       which
       xz
       yq-go # yaml processer https://github.com/mikefarah/yq
