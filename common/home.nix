@@ -63,14 +63,15 @@
       neofetch
       nfs-utils
       nil # Nix language server for vscode
-      nixfmt-rfc-style # Nix formatter
       nixd
+      nixfmt-rfc-style # Nix formatter
       nmap
       ntfs3g
       p7zip
       parted
       pciutils # lspci
       poppler_utils # pdftocairo, pdftoppm for pdf to image rendering
+      postgresql
       pre-commit
       ripgrep # recursively searches directories for a regex pattern
       smartmontools
