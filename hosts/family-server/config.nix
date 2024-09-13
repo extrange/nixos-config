@@ -124,13 +124,15 @@ in
     enable = true;
     securityType = "user";
     openFirewall = true;
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = family-server
-      netbios name = family-server
-      security = user
-      map to guest = bad user
-    '';
+    settings = {
+      global = {
+        workgroup = "WORKGROUP";
+        "server string" = "family-server";
+        "netbios name" = "family-server";
+        security = "user";
+        "map to guest" = "bad user";
+      };
+    };
     shares = {
       software = {
         path = "/home/user/software";
