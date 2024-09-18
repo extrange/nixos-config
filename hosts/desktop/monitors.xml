@@ -1,30 +1,8 @@
 <monitors version="2">
   <configuration>
     <logicalmonitor>
-      <x>0</x>
-      <y>0</y>
-      <scale>1</scale>
-      <transform>
-        <rotation>right</rotation>
-        <flipped>no</flipped>
-      </transform>
-      <monitor>
-        <monitorspec>
-          <connector>HDMI-1</connector>
-          <vendor>DEL</vendor>
-          <product>DELL U2713HM</product>
-          <serial>7JNY5486942L</serial>
-        </monitorspec>
-        <mode>
-          <width>1920</width>
-          <height>1080</height>
-          <rate>60.000</rate>
-        </mode>
-      </monitor>
-    </logicalmonitor>
-    <logicalmonitor>
-      <x>1080</x>
-      <y>687</y>
+      <x>1152</x>
+      <y>564</y>
       <scale>1.7518248558044434</scale>
       <primary>yes</primary>
       <monitor>
@@ -38,6 +16,28 @@
           <width>3840</width>
           <height>2160</height>
           <rate>59.997</rate>
+        </mode>
+      </monitor>
+    </logicalmonitor>
+    <logicalmonitor>
+      <x>0</x>
+      <y>0</y>
+      <scale>1.25</scale>
+      <transform>
+        <rotation>right</rotation>
+        <flipped>no</flipped>
+      </transform>
+      <monitor>
+        <monitorspec>
+          <connector>DP-1</connector>
+          <vendor>DEL</vendor>
+          <product>DELL U2713HM</product>
+          <serial>7JNY5486942L</serial>
+        </monitorspec>
+        <mode>
+          <width>2560</width>
+          <height>1440</height>
+          <rate>59.951</rate>
         </mode>
       </monitor>
     </logicalmonitor>
