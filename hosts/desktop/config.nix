@@ -80,6 +80,7 @@
         allow-zero-brightness = true;
         disable-display-state-check = true; # Seems to make changes faster
         show-value-label = true;
+        hide-system-indicator = true;
       };
 
     };
