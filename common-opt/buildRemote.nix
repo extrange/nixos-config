@@ -17,7 +17,10 @@ with lib;
     nix.buildMachines = [
       {
         hostName = "ssh.nicholaslyz.com"; # Specified in programs.ssh.extraConfig
-        system = "x86_64-linux";
+        systems = [
+          "x86_64-linux"
+          "i686-linux"
+        ];
         protocol = "ssh";
         maxJobs = 6;
         speedFactor = 2;
