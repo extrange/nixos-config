@@ -1,45 +1,45 @@
 <monitors version="2">
-    <configuration>
-        <logicalmonitor>
-      <x>1080</x>
-      <y>687</y>
-            <scale>1.7518248558044434</scale>
-            <primary>yes</primary>
-            <monitor>
-                <monitorspec>
-                    <connector>DP-2</connector>
-                    <vendor>DEL</vendor>
-                    <product>DELL P2715Q</product>
-                    <serial>32R1F4AP116L</serial>
-                </monitorspec>
-                <mode>
-                    <width>3840</width>
-                    <height>2160</height>
-                    <rate>59.997</rate>
-                </mode>
-            </monitor>
-        </logicalmonitor>
-        <logicalmonitor>
-            <x>0</x>
-            <y>0</y>
-            <scale>1</scale>
+  <configuration>
+    <logicalmonitor>
+      <x>0</x>
+      <y>0</y>
+      <scale>1</scale>
       <transform>
         <rotation>right</rotation>
         <flipped>no</flipped>
       </transform>
-            <monitor>
-                <monitorspec>
-                    <connector>HDMI-1</connector>
-                    <vendor>PHL</vendor>
-                    <product>PHL 223V7</product>
-                    <serial>UHB1829010180</serial>
-                </monitorspec>
-                <mode>
-                    <width>1920</width>
-                    <height>1080</height>
-                    <rate>60.000</rate>
-                </mode>
-            </monitor>
-        </logicalmonitor>
-    </configuration>
+      <monitor>
+        <monitorspec>
+          <connector>HDMI-1</connector>
+          <vendor>DEL</vendor>
+          <product>DELL U2713HM</product>
+          <serial>7JNY5486942L</serial>
+        </monitorspec>
+        <mode>
+          <width>1920</width>
+          <height>1080</height>
+          <rate>60.000</rate>
+        </mode>
+      </monitor>
+    </logicalmonitor>
+    <logicalmonitor>
+      <x>1080</x>
+      <y>687</y>
+      <scale>1.7518248558044434</scale>
+      <primary>yes</primary>
+      <monitor>
+        <monitorspec>
+          <connector>DP-2</connector>
+          <vendor>DEL</vendor>
+          <product>DELL P2715Q</product>
+          <serial>32R1F4AP116L</serial>
+        </monitorspec>
+        <mode>
+          <width>3840</width>
+          <height>2160</height>
+          <rate>59.997</rate>
+        </mode>
+      </monitor>
+    </logicalmonitor>
+  </configuration>
 </monitors>
