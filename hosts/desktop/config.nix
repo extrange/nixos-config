@@ -17,14 +17,25 @@
   # Allow compiling rpi4 iso
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  # For ddcutil (monitor brightness control)
+  boot.kernelModules = [ "i2c-dev" ];
+  services.udev.extraRules = ''
+    SUBSYSTEM=="i2c-dev", KERNEL=="i2c-[0-9]*", ATTRS{class}=="0x030000", TAG+="uaccess"
+    SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
+  '';
+
   nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
 
   home-manager.users.user = {
     home.packages = with pkgs; [
       clinfo # Check OpenCL
-      davinci-resolve
       nvtopPackages.amd
       rpi-imager
+      ddcutil
+
+      davinci-resolve
+
+      gnomeExtensions.brightness-control-using-ddcutil
     ];
 
     # For Davinci resolve
@@ -44,6 +55,12 @@
       "org/gnome/settings-daemon/plugins/power" = {
         # Don't sleep
         sleep-inactive-ac-type = "nothing";
+      };
+
+      "org/gnome/shell" = {
+        enabled-extensions = [
+          "display-brightness-ddcutil@themightydeity.github.com"
+        ];
       };
 
       # Vitals
