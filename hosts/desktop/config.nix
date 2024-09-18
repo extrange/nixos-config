@@ -63,7 +63,6 @@
         ];
       };
 
-      # Vitals
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
           "_system_load_1m_"
@@ -73,6 +72,16 @@
           "__network-rx_max__"
         ];
       };
+
+      "org/gnome/shell/extensions/display-brightness-ddcutil" = {
+        button-location = 1; # Show in system menu
+        only-all-slider = true;
+        show-all-slider = true;
+        allow-zero-brightness = true;
+        disable-display-state-check = true; # Seems to make changes faster
+        show-value-label = true;
+      };
+
     };
 
     home.file = {
