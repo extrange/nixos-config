@@ -36,6 +36,7 @@ with lib;
         smplayer
         subsonic
         telegram-desktop
+        thunderbird
         ungoogled-chromium
         vscode
         whatsapp-for-linux
