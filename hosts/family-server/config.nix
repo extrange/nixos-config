@@ -122,18 +122,8 @@ in
   };
   services.samba = {
     enable = true;
-    securityType = "user";
     openFirewall = true;
     settings = {
-      global = {
-        workgroup = "WORKGROUP";
-        "server string" = "family-server";
-        "netbios name" = "family-server";
-        security = "user";
-        "map to guest" = "bad user";
-      };
-    };
-    shares = {
       software = {
         path = "/home/user/software";
         browseable = "yes";
@@ -141,6 +131,13 @@ in
         "guest ok" = "yes";
         "acl allow execute always" = "yes";
         "force user" = "user"; # This is the most important line
+      };
+      global = {
+        workgroup = "WORKGROUP";
+        "server string" = "family-server";
+        "netbios name" = "family-server";
+        security = "user";
+        "map to guest" = "bad user";
       };
     };
   };
