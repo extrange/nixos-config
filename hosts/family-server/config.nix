@@ -6,14 +6,6 @@
   ...
 }:
 let
-  authorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINf049gcBU+JxBwkylDpOIGMtk667LfSylzoM1SPZA90 test"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyJ0LttXH9j3Ql7J1ccJbhLWdYhYn24qR6a8ur72hVi desktop"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEZXrm0AXgoOcJWckgr/ZgYVdHKrJHJg5G52bIx6zc4b server"
-
-  ];
-
   # Common mount options for local drives
   mountOptions = [
     "nofail"
@@ -24,6 +16,7 @@ let
   ];
 in
 {
+  addSshKeys = true;
   wifi = {
     enable = false;
     interface-name = "wlp0s29u1u4i2";
@@ -40,10 +33,6 @@ in
 
   # No disk encryption
   boot.initrd.luks.devices = lib.mkForce { };
-
-  # Users allowed to SSH into this server
-  users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
-  users.users."root".openssh.authorizedKeys.keys = authorizedKeys; # allow root login for virt-manager/qemu kvm access
 
   services.openssh = {
     enable = true;

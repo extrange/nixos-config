@@ -195,6 +195,12 @@ Build a flake and discard the result (useful on a remote system)
 nix build path:.#nixosConfigurations.<hostname>.config.system.build.toplevel
 ```
 
+Check a flake (with uncommitted changes):
+
+```bash
+nix flake check path:.
+```
+
 ## Fixes
 
 Random permission denied errors on remotes, e.g.
