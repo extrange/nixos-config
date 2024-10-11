@@ -138,7 +138,7 @@
               hostname = "ssh.nicholaslyz.com";
             in
             {
-              host = "server ${hostname}";
+              host = "server";
               inherit hostname;
               port = 39483;
               user = "user";
@@ -150,7 +150,7 @@
               hostname = "chanel-server.tail14cd7.ts.net";
             in
             {
-              host = "chanel-server ${hostname}";
+              host = "chanel-server";
               inherit hostname;
               user = "chanel";
             };
@@ -161,7 +161,7 @@
               hostname = "ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com";
             in
             {
-              host = "ec2 ${hostname}";
+              host = "ec2";
               inherit hostname;
               user = "ubuntu";
             };
