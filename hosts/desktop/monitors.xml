@@ -1,13 +1,13 @@
 <monitors version="2">
   <configuration>
     <logicalmonitor>
-      <x>1152</x>
-      <y>564</y>
-      <scale>1.7518248558044434</scale>
+      <x>1440</x>
+      <y>1120</y>
+      <scale>1.5</scale>
       <primary>yes</primary>
       <monitor>
         <monitorspec>
-          <connector>DP-2</connector>
+          <connector>DP-1</connector>
           <vendor>DEL</vendor>
           <product>DELL P2715Q</product>
           <serial>32R1F4AP116L</serial>
@@ -22,14 +22,14 @@
     <logicalmonitor>
       <x>0</x>
       <y>0</y>
-      <scale>1.25</scale>
+      <scale>1</scale>
       <transform>
         <rotation>right</rotation>
         <flipped>no</flipped>
       </transform>
       <monitor>
         <monitorspec>
-          <connector>DP-1</connector>
+          <connector>DP-2</connector>
           <vendor>DEL</vendor>
           <product>DELL U2713HM</product>
           <serial>7JNY5486942L</serial>
