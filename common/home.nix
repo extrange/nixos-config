@@ -165,6 +165,16 @@
               inherit hostname;
               user = "ubuntu";
             };
+
+          ec2-unf =
+            let
+              hostname = "ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com";
+            in
+            {
+              host = "ec2-inf";
+              inherit hostname;
+              user = "ubuntu";
+            };
         };
       };
     };
