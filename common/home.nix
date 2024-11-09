@@ -158,7 +158,7 @@
           # AWS EC2 instance with GPU for testing. Remove when done.
           ec2 =
             let
-              hostname = "ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com";
+              hostname = "ec2-47-128-147-189.ap-southeast-1.compute.amazonaws.com";
             in
             {
               host = "ec2";
