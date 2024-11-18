@@ -39,9 +39,9 @@
       file
       # ffmpeg - use the option `ffmpegCustom` instead
       fzf
-      gdu # ncdu-like
       gh
       git
+      guestfs-tools # virt-sparsify
       iftop
       iotop
       ipcalc
@@ -60,6 +60,7 @@
       ltrace # library call monitoring
       minikube
       mtr # ping + tracert TUI
+      ncdu
       neofetch
       nfs-utils
       nil # Nix language server for vscode
