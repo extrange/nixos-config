@@ -47,8 +47,9 @@
 
     home.packages = with pkgs; [
       gnome-power-manager
-      powertop
       lutris
+      powertop
+      vulkan-tools
       wineWowPackages.waylandFull
     ];
 
