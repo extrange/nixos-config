@@ -27,6 +27,7 @@ with lib;
         jellyfin-media-player
         kid3 # audio file tagger
         libreoffice
+        lutris
         microsoft-edge
         moonlight-qt
         mpv # required for smplayer
@@ -40,6 +41,7 @@ with lib;
         ungoogled-chromium
         vscode
         whatsapp-for-linux
+        wineWowPackages.waylandFull
         zoom-us
 
         # Gnome Extensions

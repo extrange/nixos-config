@@ -47,10 +47,7 @@
 
     home.packages = with pkgs; [
       gnome-power-manager
-      lutris
       powertop
-      vulkan-tools
-      wineWowPackages.waylandFull
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
