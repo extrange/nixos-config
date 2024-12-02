@@ -29,9 +29,11 @@
   home-manager.users.user = {
     home.packages = with pkgs; [
       clinfo # Check OpenCL
+      darktable
+      ddcutil
+      digikam
       nvtopPackages.amd
       rpi-imager
-      ddcutil
 
       davinci-resolve
 
