@@ -121,6 +121,8 @@ with lib;
 
         "org/gnome/settings-daemon/plugins/color" = {
           night-light-enabled = true;
+          night-light-schedule-from = 19.0;
+          night-light-schedule-to = 6.0;
           night-light-temperature = mkUint32 1400; # Minimum is 1000
         };
 
