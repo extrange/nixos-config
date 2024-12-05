@@ -54,12 +54,8 @@ with lib;
         gnomeExtensions.vitals
 
         # Fonts
-        (nerdfonts.override {
-          fonts = [
-            "JetBrainsMono"
-            "FiraCode"
-          ];
-        })
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.fira-code
         open-sans
         source-sans
         jetbrains-mono # has ligatures
