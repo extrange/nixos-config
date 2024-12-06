@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   update-flake:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
