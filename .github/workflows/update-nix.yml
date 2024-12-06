@@ -8,27 +8,13 @@ permissions:
   contents: write
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   update-flake:
     runs-on: ubuntu-latest
+    needs: test
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: true
-
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
-      - run: df -h
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -37,11 +23,6 @@ jobs:
 
       - name: Update flake.lock file
         run: nix flake update --accept-flake-config
-
-      - name: Run tests + builds for all hosts
-        run: nix flake check --accept-flake-config
-
-      - run: df -h
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v5
