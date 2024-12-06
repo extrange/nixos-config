@@ -35,8 +35,6 @@
       nvtopPackages.amd
       rpi-imager
 
-      davinci-resolve
-
       gnomeExtensions.brightness-control-using-ddcutil
     ];
 
