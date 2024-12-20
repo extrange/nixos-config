@@ -71,8 +71,8 @@ with lib;
           force = true;
         };
 
-        ".config/whatsapp-for-linux/settings.conf" = {
-          source = ./.config/whatsapp-for-linux/settings.conf;
+        ".config/wasistlos/settings.conf" = {
+          source = ./.config/wasistlos/settings.conf;
           force = true;
         };
 
