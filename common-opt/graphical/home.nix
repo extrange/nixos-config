@@ -160,6 +160,7 @@ with lib;
             "org.telegram.desktop.desktop"
             "com.github.eneshecan.WhatsAppForLinux.desktop"
             "discord.desktop"
+            "com.github.xeco23.WasIstLos.desktop"
           ];
 
           # Enable extensions
