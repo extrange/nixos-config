@@ -137,21 +137,32 @@
     knownHosts = {
       # Added to /etc/ssh/ssh_known_hosts (global)
       # Hostnames given here are their Tailscale MagicDNS names
-      "ssh.nicholaslyz.com,server,192.168.184".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+      "ssh.nicholaslyz.com,server,192.168.184".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
-      "192.168.1.238,family-server".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7MT+3VHbkXr/nj6Z/a3WGrPy8W4eWa81vgtOKOs2Qc";
+      "192.168.1.238,family-server".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7MT+3VHbkXr/nj6Z/a3WGrPy8W4eWa81vgtOKOs2Qc";
 
-      "ssh.icybat.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
+      "ssh.icybat.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
 
-      "chanel-server.tail14cd7.ts.net".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXcEkJzqDxVBOZzL9DfSR5nE+D+Hx+ogDM+Pz+Npvf/";
+      "chanel-server.tail14cd7.ts.net".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXcEkJzqDxVBOZzL9DfSR5nE+D+Hx+ogDM+Pz+Npvf/";
 
-      "chanel-fedora.tail14cd7.ts.net".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4ETTbz3fgYTc7X5H5diG/tHl8sWcrqLKlqlPvqq7X0";
+      "chanel-fedora.tail14cd7.ts.net".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4ETTbz3fgYTc7X5H5diG/tHl8sWcrqLKlqlPvqq7X0";
 
-      "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+      "github.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
-      "eu.nixbuild.net".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      "eu.nixbuild.net".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
 
-      "ec2,ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com".publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHoi4ExKdHMYTUFPQZ+lY8GC7Itq2AhWZaiBpeae3oqZ4PHOoyhanT9KZtwLhE9oNoSataLZFOPnzKpmhNOSTzc=";
+      "ec2,ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com".publicKey =
+        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHoi4ExKdHMYTUFPQZ+lY8GC7Itq2AhWZaiBpeae3oqZ4PHOoyhanT9KZtwLhE9oNoSataLZFOPnzKpmhNOSTzc=";
+
+      "hcc,ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKG408vS6+iix/ZVHASXcSsILGlsqq5jSIf+s2ORHLzI";
     };
 
     # Required for SSHFS (SSH client run as root)
