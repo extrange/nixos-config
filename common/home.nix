@@ -167,14 +167,15 @@
               user = "ubuntu";
             };
 
-          ec2-unf =
+          # HCC jump host
+          hcc =
             let
-              hostname = "ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com";
+              hostname = "ec2-18-143-74-176.ap-southeast-1.compute.amazonaws.com";
             in
             {
-              host = "ec2-inf";
+              host = "hcc";
               inherit hostname;
-              user = "ubuntu";
+              user = "nicholas";
             };
         };
       };
