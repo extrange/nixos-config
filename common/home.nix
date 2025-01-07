@@ -175,7 +175,12 @@
             {
               host = "hcc";
               inherit hostname;
-              user = "nicholas";
+              user = "sagemaker-user";
+              port = 9999;
+              extraOptions = {
+                RequestTTY = "yes";
+                RemoteCommand = "bash";
+              };
             };
         };
       };

@@ -158,9 +158,11 @@
       "eu.nixbuild.net".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
 
+      # AWS GPU instance
       "ec2,ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com".publicKey =
         "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHoi4ExKdHMYTUFPQZ+lY8GC7Itq2AhWZaiBpeae3oqZ4PHOoyhanT9KZtwLhE9oNoSataLZFOPnzKpmhNOSTzc=";
 
+      # The reverse ssh host
       "hcc,ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKG408vS6+iix/ZVHASXcSsILGlsqq5jSIf+s2ORHLzI";
     };
