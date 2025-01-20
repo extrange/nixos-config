@@ -180,7 +180,7 @@
               extraOptions = {
                 RequestTTY = "yes";
                 RemoteCommand = "bash";
-                ServerAliveInterval = 15;
+                ServerAliveInterval = "15";
               };
             };
         };
