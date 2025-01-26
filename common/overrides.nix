@@ -4,21 +4,25 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      compsize =
-        let
-          btrfs-progs' = pkgs.btrfs-progs.overrideAttrs (old: rec {
-            pname = "btrfs-progs";
-            version = "6.10";
-            src = pkgs.fetchurl {
-              url = "mirror://kernel/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${version}.tar.xz";
-              hash = "sha256-M4KoTj/P4f/eoHphqz9OhmZdOPo18fNFSNXfhnQj4N8=";
-            };
-          });
-
-        in
-        prev.compsize.overrideAttrs {
-          buildInputs = [ btrfs-progs' ];
+      # until #369069 gets merged: https://nixpk.gs/pr-tracker.html?pr=369069
+      gnome-extension-manager = prev.gnome-extension-manager.overrideAttrs (old: {
+        src = prev.fetchFromGitHub {
+          owner = "mjakeman";
+          repo = "extension-manager";
+          rev = "v0.6.0";
+          hash = "sha256-AotIzFCx4k7XLdk+2eFyJgrG97KC1wChnSlpLdk90gE=";
         };
+        patches = [];
+        buildInputs = with prev; [
+          blueprint-compiler
+          gtk4
+          json-glib
+          libadwaita
+          libsoup_3
+          libbacktrace
+          libxml2
+        ];
+      });
     })
   ];
 }
