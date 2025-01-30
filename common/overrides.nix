@@ -12,7 +12,7 @@
           rev = "v0.6.0";
           hash = "sha256-AotIzFCx4k7XLdk+2eFyJgrG97KC1wChnSlpLdk90gE=";
         };
-        patches = [];
+        patches = [ ];
         buildInputs = with prev; [
           blueprint-compiler
           gtk4
