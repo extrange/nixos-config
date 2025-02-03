@@ -184,6 +184,13 @@
     '';
   };
 
+  virtualisation.vmVariant = {
+    # following configuration is added only when building VM with build-vm
+    virtualisation = {
+      memorySize = 2048; # Use 2048MiB memory.
+    };
+  };
+
   # Optimization: symlink identical files in store
   # nix.settings.auto-optimise-store = true; # Run during every build, may slow down builds
   nix.optimise.automatic = true; # Run daily at 0345
