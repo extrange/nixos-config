@@ -78,6 +78,7 @@
       smartmontools
       socat
       sops
+      sqlfluff
       ssh-to-age
       strace # system call monitoring
       syncthing
