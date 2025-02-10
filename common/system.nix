@@ -159,8 +159,8 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
 
       # AWS GPU instance
-      "ec2,ec2-47-129-230-218.ap-southeast-1.compute.amazonaws.com".publicKey =
-        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHoi4ExKdHMYTUFPQZ+lY8GC7Itq2AhWZaiBpeae3oqZ4PHOoyhanT9KZtwLhE9oNoSataLZFOPnzKpmhNOSTzc=";
+      "ec2,ec2-13-214-209-222.ap-southeast-1.compute.amazonaws.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsCLQM4ay5+bpVwXm4+727N0GLnqouzu/b6MHUKiPPb";
 
       # The reverse ssh host
       "hcc,ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com".publicKey =
