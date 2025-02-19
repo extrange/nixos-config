@@ -97,6 +97,13 @@
       zstd
     ];
 
+    home.file = {
+      ".aws/config" = {
+        source = ./.aws/config;
+        force = true;
+      };
+    };
+
     # Application-specific config
     programs = {
       bash = {
