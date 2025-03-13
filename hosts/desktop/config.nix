@@ -17,6 +17,9 @@
   # Allow compiling rpi4 iso
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
+  # Printer
+  services.printing.enable = true;
+
   # For ddcutil (monitor brightness control)
   boot.kernelModules = [ "i2c-dev" ];
   services.udev.extraRules = ''
