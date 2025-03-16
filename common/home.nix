@@ -191,6 +191,16 @@
                 ServerAliveInterval = "15";
               };
             };
+
+          azure-chanel =
+            let
+              hostname = "csid.southeastasia.cloudapp.azure.com";
+            in
+            {
+              host = "azure-chanel";
+              inherit hostname;
+              user = "chanel";
+            };
         };
       };
     };
