@@ -142,65 +142,40 @@
         matchBlocks = {
 
           # This is so I don't have to specify the port my server listens on
-          server =
-            let
-              hostname = "ssh.nicholaslyz.com";
-            in
-            {
-              host = "server";
-              inherit hostname;
-              port = 39483;
-              user = "user";
-            };
+          server = {
+            hostname = "ssh.nicholaslyz.com";
+            port = 39483;
+            user = "user";
+          };
 
           # This is so I don't have to specify the user as 'chanel'
-          chanel-server =
-            let
-              hostname = "chanel-server.tail14cd7.ts.net";
-            in
-            {
-              host = "chanel-server";
-              inherit hostname;
-              user = "chanel";
-            };
+          chanel-server = {
+            hostname = "chanel-server.tail14cd7.ts.net";
+            user = "chanel";
+          };
 
           # AWS EC2 instance with GPU for testing. Remove when done.
-          ec2 =
-            let
-              hostname = "ec2-47-128-147-189.ap-southeast-1.compute.amazonaws.com";
-            in
-            {
-              host = "ec2";
-              inherit hostname;
-              user = "ubuntu";
-            };
+          ec2 = {
+            hostname = "ec2-47-128-147-189.ap-southeast-1.compute.amazonaws.com";
+            user = "ubuntu";
+          };
 
           # HCC jump host
-          hcc =
-            let
-              hostname = "ec2-18-143-74-176.ap-southeast-1.compute.amazonaws.com";
-            in
-            {
-              host = "hcc";
-              inherit hostname;
-              user = "sagemaker-user";
-              port = 9999;
-              extraOptions = {
-                RequestTTY = "yes";
-                RemoteCommand = "bash";
-                ServerAliveInterval = "15";
-              };
+          hcc = {
+            hostname = "ec2-18-143-74-176.ap-southeast-1.compute.amazonaws.com";
+            user = "sagemaker-user";
+            port = 9999;
+            extraOptions = {
+              RequestTTY = "yes";
+              RemoteCommand = "bash";
+              ServerAliveInterval = "15";
             };
+          };
 
-          azure-chanel =
-            let
-              hostname = "csid.southeastasia.cloudapp.azure.com";
-            in
-            {
-              host = "azure-chanel";
-              inherit hostname;
-              user = "chanel";
-            };
+          azure-chanel = {
+            hostname = "csid.southeastasia.cloudapp.azure.com";
+            user = "chanel";
+          };
         };
       };
     };
