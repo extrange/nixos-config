@@ -210,6 +210,15 @@ with lib;
           use-system-font = false;
           custom-font = "JetBrains Mono NL 12";
         };
+
+        # Disable search completely
+        "org/freedesktop/tracker/miner/files" = {
+          index-recursive-directories = [ ];
+          index-single-directories = [ ];
+        };
+        "org/gnome/desktop/search-providers" = {
+          disable-external = true;
+        };
       };
     };
   };
