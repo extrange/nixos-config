@@ -36,7 +36,6 @@
       ddcutil
       digikam
       nvtopPackages.amd
-      rpi-imager
 
       gnomeExtensions.brightness-control-using-ddcutil
     ];
