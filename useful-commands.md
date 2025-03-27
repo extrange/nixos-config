@@ -128,6 +128,14 @@ users.users.myusername = {
 };
 ```
 
+Run a specific version of a package with `nix shell`:
+
+```bash
+export NIXPKGS_ALLOW_UNFREE=1
+nix shell nixpkgs/dd613136ee91f67e5dba3f3f41ac99ae89c5406b#vscode-fhs --impure
+# You can find the nixpkgs revision using https://www.nixhub.io
+```
+
 Evaluate the value of a configuration option:
 
 ```bash
