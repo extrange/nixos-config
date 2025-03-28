@@ -56,7 +56,6 @@ Once installation is completed successfully, reboot.
   - Tailscale (Auth Key max expiry is 90 days)
   - Telegram
   - Whatsapp
-- Syncthing: configure folders, add device to server
 - GSConnect pairing
 - VSCode settings sync (note: due to [automatic login], the keyring is not unlocked. However, it is possible to use a insecure storage and disable the [password].)
 
