@@ -180,9 +180,6 @@
       };
     };
 
-    # Run as user, ivo possible permission issues if run as system
-    services.syncthing.enable = true;
-
     home.stateVersion = "24.05";
   };
 }
