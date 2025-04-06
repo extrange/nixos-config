@@ -126,7 +126,7 @@ with lib;
               "us+dvorak"
             ])
             (mkTuple [
-              "xbk"
+              "xkb"
               "us"
             ])
           ];
