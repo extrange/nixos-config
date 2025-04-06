@@ -209,16 +209,6 @@ Check a flake (with uncommitted changes):
 nix flake check path:.
 ```
 
-## Fixes
-
-Random permission denied errors on remotes, e.g.
-
-`> error: opening lock file '/nix/store/560z0zfybsjb8m76n67x6c1k7gpm080w-libunistring-1.2.lock': Permission denied`
-
-Temporary fix: `sudo chown -R user /nix`.
-
-Permanent fix: This was (for me) caused by a `systemd` service running `nix-collect-garbage -d` as `root`. Adding `User=user` solved it.
-
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
