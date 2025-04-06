@@ -19,6 +19,22 @@
 
   # Printer
   services.printing.enable = true;
+  hardware.printers =
+    let
+      brother = "Brother_MFC-J470DW";
+    in
+    {
+      ensurePrinters = [
+        {
+          name = brother;
+          location = "Home";
+          deviceUri = "ipp://192.168.1.101/ipp";
+          model = "everywhere";
+        }
+      ];
+      ensureDefaultPrinter = brother;
+
+    };
 
   # For ddcutil (monitor brightness control)
   boot.kernelModules = [ "i2c-dev" ];
