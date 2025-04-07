@@ -26,8 +26,17 @@
     intel-compute-runtime
   ];
 
-  # Increase zram to 100% of RAM
-  zramSwap.memoryPercent = 100;
+  # Use zswap instead of zram
+  zramSwap.enable = lib.mkForce false;
+  boot.initrd.kernelModules = [
+    "zsmalloc"
+  ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   boot.kernelParams = [
     # Fixes issue with laptop not sleeping
@@ -40,6 +49,32 @@
 
     # Touchscreen: Disabled, as not required for now
     # "usbcore.quirks=2386:433b:bk"
+
+    # zswap
+    #
+    # View current parameters with:
+    # grep -r . /sys/module/zswap/parameters/
+    #
+    # View current statistics with
+    # grep -r . /sys/kernel/debug/zswap
+    #
+    # Kernel boot parameters documentations
+    # https://wiki.archlinux.org/title/Zswap#Using_kernel_boot_parameters
+    #
+    # Brief description of parameters in Kconfig
+    # https://github.com/torvalds/linux/blob/9ed22ae6be817d7a3f5c15ca22cbc9d3963b481d/mm/Kconfig#L48
+    #
+    # Definition of all kernel parameters (kernel source)
+    # https://github.com/torvalds/linux/blob/9ed22ae6be817d7a3f5c15ca22cbc9d3963b481d/mm/zswap.c
+    #
+    # To check that zswap is writing back to swap, do a stress test like
+    # stress-ng --vm 2 --vm-bytes 4G --timeout 60s
+    # and check that written_back_pages is increasing
+    "zswap.enabled=1"
+    "zswap.compressor=zstd" # Benchmarks: https://lwn.net/Articles/751795/
+    "zswap.zpool=zsmalloc"
+    "zswap.max_pool_percent=50"
+    "zswap.shrinker_enabled=1"
   ];
 
   environment.variables = {
