@@ -81,6 +81,7 @@
       sqlfluff
       ssh-to-age
       strace # system call monitoring
+      stress-ng
       syncthing
       sysstat
       tree
