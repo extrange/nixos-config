@@ -51,28 +51,17 @@
   boot.supportedFilesystems = [ "ntfs" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [
-    "zsmalloc" # For zswap
-  ];
-  boot.kernelParams = [
-    # zswap
-    "zswap.enabled=1"
-    "zswap.compressor=zstd"
-    "zswap.zpool=zsmalloc"
-    "zswap.max_pool_percent=50"
-    "zswap.shrinker_enabled=1"
-  ];
 
-  # Encryption is enabled by default. Individual devices override this
-  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
-
-  # Swap (used by zswap)
+  # Swap
   swapDevices = [
     {
       device = "/swapfile";
       size = 16 * 1024;
     }
   ];
+
+  # Encryption is enabled by default. Individual devices override this
+  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
 
   # Enable btrfs compression on /
   fileSystems."/".options = [ "compress=zstd" ];

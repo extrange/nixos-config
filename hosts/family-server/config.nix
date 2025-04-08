@@ -25,6 +25,7 @@ in
     enable = true;
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
   };
+  zswap = true;
 
   # Required for USB wifi dongle
   # boot.extraModulePackages = with config.boot.kernelPackages; [

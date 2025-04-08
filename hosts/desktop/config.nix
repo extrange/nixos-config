@@ -8,6 +8,7 @@
 {
   buildRemote = true;
   graphical = true;
+  zswap = true;
 
   # For davinci resolve
   hardware.graphics.extraPackages = with pkgs; [
