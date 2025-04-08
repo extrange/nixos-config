@@ -57,6 +57,15 @@
     memoryPercent = 50;
   };
 
+  # Optimize swap on zram
+  # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 180;
+    "vm.watermark_boost_factor" = 0;
+    "vm.watermark_scale_factor" = 125;
+    "vm.page-cluster" = 0;
+  };
+
   # Encryption is enabled by default. Individual devices override this
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
 
