@@ -52,13 +52,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Swap
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 16 * 1024;
-    }
-  ];
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
 
   # Encryption is enabled by default. Individual devices override this
   boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
