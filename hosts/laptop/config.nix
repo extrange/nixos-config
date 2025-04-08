@@ -13,7 +13,9 @@
     enable = true;
     interface-name = "wlp0s20f3";
   };
-  zswap = true;
+
+  # Fix OOM errors
+  zramSwap.memoryPercent = lib.mkForce 200;
 
   # Declare secret and fix its permissions
   sops.secrets."laptop/syncthing/key".owner = config.users.users.user.name;
