@@ -209,6 +209,12 @@ Check a flake (with uncommitted changes):
 nix flake check path:.
 ```
 
+Build flake locally without using remote builders:
+
+```bash
+sudo nixos-rebuild switch --flake . --builders '' --max-jobs 4
+```
+
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
