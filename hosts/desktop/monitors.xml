@@ -24,15 +24,15 @@
       <y>0</y>
       <scale>1</scale>
       <transform>
-        <rotation>right</rotation>
+        <rotation>left</rotation>
         <flipped>no</flipped>
       </transform>
       <monitor>
         <monitorspec>
-          <connector>DP-2</connector>
+          <connector>DP-4</connector>
           <vendor>DEL</vendor>
-          <product>DELL U2713HM</product>
-          <serial>7JNY5486942L</serial>
+          <product>DELL U2515H</product>
+          <serial>01N5661Q020L</serial>
         </monitorspec>
         <mode>
           <width>2560</width>
