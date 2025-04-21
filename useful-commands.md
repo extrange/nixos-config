@@ -1,19 +1,80 @@
-# Useful Commands/Tools
+# Useful Commands/Tools For Flakes
 
-## Setup formatting on a remote
-
-```bash
-nix profile install github:nixos/nixd
-nix profile install github:nixos/nixfmt
-```
-
-Modify the remote's `settings.json` appropriately.
-
-## Flakes
+## Accessing Outputs
 
 `#` is used to access the outputs of a flake, when referenced from the command line.
 
 E.g. `nixos-rebuild switch --flake path:.#nixosConfigurations`.
+
+## Dev Shells
+
+With the following `flake.nix`:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+
+      in
+      with pkgs;
+      {
+        devShells.default = mkShell {
+          buildInputs = [ uv ];
+        };
+      }
+    );
+}
+```
+
+You can run `nix develop` to enter a [Nix development environment] (actually a build environment) which has `uv` installed.
+
+Alternatively, you could do this with `nix shell nixpkgs#uv`.
+
+However, with `uv`, as it downloads Python binaries (which will [not work][uv-nix] on Nix as they expect a traditional filesystem layout), you need to use a [FHS environment]:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        fhs = pkgs.buildFHSEnv {
+          name = "fhs-shell";
+          targetPkgs = pkgs: [
+            pkgs.uv
+          ];
+        };
+      in
+      {
+        devShells.default = fhs.env;
+      }
+    );
+}
+```
 
 ## Packaging
 
@@ -215,9 +276,20 @@ Build flake locally without using remote builders:
 sudo nixos-rebuild switch --flake . --builders '' --max-jobs 4
 ```
 
+Install packages with `nix profile`:
+
+```bash
+# E.g., setup formatting on a remote
+nix profile install nixpkgs/nixpkgs-unstable#nixd
+nix profile install nixpkgs/nixpkgs-unstable#nixfmt-rfc-style
+```
+
 [Overriding]: https://ryantm.github.io/nixpkgs/using/overrides/
 [overlay]: https://nixos.wiki/wiki/Overlays#Examples_of_overlays
 [specific-package-version]: https://old.reddit.com/r/NixOS/comments/1b08hqn/can_flakes_pin_specific_versions_of_individual/
 [nix-progress]: https://github.com/NixOS/nix/issues/3352
 [nix repl]: https://github.com/justinwoo/nix-shorts/blob/master/posts/inspecting-values-with-repl.md
 [package-tutorial]: https://nix-tutorial.gitlabpages.inria.fr/nix-tutorial/first-package.html
+[Nix development environment]: https://nix.dev/manual/nix/latest/command-ref/new-cli/nix3-develop
+[uv-nix]: https://old.reddit.com/r/NixOS/comments/1fv4hyg/anyone_using_python_uv_on_nixos/
+[FHS environment]: https://www.alexghr.me/blog/til-nix-flake-fhs/
