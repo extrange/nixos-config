@@ -64,7 +64,7 @@ with lib;
             };
             "802-1x" = {
               eap = "peap;";
-              identity = "essa-U9szNymmc7ReVA5ewbKqtdxQJQ@singtel-wsg";
+              identity = "essa-MigsYlp4938@m1net.com.sg";
               password = "$wireless_sgx";
               phase2-auth = "mschapv2";
             };
