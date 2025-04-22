@@ -103,6 +103,7 @@
         hot-sensors = [
           "_system_load_1m_"
           "_memory_usage_"
+          "_memory_swap_usage_"
           "__temperature_max__"
           "__network-rx_max__"
           "_battery_rate_"
