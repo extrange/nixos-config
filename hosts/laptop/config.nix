@@ -14,7 +14,7 @@
     interface-name = "wlp0s20f3";
   };
 
-  # Fix OOM errors
+  # This laptop only has 8GB of RAM so we need even more ZRAM
   zramSwap.memoryPercent = lib.mkForce 200;
 
   # Declare secret and fix its permissions
