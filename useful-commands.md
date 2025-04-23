@@ -231,6 +231,9 @@ Load a flake into the repl (more info on [nix repl]):
 
 ```bash
 nix repl --expr '(builtins.getFlake "/home/user/nixos-config")'
+
+# Alternatively
+nix repl --expr "builtins.getFlake \"$PWD\""
 # Tab completion will work subsequently on attributes of the flake, e.g. inputs/outputs
 ```
 
