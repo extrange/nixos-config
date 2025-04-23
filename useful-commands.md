@@ -279,6 +279,13 @@ Build flake locally without using remote builders:
 sudo nixos-rebuild switch --flake . --builders '' --max-jobs 4
 ```
 
+Update a host remotely:
+
+```bash
+# Note: you need to ssh as root on the host
+nixos-rebuild switch --flake path:. --target-host root@192.168.1.135
+```
+
 Install packages with `nix profile`:
 
 ```bash
