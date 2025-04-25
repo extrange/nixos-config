@@ -92,12 +92,12 @@ with lib;
             name = scriptName;
             runtimeInputs = [ pkgs.dconf ];
             text = ''
-              time_now=$(date +%H%M)
-              start=$(echo '${dndStart}' | tr -d ':')  # "18:00" → "1800"
-              end=$(echo '${dndEnd}' | tr -d ':')      # "07:00" → "0700"
+              time_now=10#$(date +%H%M)
+              start=10#$(echo '${dndStart}' | tr -d ':')  # "18:00" → "1800"
+              end=10#$(echo '${dndEnd}' | tr -d ':')      # "07:00" → "0700"
 
               # enable only if current ∈ [end, start)
-              if [[ "10#$time_now" -ge "10#$end" ]] && [[ "10#$time_now" -lt "$start" ]]; then
+              if [[ "$time_now" -ge "$end" ]] && [[ "$time_now" -lt "$start" ]]; then
                 dconf write /org/gnome/shell/extensions/gsconnect/enabled true
                 dconf write /org/gnome/desktop/notifications/show-banners true
                 echo "GSConnect and notifications enabled"
