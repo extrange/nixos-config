@@ -133,6 +133,15 @@
       password = "12345";
       hashedPasswordFile = lib.mkForce null;
     };
+
+    # nixos-rebuild build-vm: Mount the hosts .ssh directory so the VM can decrypt secrets
+    virtualisation.sharedDirectories = {
+      ssh = {
+        source = "$HOME/.ssh"; # Substituted by the host's shell (and user) when running the VM
+        target = "/home/${config.users.users.user.name}/.ssh";
+      };
+    };
+    virtualisation.memorySize = 2048;
   };
 
   services = {
@@ -193,13 +202,6 @@
         IPQoS throughput
         IdentityFile /home/user/.ssh/id_ed25519
     '';
-  };
-
-  virtualisation.vmVariant = {
-    # following configuration is added only when building VM with build-vm
-    virtualisation = {
-      memorySize = 2048; # Use 2048MiB memory.
-    };
   };
 
   # Optimization: symlink identical files in store
