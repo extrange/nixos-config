@@ -67,7 +67,15 @@
   };
 
   # Encryption is enabled by default. Individual devices override this
-  boot.initrd.luks.devices."luks-primary".device = "/dev/disk/by-label/primary";
+  boot.initrd.luks.devices."luks-primary" = {
+    device = "/dev/disk/by-label/primary";
+
+    # Bypass internal dm-crypt workqueues on SSDs to fix freezing problems
+    # Note: probably only for SSDs.
+    # https://blog.cloudflare.com/speeding-up-linux-disk-encryption/
+    # https://dannyvanheumen.nl/post/prevent-linux-system-freezes-dmcrypt-luks-configuration/
+    bypassWorkqueues = true;
+  };
 
   # Enable btrfs compression on /
   fileSystems."/".options = [ "compress=zstd" ];
@@ -134,11 +142,11 @@
       hashedPasswordFile = lib.mkForce null;
     };
 
-    # nixos-rebuild build-vm: Mount the hosts .ssh directory so the VM can decrypt secrets
+    # nixos-rebuild build-vm: Mount the hosts SSH key so the VM can decrypt secrets
     virtualisation.sharedDirectories = {
       ssh = {
-        source = "$HOME/.ssh"; # Substituted by the host's shell (and user) when running the VM
-        target = "/home/${config.users.users.user.name}/.ssh";
+        source = "$HOME/.ssh/id_ed25519"; # Substituted by the host's shell (and user)
+        target = "/home/${config.users.users.user.name}/.ssh/id_ed25519";
       };
     };
     virtualisation.memorySize = 2048;

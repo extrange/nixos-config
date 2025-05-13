@@ -43,10 +43,6 @@
     SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
   '';
 
-  hardware.block.scheduler = {
-    sda = "bfq";
-  };
-
   nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
 
   home-manager.users.user = {
