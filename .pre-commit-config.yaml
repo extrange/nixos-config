@@ -19,4 +19,4 @@ repos:
         description: Format all files with treefmt
         entry: bash -c 'treefmt'
         language: system
-        stages: ["commit", "push"]
+        stages: ["pre-commit", "pre-push"]
