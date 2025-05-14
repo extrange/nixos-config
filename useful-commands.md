@@ -279,6 +279,12 @@ Build flake locally without using remote builders:
 sudo nixos-rebuild switch --flake . --builders '' --max-jobs 4
 ```
 
+Build flake from Github, using SSH, without caching (see this [issues][nix-caching]):
+
+```bash
+sudo nixos-rebuild switch --flake git+ssh://git@github.com/cheeseecake/chanel-nixos --option tarball-ttl 0
+```
+
 Update a host remotely:
 
 ```bash
@@ -303,3 +309,4 @@ nix profile install nixpkgs/nixpkgs-unstable#nixfmt-rfc-style
 [Nix development environment]: https://nix.dev/manual/nix/latest/command-ref/new-cli/nix3-develop
 [uv-nix]: https://old.reddit.com/r/NixOS/comments/1fv4hyg/anyone_using_python_uv_on_nixos/
 [FHS environment]: https://www.alexghr.me/blog/til-nix-flake-fhs/
+[nix-caching]: https://github.com/NixOS/nix/issues/6830
