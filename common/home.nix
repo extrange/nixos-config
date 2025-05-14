@@ -37,6 +37,7 @@
       ethtool
       exiftool
       file
+      fio
       # ffmpeg - use the option `ffmpegCustom` instead
       fzf
       gh
@@ -68,6 +69,7 @@
       nixfmt-rfc-style # Nix formatter
       nmap
       ntfs3g
+      openssl
       p7zip
       parted
       pciutils # lspci
