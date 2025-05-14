@@ -6,7 +6,6 @@
   ...
 }:
 {
-  buildRemote = true;
   graphical = true;
 
   # For davinci resolve
