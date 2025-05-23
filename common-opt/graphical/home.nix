@@ -91,6 +91,9 @@ with lib;
             name = scriptName;
             runtimeInputs = [ pkgs.dconf ];
             text = ''
+              # Fix issue where timer doesn't work immediately after logon
+              sleep 1m;
+
               time_now=10#$(date +%H%M)
               start=10#$(echo '${dndStart}' | tr -d ':')  # "18:00" → "1800"
               end=10#$(echo '${dndEnd}' | tr -d ':')      # "07:00" → "0700"
