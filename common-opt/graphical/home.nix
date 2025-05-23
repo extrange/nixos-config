@@ -28,7 +28,6 @@ with lib;
         kid3 # audio file tagger
         libreoffice
         lutris
-        microsoft-edge
         moonlight-qt
         mpv # required for smplayer
         obs-studio
