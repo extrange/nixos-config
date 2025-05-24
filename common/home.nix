@@ -128,6 +128,18 @@
         enable = true;
         userEmail = "29305375+extrange@users.noreply.github.com";
         userName = "extrange";
+        signing = {
+          format = "ssh";
+          key = "/home/${config.users.users.user.name}/.ssh/id_ed25519.pub";
+          signByDefault = true;
+
+        };
+        delta = {
+          enable = true;
+          options = {
+            side-by-side = true;
+          };
+        };
       };
 
       nnn = {
