@@ -27,7 +27,7 @@ with lib;
       description = "Uptime Kuma Ping";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.curl}/bin/curl -sS ${config.uptime.url}";
+        ExecStart = "${pkgs.curl}/bin/curl -sS --retry 5 --retry-delay 2 ${config.uptime.url}";
       };
     };
     systemd.timers.uptime = {
