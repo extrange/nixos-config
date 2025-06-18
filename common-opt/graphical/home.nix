@@ -91,19 +91,18 @@ with lib;
             name = scriptName;
             runtimeInputs = [ pkgs.dconf ];
             text = ''
-              # Fix issue where timer doesn't work immediately after logon
-              sleep 1m;
-
               time_now=10#$(date +%H%M)
               start=10#$(echo '${dndStart}' | tr -d ':')  # "18:00" → "1800"
               end=10#$(echo '${dndEnd}' | tr -d ':')      # "07:00" → "0700"
 
               # enable only if current ∈ [end, start)
               if [[ "$time_now" -ge "$end" ]] && [[ "$time_now" -lt "$start" ]]; then
+                echo "Enabling GSConnect and notifications"
                 dconf write /org/gnome/shell/extensions/gsconnect/enabled true
                 dconf write /org/gnome/desktop/notifications/show-banners true
                 echo "GSConnect and notifications enabled"
               else
+                echo "Disabling GSConnect and notifications"
                 dconf write /org/gnome/shell/extensions/gsconnect/enabled false
                 dconf write /org/gnome/desktop/notifications/show-banners false
                 echo "GSConnect and notifications disabled"
@@ -123,9 +122,15 @@ with lib;
         in
         {
           services.dnd-toggle = {
-            Unit.Description = "Toggle notifications and GSConnect based on DND hours";
-            Service.Type = "oneshot";
-            Service.ExecStart = "${toggleScript}/bin/${scriptName}";
+            Unit = {
+              Description = "Toggle notifications and GSConnect based on DND hours";
+              Wants = [ "graphical.target" ];
+              After = [ "graphical.target" ];
+            };
+            Service = {
+              Type = "oneshot";
+              ExecStart = "${toggleScript}/bin/${scriptName}";
+            };
           };
 
           timers.dnd-toggle = {
