@@ -24,6 +24,7 @@ with lib;
         gnome-extension-manager
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
+        jan
         jellyfin-media-player
         kid3 # audio file tagger
         libreoffice
