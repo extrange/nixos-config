@@ -5,6 +5,7 @@
 Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
 
 [Useful Commands]
+[Server]
 
 ## Configuration
 
@@ -114,3 +115,4 @@ nixos-rebuild --target-host user@192.168.1.30 --flake path:.#rpi4 --use-remote-s
 [automatic login]: https://askubuntu.com/questions/1352398/asking-for-password-when-i-open-vscode-for-the-first-time
 [password]: https://askubuntu.com/questions/24770/gnome-keyring-keeps-asking-for-a-password-that-doesnt-exist/24773#24773
 [Useful Commands]: useful-commands.md
+[Server]: server.md
