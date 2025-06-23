@@ -125,8 +125,8 @@ with lib;
           services.dnd-toggle = {
             Unit = {
               Description = "Toggle notifications and GSConnect based on DND hours";
-              Wants = [ "graphical.target" ];
-              After = [ "graphical.target" ];
+              Wants = [ "graphical-session.target" ];
+              After = [ "graphical-session.target" ];
             };
             Service = {
               Type = "oneshot";

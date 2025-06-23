@@ -6,11 +6,22 @@ Some notes about my server configuration (as I'll be moving it to NixOS soon).
 
 All with compression turned on (zstd).
 
-| Mount Point    | Snaps | Setup       | Use                      |
-| -------------- | ----- | ----------- | ------------------------ |
-| `/mnt/storage` | Yes   | HDD, RAIDZ2 | File storage             |
-| `/`            | Yes   | SSD, RAID1  | OS, VM OS, server, repos |
-| `/mnt/vm-data` | No    | HD, RAID1   | Raw VM storage           |
+| Mount Point    | Snaps | Setup      | Use                      |
+| -------------- | ----- | ---------- | ------------------------ |
+| `/mnt/storage` | Yes   | HDD, RAIDZ | File storage             |
+| `/`            | Yes   | SSD, RAID1 | OS, VM OS, server, repos |
+| `/mnt/vm-data` | No    | HD, RAID1  | Raw VM storage           |
+
+Subvolumes on `/`:
+
+| Path            | Description                            |
+| --------------- | -------------------------------------- |
+| /var/log        | Don't snapshot syslogs                 |
+| /var/lib/docker | Don't snapshot anything Docker-related |
+| /nix            | Nix                                    |
+| /vm             | VM OS image                            |
+
+Barring those exceptions, the rest of `/` is snapshotted.
 
 Note: RAIDZ [should not][raidz-database] be used with databases.
 
