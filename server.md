@@ -6,20 +6,21 @@ Some notes about my server configuration (as I'll be moving it to NixOS soon).
 
 All with compression turned on (zstd).
 
-| Mount Point    | Snaps | Setup      | Use                      |
-| -------------- | ----- | ---------- | ------------------------ |
-| `/mnt/storage` | Yes   | HDD, RAIDZ | File storage             |
-| `/`            | Yes   | SSD, RAID1 | OS, VM OS, server, repos |
-| `/mnt/vm-data` | No    | HD, RAID1  | Raw VM storage           |
+| Mount Point           | Snaps | Setup      | Use                      |
+| --------------------- | ----- | ---------- | ------------------------ |
+| `/mnt/storage`        | Yes   | HDD, RAIDZ | File storage             |
+| `/`                   | Yes   | SSD, RAID1 | OS, VM OS, server, repos |
+| `/dev/zvol/vm-data/*` | No    | HDD, RAID1 | VM storage (as zvols)    |
 
-Subvolumes on `/`:
+Subvolumes on `/` (all top-level):
 
-| Path            | Description                            |
-| --------------- | -------------------------------------- |
-| /var/log        | Don't snapshot syslogs                 |
-| /var/lib/docker | Don't snapshot anything Docker-related |
-| /nix            | Nix                                    |
-| /vm             | VM OS image                            |
+| Path           | Description                            |
+| -------------- | -------------------------------------- |
+| var/log        | Don't snapshot syslogs                 |
+| var/lib/docker | Don't snapshot anything Docker-related |
+| nix            | Nix                                    |
+| vm             | VM OS image                            |
+| server         | Server docker containers               |
 
 Barring those exceptions, the rest of `/` is snapshotted.
 
