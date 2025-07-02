@@ -7,6 +7,7 @@
 }:
 {
   graphical = true;
+  addSshKeys = true;
 
   # For davinci resolve
   hardware.graphics.extraPackages = with pkgs; [
