@@ -34,14 +34,6 @@ in
   # No disk encryption
   boot.initrd.luks.devices = lib.mkForce { };
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      # Prevent SSH connections from timing out prematurely
-      ClientAliveInterval = 15;
-    };
-  };
-
   # GPU passthrough
   boot.kernelParams = [
     "intel_iommu=on"
