@@ -58,9 +58,7 @@ with lib;
             "allow_other"
             "reconnect" # handle connection drops
             "ServerAliveInterval=15" # keep connections alive
-
-            # Fixes sshfs not mounting automatically at boot
-            "x-systemd.automount"
+            "x-systemd.automount" # Mount on demand (fixes not mounting on boot)
 
           ];
           fsType = "fuse.sshfs";
