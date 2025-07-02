@@ -183,17 +183,6 @@
 
       "github.com".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-
-      "eu.nixbuild.net".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
-
-      # AWS GPU instance
-      "ec2,ec2-13-214-209-222.ap-southeast-1.compute.amazonaws.com".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsCLQM4ay5+bpVwXm4+727N0GLnqouzu/b6MHUKiPPb";
-
-      # The reverse ssh host
-      "hcc,ec2-18-142-95-220.ap-southeast-1.compute.amazonaws.com".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKG408vS6+iix/ZVHASXcSsILGlsqq5jSIf+s2ORHLzI";
     };
 
     # Required for SSHFS (SSH client run as root)
@@ -203,12 +192,6 @@
         HostName ssh.nicholaslyz.com
         Port 39483
         User user
-        IdentityFile /home/user/.ssh/id_ed25519
-
-      Host eu.nixbuild.net
-        PubkeyAcceptedKeyTypes ssh-ed25519
-        ServerAliveInterval 60
-        IPQoS throughput
         IdentityFile /home/user/.ssh/id_ed25519
     '';
   };

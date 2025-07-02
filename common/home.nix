@@ -169,24 +169,6 @@
             user = "chanel";
           };
 
-          # AWS EC2 instance with GPU for testing. Remove when done.
-          ec2 = {
-            hostname = "ec2-47-128-147-189.ap-southeast-1.compute.amazonaws.com";
-            user = "ubuntu";
-          };
-
-          # HCC jump host
-          hcc = {
-            hostname = "ec2-18-143-74-176.ap-southeast-1.compute.amazonaws.com";
-            user = "sagemaker-user";
-            port = 9999;
-            extraOptions = {
-              RequestTTY = "yes";
-              RemoteCommand = "bash";
-              ServerAliveInterval = "15";
-            };
-          };
-
           azure-chanel = {
             hostname = "csid.southeastasia.cloudapp.azure.com";
             user = "chanel";
