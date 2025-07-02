@@ -165,7 +165,7 @@
   programs.ssh = {
     knownHosts = {
       # Added to /etc/ssh/ssh_known_hosts (global)
-      # Hostnames given here are their Tailscale MagicDNS names
+      # Hostnames given here are their Tailscale MagicDNS names/LAN IPs
       "ssh.nicholaslyz.com,server,192.168.184".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
@@ -185,6 +185,8 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     };
 
+    # Added to /etc/ssh/ssh_config (used by root and all users)
+    #
     # Required for SSHFS (SSH client run as root)
     # Otherwise, the root's IdentityFile is used (/root/.ssh) which is not recognized
     extraConfig = ''
