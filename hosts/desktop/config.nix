@@ -15,6 +15,7 @@
 
   # Allow compiling rpi4 iso
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
 
   # Printer
   services.printing.enable = true;
@@ -42,7 +43,15 @@
     SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
   '';
 
-  nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
+  # Archival drives
+  fileSystems."/mnt/chanel-archive" = {
+    device = "/dev/disk/by-uuid/803c34f4-a16a-4c9f-abf2-f734157d08e8";
+    options = [
+      "noauto"
+      "compress-force=zstd"
+      "x-systemd.automount" # Automatically mount on access
+    ];
+  };
 
   home-manager.users.user = {
     home.packages = with pkgs; [
