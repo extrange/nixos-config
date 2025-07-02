@@ -6,12 +6,7 @@
 }:
 with lib;
 {
-  options.ffmpegCustom = mkOption {
-    type = types.bool;
-    description = "Ffmpeg with FdkAac codec support";
-    example = true;
-    default = true;
-  };
+  options.ffmpegCustom = mkEnableOption "Ffmpeg with FdkAac codec support";
 
   config = {
     home-manager.users.user.home.packages = with pkgs; [

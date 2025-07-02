@@ -8,7 +8,6 @@
 {
   graphical = true;
   services.keyd.enable = lib.mkForce false;
-  ffmpegCustom = false;
 
   home-manager.users.user = {
     dconf.settings = with home-manager.lib.hm.gvariant; {

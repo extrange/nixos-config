@@ -17,6 +17,7 @@ let
 in
 {
   addSshKeys = true;
+  ffmpegCustom = true;
   wifi = {
     enable = false;
     interface-name = "wlp0s29u1u4i2";

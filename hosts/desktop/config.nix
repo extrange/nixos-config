@@ -8,6 +8,7 @@
 {
   graphical = true;
   addSshKeys = true;
+  ffmpegCustom = true;
 
   # For davinci resolve
   hardware.graphics.extraPackages = with pkgs; [

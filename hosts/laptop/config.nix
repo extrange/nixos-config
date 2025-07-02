@@ -8,6 +8,7 @@
 
 {
   buildRemote = true;
+  ffmpegCustom = true;
   graphical = true;
   wifi = {
     enable = true;

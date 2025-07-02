@@ -1,12 +1,7 @@
 { lib, config, ... }:
 with lib;
 {
-  options.buildRemote = mkOption {
-    type = types.bool;
-    description = "Whether to build remotely";
-    example = true;
-    default = false;
-  };
+  options.buildRemote = mkEnableOption "Whether to build remotely";
 
   config = mkIf config.buildRemote {
     # Never build locally
