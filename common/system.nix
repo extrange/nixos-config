@@ -48,7 +48,13 @@
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/kernel/kernels-org.json
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [
+    "ntfs"
+    "zfs"
+  ];
+  boot.zfs.forceImportRoot = false;
+
+  # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = 0;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -112,6 +118,7 @@
 
   # Network
   networking.hostName = hostname;
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
   networking.networkmanager.enable = true;
 
   # userborn aims to replace the old perl script
