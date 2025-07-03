@@ -7,7 +7,10 @@
 }:
 {
   graphical = true;
-  addSshKeys = true;
+  addAuthorizedKeys = {
+    enable = true;
+    addForRoot = true;
+  };
   ffmpegCustom = true;
 
   # For davinci resolve

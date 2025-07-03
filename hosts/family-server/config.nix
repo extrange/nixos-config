@@ -16,7 +16,10 @@ let
   ];
 in
 {
-  addSshKeys = true;
+  addAuthorizedKeys = {
+    enable = true;
+    forRoot = true; # For virt-manager/qemu kvm access
+  };
   ffmpegCustom = true;
   wifi = {
     enable = false;

@@ -1,15 +1,14 @@
 { lib, config, ... }:
 with lib;
 {
-  options.addSshKeys = mkOption {
-    type = types.bool;
-    description = "Whether to add authorized keys for SSH for both user and root";
-    example = true;
-    default = false;
+  options.addAuthorizedKeys = {
+    enable = mkEnableOption "Add authorized keys for SSH";
+    forRoot = mkEnableOption "Also add authorized keys to root";
   };
 
   config =
     let
+      # These are added to /etc/ssh/authorized_keys.d
       authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINf049gcBU+JxBwkylDpOIGMtk667LfSylzoM1SPZA90 test"
@@ -19,15 +18,16 @@ with lib;
 
       ];
     in
-    mkIf config.addSshKeys {
+    mkIf config.addAuthorizedKeys {
       services.openssh = {
         enable = true;
         settings = {
-          # Prevent SSH connections from timing out prematurely
+          # Prevent inactive SSH connections from dropping
           ClientAliveInterval = 15;
         };
       };
       users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
-      users.users."root".openssh.authorizedKeys.keys = authorizedKeys; # allow root login for virt-manager/qemu kvm access
+      users.users."root".openssh.authorizedKeys.keys =
+        mkIf config.addAuthorizedKeys.forRoot authorizedKeys;
     };
 }
