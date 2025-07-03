@@ -55,6 +55,7 @@
       "noauto"
       "compress-force=zstd"
       "x-systemd.automount" # Automatically mount on access
+      "x-systemd.device-timeout=1s" # Don't freeze when accessing directory without the device
     ];
   };
 
