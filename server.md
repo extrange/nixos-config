@@ -39,6 +39,13 @@ Resources:
 - [Btrfs man pages on direct writes][btrfs-checksum]
 - [Btrfs storage (Proxmox)][proxmox-btrfs]
 
+## ZFS Backup + Scrub
+
+```sh
+sudo syncoid --preserve-properties --sshkey ~/.ssh/id_ed25519 --sshport 39483 server:storage/data archive/storage/data && \
+ssh root@server 'zfs zpool scrub -w storage && zpool status storage'
+```
+
 [O_DIRECT]: https://man7.org/linux/man-pages/man2/open.2.html
 [btrfs-checksum]: https://btrfs.readthedocs.io/en/latest/btrfs-man5.html#checksum-algorithms
 [proxmox-btrfs]: https://pve.proxmox.com/wiki/Storage:_BTRFS
