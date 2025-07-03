@@ -103,14 +103,6 @@
     DefaultTimeoutStopSec=15s
   '';
 
-  # Fix long timeout for user-manager.service
-  # Note: didn't seem to work for laptop on 2024-07-22
-  systemd.slices.user.sliceConfig = {
-    # List slices with systemd-cgls
-    # Check with systemctl cat user.slice
-    DefaultTimeoutStopSec = "15s";
-  };
-
   security.sudo.extraConfig = "Defaults timestamp_timeout=30"; # 30 mins
 
   systemd.services."getty@tty1".enable = true;
