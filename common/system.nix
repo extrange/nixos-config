@@ -114,6 +114,12 @@
   networking.hostName = hostname;
   networking.networkmanager.enable = true;
 
+  # userborn aims to replace the old perl script
+  # https://nixos.org/manual/nixos/stable/#sec-userborn
+  # It also lets sops-nix run as a systemd service, which fixes issues with
+  # SSH keys in subvolumes not being available at boot
+  services.userborn.enable = true;
+
   users = {
     mutableUsers = false;
     users."user" = {
