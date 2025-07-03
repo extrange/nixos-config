@@ -6,14 +6,20 @@ Some notes about my server configuration (as I'll be moving it to NixOS soon).
 
 TODO: Move these to disko.
 
+Each volume/dataset should have:
+
+- Snapshots
+- Backups
+- Scrubs
+
 ### ZFS
 
 Dataset properties: `atime=off`, `compression=zstd-3`
 
-| Dataset                | Storage       | Snaps | Backup |
-| ---------------------- | ------------- | ----- | ------ |
-| storage/data           | 4x HDD, RAIDZ | Yes   | Yes    |
-| storage/windows-gaming | 2x HDD, RAID1 | Yes   | No     |
+| Dataset                | Storage       | Snaps | Backup | Scrub   |
+| ---------------------- | ------------- | ----- | ------ | ------- |
+| storage/data           | 4x HDD, RAIDZ | Yes   | Yes    | Monthly |
+| storage/windows-gaming | 2x HDD, RAID1 | Yes   | No     | Monthly |
 
 Note: RAIDZ [should not][raidz-database] be used with databases.
 
@@ -22,6 +28,8 @@ Note: RAIDZ [should not][raidz-database] be used with databases.
 Mount options: `noatime,compress=zstd`
 
 All on 2x SSD, RAID1 (mirror).
+
+Scrub is done monthly.
 
 | Subvolume      | Snaps | Backup |
 | -------------- | ----- | ------ |
