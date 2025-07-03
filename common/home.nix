@@ -77,6 +77,7 @@
       postgresql
       pre-commit
       ripgrep # recursively searches directories for a regex pattern
+      sanoid
       smartmontools
       socat
       sops
