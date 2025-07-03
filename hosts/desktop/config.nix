@@ -9,7 +9,7 @@
   graphical = true;
   addAuthorizedKeys = {
     enable = true;
-    addForRoot = true;
+    forRoot = true; # Chanel's btrbk-archive
   };
   ffmpegCustom = true;
 

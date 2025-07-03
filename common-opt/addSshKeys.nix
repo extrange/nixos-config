@@ -2,12 +2,13 @@
 with lib;
 {
   options.addAuthorizedKeys = {
-    enable = mkEnableOption "Add authorized keys for SSH";
+    enable = mkEnableOption "Add authorized keys to user";
     forRoot = mkEnableOption "Also add authorized keys to root";
   };
 
   config =
     let
+      cfg = config.addAuthorizedKeys;
       # These are added to /etc/ssh/authorized_keys.d
       authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
@@ -18,7 +19,7 @@ with lib;
 
       ];
     in
-    mkIf config.addAuthorizedKeys {
+    mkIf cfg.enable {
       services.openssh = {
         enable = true;
         settings = {
@@ -27,7 +28,6 @@ with lib;
         };
       };
       users.users."user".openssh.authorizedKeys.keys = authorizedKeys;
-      users.users."root".openssh.authorizedKeys.keys =
-        mkIf config.addAuthorizedKeys.forRoot authorizedKeys;
+      users.users."root".openssh.authorizedKeys.keys = mkIf cfg.forRoot authorizedKeys;
     };
 }
