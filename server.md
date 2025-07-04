@@ -6,39 +6,44 @@ Some notes about my server configuration (as I'll be moving it to NixOS soon).
 
 TODO: Move these to disko.
 
-Each volume/dataset should have:
+Each volume/dataset may have:
 
 - Snapshots
-- Backups
-- Scrubs
+- Backups (6-monthly)
+- Scrubs (monthly)
 
 ### ZFS
 
-Dataset properties: `atime=off`, `compression=zstd-3`
+- Dataset properties: `atime=off`, `compression=zstd-3`
 
-| Dataset                | Storage       | Snaps | Backup | Scrub   |
-| ---------------------- | ------------- | ----- | ------ | ------- |
-| storage/data           | 4x HDD, RAIDZ | Yes   | Yes    | Monthly |
-| storage/windows-gaming | 2x HDD, RAID1 | Yes   | No     | Monthly |
+| Pool    | Drives         | Scrub |
+| ------- | -------------- | :---: |
+| storage | 4x HDD, RAIDZ2 |  ✅   |
+| vm-data | 2x HDD, RAID1  |  ✅   |
 
-Note: RAIDZ [should not][raidz-database] be used with databases.
+| Dataset                | Snaps | Backup |
+| ---------------------- | :---: | :----: |
+| storage/data           |  ✅   |   ✅   |
+| vm-data/windows-gaming |  ✅   |        |
+
+_Note: RAIDZ [should not][raidz-database] be used with databases._
 
 ### Btrfs
 
 Mount options: `noatime,compress=zstd`
 
-All on 2x SSD, RAID1 (mirror).
-
-Scrub is done monthly.
+| Volume | Drives         | Scrub |
+| ------ | -------------- | :---: |
+| /      | 2x SSD, mirror |  ✅   |
 
 | Subvolume      | Snaps | Backup |
-| -------------- | ----- | ------ |
-| root           | Yes   | Yes    |
-| server         | Yes   | Yes    |
-| vm             | Yes   | No     |
-| var/log        | No    | No     |
-| var/lib/docker | No    | No     |
-| nix            | No    | No     |
+| -------------- | :---: | :----: |
+| root           |  ✅   |   ✅   |
+| server         |  ✅   |   ✅   |
+| vm             |  ✅   |        |
+| var/log        |       |        |
+| var/lib/docker |       |        |
+| nix            |       |        |
 
 #### Direct writes and checksum errors
 
@@ -55,7 +60,9 @@ Further reading:
 
 ## ZFS Backup + Scrub Command
 
-The pool dataset is configured with `compression=zstd-3` and `atime=off`.
+Backup the server's snapshots to a local drive, then scrub it.
+
+The pool's root dataset is configured with `compression=zstd-3` and `atime=off`.
 
 ```sh
 sudo syncoid \
@@ -63,7 +70,7 @@ sudo syncoid \
 --sshkey ~/.ssh/id_ed25519 \
 --sshport 39483 \
 server:storage/data archive/storage/data && \
-ssh root@server 'zfs zpool scrub -w storage && zpool status storage'
+sudo zpool scrub -w archive && zpool status archive
 ```
 
 _Note: We don't preserve properties (`--preserve-properties`) because we don't want to preserve the `mountpoint` property._

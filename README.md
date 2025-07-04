@@ -5,6 +5,7 @@
 Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
 
 [Useful Commands]
+
 [Server]
 
 ## Configuration
