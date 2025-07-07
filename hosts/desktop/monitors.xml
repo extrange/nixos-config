@@ -1,8 +1,8 @@
 <monitors version="2">
   <configuration>
     <logicalmonitor>
-      <x>1440</x>
-      <y>1120</y>
+      <x>2560</x>
+      <y>0</y>
       <scale>1.5</scale>
       <primary>yes</primary>
       <monitor>
@@ -23,10 +23,6 @@
       <x>0</x>
       <y>0</y>
       <scale>1</scale>
-      <transform>
-        <rotation>left</rotation>
-        <flipped>no</flipped>
-      </transform>
       <monitor>
         <monitorspec>
           <connector>DP-4</connector>
@@ -45,8 +41,8 @@
   <!-- Duplicated, because sometimes the U2515H appears on DP-5 -->
   <configuration>
     <logicalmonitor>
-      <x>1440</x>
-      <y>1120</y>
+      <x>2560</x>
+      <y>0</y>
       <scale>1.5</scale>
       <primary>yes</primary>
       <monitor>
@@ -67,10 +63,6 @@
       <x>0</x>
       <y>0</y>
       <scale>1</scale>
-      <transform>
-        <rotation>left</rotation>
-        <flipped>no</flipped>
-      </transform>
       <monitor>
         <monitorspec>
           <connector>DP-5</connector>
