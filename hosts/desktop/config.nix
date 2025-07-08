@@ -66,6 +66,7 @@
       ddcutil
       digikam
       nvtopPackages.amd
+      solaar # Logitech KB Configurator
 
       gnomeExtensions.brightness-control-using-ddcutil
     ];
