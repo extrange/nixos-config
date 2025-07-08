@@ -174,6 +174,11 @@
             hostname = "csid.southeastasia.cloudapp.azure.com";
             user = "chanel";
           };
+
+          router = {
+            hostname = "192.168.1.1";
+            user = "admin";
+          };
         };
       };
     };
