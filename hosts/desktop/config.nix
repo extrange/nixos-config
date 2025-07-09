@@ -6,6 +6,7 @@
   ...
 }:
 {
+  imports = [ ./brightness.nix ];
   graphical = true;
   addAuthorizedKeys = {
     enable = true;
