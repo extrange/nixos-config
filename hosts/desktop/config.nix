@@ -114,6 +114,9 @@
         disable-display-state-check = true; # Seems to make changes faster
         show-value-label = true;
         hide-system-indicator = true;
+        ddcutil-binary-path = "${pkgs.ddcutil}/bin/ddcutil";
+        increase-brightness-shortcut = [ "MonBrightnessUp" ];
+        decrease-brightness-shortcut = [ "MonBrightnessDown" ];
       };
 
     };
