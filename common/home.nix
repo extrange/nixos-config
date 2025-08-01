@@ -26,10 +26,12 @@
       aria2
       awscli2
       bat
+      biome
       btop
       btrfs-progs
       compsize
       cryptsetup
+      direnv
       dmidecode
       dnsutils # `dig` + `nslookup`
       duf
