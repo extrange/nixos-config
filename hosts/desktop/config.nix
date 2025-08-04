@@ -14,6 +14,14 @@
   };
   ffmpegCustom = true;
 
+  # Adds udev rules for solaar.
+  # Note that you need to replug+repair the keyboard for the first time
+  # https://github.com/3v1n0/Solaar/blob/master/docs/installation.md
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;
+  };
+
   # For davinci resolve
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
@@ -67,9 +75,10 @@
       ddcutil
       digikam
       nvtopPackages.amd
-      solaar # Logitech KB Configurator
+      solaar
 
       gnomeExtensions.brightness-control-using-ddcutil
+      gnomeExtensions.solaar-extension
     ];
 
     # For Davinci resolve
@@ -134,28 +143,12 @@
         [Desktop Entry]
         Type=Application
         Name=Solaar
-        Exec=sudo ${pkgs.solaar}/bin/solaar -w hide
+        Exec=${pkgs.solaar}/bin/solaar -w hide
       '';
       force = true;
     };
 
   };
-
-  security.sudo.extraRules = [
-    # requiring a password.
-    {
-      groups = [ "wheel" ];
-      commands = [
-        {
-          command = "${pkgs.solaar}/bin/solaar";
-          options = [
-            "SETENV"
-            "NOPASSWD"
-          ];
-        }
-      ];
-    }
-  ];
 
   # Upgrade once a week max
   system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
