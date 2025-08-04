@@ -122,25 +122,40 @@
 
     };
 
-    home.file = {
-      # Set fractional scaling and monitor position
-      ".config/monitors.xml" = {
-        source = ./monitors.xml;
-        force = true; # overwrite existing
-      };
-
-      # Fixes Logitech Bolt receiver (kb) waking immediately after sleep
-      ".config/autostart/solaar.desktop" = {
-        text = ''
-          [Desktop Entry]
-          Type=Application
-          Name=Solaar
-          Exec=${pkgs.solaar}/bin/solaar -w hide
-        '';
-        force = true;
-      };
+    # Set fractional scaling and monitor position
+    home.file.".config/monitors.xml" = {
+      source = ./monitors.xml;
+      force = true; # overwrite existing
     };
+
+    # Fixes Logitech Bolt receiver (kb) waking immediately after sleep
+    home.file.".config/autostart/solaar.desktop" = {
+      text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=Solaar
+        Exec=sudo ${pkgs.solaar}/bin/solaar -w hide
+      '';
+      force = true;
+    };
+
   };
+
+  security.sudo.extraRules = [
+    # requiring a password.
+    {
+      groups = [ "wheel" ];
+      commands = [
+        {
+          command = "${pkgs.solaar}/bin/solaar";
+          options = [
+            "SETENV"
+            "NOPASSWD"
+          ];
+        }
+      ];
+    }
+  ];
 
   # Upgrade once a week max
   system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
