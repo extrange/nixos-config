@@ -104,7 +104,9 @@
   # Decrease systemd shutdown timer duration
   # Written to /etc/systemd/system.conf
   # Verify with `systemctl show --all | grep -i timeout`
-  systemd.extraConfig = "DefaultTimeoutStopSec=15s";
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "15s";
+  };
 
   # By setting the timeout for the user manager itself, it applies to all user services
   # https://wiki.archlinux.org/title/Systemd/User#Changing_the_timeout_value
