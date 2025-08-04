@@ -6,4 +6,11 @@
     (final: prev: {
     })
   ];
+
+  # Darktable
+  # https://github.com/NixOS/nixpkgs/issues/429268
+  nixpkgs.config.permittedInsecurePackages = [
+    "libsoup-2.74.3"
+  ];
+
 }
