@@ -128,6 +128,17 @@
         source = ./monitors.xml;
         force = true; # overwrite existing
       };
+
+      # Fixes Logitech Bolt receiver (kb) waking immediately after sleep
+      ".config/autostart/solaar.desktop" = {
+        text = ''
+          [Desktop Entry]
+          Type=Application
+          Name=Solaar
+          Exec=${pkgs.solaar}/bin/solaar -w hide
+        '';
+        force = true;
+      };
     };
   };
 
