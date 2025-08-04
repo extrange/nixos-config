@@ -121,6 +121,17 @@
   networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
   networking.networkmanager.enable = true;
 
+  networking.nameservers = [ "1.1.1.1" ];
+
+  # The default resolver (glibc) has the issue with no internet after resuming from suspend/link changes
+  # Appears to be due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ]; # All domains
+    dnsovertls = "true";
+  };
+
   # userborn aims to replace the old perl script
   # https://nixos.org/manual/nixos/stable/#sec-userborn
   # It also lets sops-nix run as a systemd service, which fixes issues with
