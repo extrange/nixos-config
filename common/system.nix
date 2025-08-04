@@ -114,7 +114,26 @@
   # Verify with `systemctl show --all user@1000.service | grep -i timeout`
   systemd.services."user@".serviceConfig.TimeoutStopSec = "15s";
 
-  security.sudo.extraConfig = "Defaults timestamp_timeout=30"; # 30 mins
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        groups = [ "wheel" ];
+        commands =
+          lib.map
+            (p: {
+              command = "${pkgs.systemd}/bin/${p}";
+              options = [ "NOPASSWD" ];
+            })
+            [
+              "reboot"
+              "poweroff"
+              "suspend"
+            ];
+      }
+    ];
+    extraConfig = "Defaults timestamp_timeout=30"; # 30 mins;
+  };
 
   systemd.services."getty@tty1".enable = true;
   systemd.services."autovt@tty1".enable = true;
