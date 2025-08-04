@@ -46,7 +46,8 @@
 
   # See latest kernels here
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/kernel/kernels-org.json
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Unfortunately because we are using ZFS we cannot use the latest kernel
+  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.supportedFilesystems = [
     "ntfs"
