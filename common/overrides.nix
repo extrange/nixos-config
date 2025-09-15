@@ -7,10 +7,13 @@
     })
   ];
 
-  # Darktable
-  # https://github.com/NixOS/nixpkgs/issues/429268
   nixpkgs.config.permittedInsecurePackages = [
+    # Darktable
+    # https://github.com/NixOS/nixpkgs/issues/429268
     "libsoup-2.74.3"
+
+    # Jellyfin
+    "qtwebengine-5.15.19"
   ];
 
 }
