@@ -38,6 +38,8 @@ jobs:
         run: nix flake update --accept-flake-config
 
       - name: Run tests + builds for all hosts
-        run: nix flake check --accept-flake-config
+        run: |
+          # Use --max-jobs 1 to avoid OOM issues on GitHub Actions
+          nix flake check --accept-flake-config --max-jobs 1
 
       - run: df -h
