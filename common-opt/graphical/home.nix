@@ -25,7 +25,6 @@ with lib;
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
         jan
-        jellyfin-media-player
         kid3 # audio file tagger
         libreoffice
         lutris
@@ -159,7 +158,6 @@ with lib;
             "code.desktop"
             "org.telegram.desktop.desktop"
             "com.github.eneshecan.WhatsAppForLinux.desktop"
-            "discord.desktop"
             "com.github.xeco23.WasIstLos.desktop"
           ];
 

@@ -49,23 +49,22 @@
         hostname:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules =
-            [
-              sops-nix.nixosModules.sops
-              home-manager.nixosModules.home-manager
-              {
-                _module.args = inputs // {
-                  inherit hostname;
-                  pkgs-stable = import nixpkgs-stable {
-                    system = "x86_64-linux";
-                    config.allowUnfree = true;
-                  };
+          modules = [
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            {
+              _module.args = inputs // {
+                inherit hostname;
+                pkgs-stable = import nixpkgs-stable {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
                 };
-              }
-            ]
-            ++ (getNixFilesInDir ./common)
-            ++ (getNixFilesInDir ./common-opt)
-            ++ (getNixFilesInDir ./hosts/${hostname});
+              };
+            }
+          ]
+          ++ (getNixFilesInDir ./common)
+          ++ (getNixFilesInDir ./common-opt)
+          ++ (getNixFilesInDir ./hosts/${hostname});
         };
 
     in
