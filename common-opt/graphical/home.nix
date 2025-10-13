@@ -15,7 +15,6 @@ with lib;
       home.packages = with pkgs; [
         android-tools
         audacity
-        azuredatastudio
         calibre
         dbeaver-bin
         discord
