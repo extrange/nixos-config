@@ -17,6 +17,10 @@
     "nix-command"
     "flakes"
   ];
+  nix.settings.trusted-users = [
+    "root"
+    config.users.users.user.name
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # sops-nix

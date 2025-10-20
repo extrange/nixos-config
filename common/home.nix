@@ -31,6 +31,7 @@
       btrfs-progs
       compsize
       cryptsetup
+      devenv
       direnv
       dmidecode
       dnsutils # `dig` + `nslookup`
@@ -129,19 +130,24 @@
 
       git = {
         enable = true;
-        userEmail = "29305375+extrange@users.noreply.github.com";
-        userName = "extrange";
+        settings = {
+          user = {
+            email = "29305375+extrange@users.noreply.github.com";
+            name = "extrange";
+          };
+        };
         signing = {
           format = "ssh";
           key = "/home/${config.users.users.user.name}/.ssh/id_ed25519.pub";
           signByDefault = true;
-
         };
-        delta = {
-          enable = true;
-          options = {
-            side-by-side = true;
-          };
+      };
+
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+        options = {
+          side-by-side = true;
         };
       };
 
@@ -155,6 +161,7 @@
 
       ssh = {
         enable = true;
+        enableDefaultConfig = false;
 
         # ~.ssh/config
         matchBlocks = {
