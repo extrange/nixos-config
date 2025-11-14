@@ -16,6 +16,9 @@ with lib;
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
 
+    # For Lutris
+    hardware.graphics.enable32Bit = true;
+
     # Display: enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = "user";
@@ -68,11 +71,13 @@ with lib;
       {
         "/mnt/storage" = {
           device = "ssh.nicholaslyz.com:/mnt/storage";
-        } // options;
+        }
+        // options;
 
         "/mnt/workspace" = {
           device = "ssh.nicholaslyz.com:/home/user";
-        } // options;
+        }
+        // options;
       };
 
     environment.systemPackages = with pkgs; [
