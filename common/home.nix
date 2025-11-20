@@ -76,7 +76,7 @@
       p7zip
       parted
       pciutils # lspci
-      poppler_utils # pdftocairo, pdftoppm for pdf to image rendering
+      poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
       postgresql
       pre-commit
       ripgrep # recursively searches directories for a regex pattern
