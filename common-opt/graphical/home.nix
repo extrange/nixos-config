@@ -38,7 +38,7 @@ with lib;
         thunderbird
         ungoogled-chromium
         vscode
-        whatsapp-for-linux
+        wasistlos
         wineWowPackages.waylandFull
         zoom-us
 
