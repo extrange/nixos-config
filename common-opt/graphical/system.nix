@@ -39,6 +39,8 @@ with lib;
       totem # video player
     ];
 
+    services.flatpak.enable = true;
+
     # Sound
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
