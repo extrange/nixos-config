@@ -64,13 +64,16 @@ Backup the server's snapshots to a local drive, then scrub it.
 
 The pool's root dataset is configured with `compression=zstd-3` and `atime=off`.
 
-```sh
-sudo syncoid \
---delete-target-snapshots \
---sshkey ~/.ssh/id_ed25519 \
---sshport 39483 \
-server:storage/data archive/storage/data && \
-sudo zpool scrub -w archive && zpool status archive
+```bash
+sudo bash -c "
+  syncoid \
+    --delete-target-snapshots \
+    --sshkey ~/.ssh/id_ed25519 \
+    --sshport 39483 \
+    server:storage/data archive/storage/data && \
+  zpool scrub -w archive && \
+  zpool status archive
+"
 ```
 
 _Note: We don't preserve properties (`--preserve-properties`) because we don't want to preserve the `mountpoint` property._
