@@ -60,9 +60,7 @@ Further reading:
 
 ## ZFS Backup + Scrub Command
 
-Backup the server's snapshots to a local drive, then scrub it.
-
-The pool's root dataset is configured with `compression=zstd-3` and `atime=off`.
+The following can be run on a local computer with the archive drive imported prior, to backup the server's snapshots as well as scrub the archive drive:
 
 ```bash
 sudo bash -c "
@@ -75,6 +73,8 @@ sudo bash -c "
   zpool status archive
 "
 ```
+
+The archive drive pool's root dataset is configured with `compression=zstd-3` and `atime=off`.
 
 _Note: We don't preserve properties (`--preserve-properties`) because we don't want to preserve the `mountpoint` property._
 
