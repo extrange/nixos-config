@@ -57,6 +57,7 @@ with lib;
         open-sans
         source-sans
         jetbrains-mono # has ligatures
+        (pkgs.callPackage ./allura.nix { })
       ];
 
       fonts.fontconfig.enable = true;
