@@ -69,7 +69,7 @@
       nfs-utils
       nil # Nix language server for vscode
       nixd
-      nixfmt-rfc-style # Nix formatter
+      nixfmt # Nix formatter
       nmap
       ntfs3g
       openssl
