@@ -46,30 +46,15 @@ in
     options = [ "subvol=root" ] ++ mountOptions;
   };
 
-  # VM Storage
-  fileSystems."/mnt/vm-storage" = {
-    device = "/dev/disk/by-uuid/1b4fda7c-1f93-4edb-8749-a0415ce87360";
-    fsType = "btrfs";
-    options = [ "subvol=root" ] ++ mountOptions;
-  };
-
-  # Deduplication
-  # services.beesd.filesystems = {
-  #   software = {
-  #     spec = "LABEL=software";
-
-  #     # Explanation of .beeshome/beesstats.txt
-  #     # https://github.com/Zygo/bees/issues/66#issuecomment-403306685
-  #     hashTableSizeMB = 4096;
-  #   };
-  # };
-
   # BtrFS autoscrub
   services.btrfs.autoScrub.fileSystems = lib.mkForce [
     "/"
     "/home/user/software"
     "/mnt/vm-storage"
   ];
+
+  # Import our vm storage pool
+  boot.zfs.extraPools = [ "vm-data" ];
 
   # NFS
   services.nfs.server.enable = true;
