@@ -153,9 +153,11 @@
   # Appears to be due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
   services.resolved = {
     enable = true;
-    dnssec = "true";
-    domains = [ "~." ]; # All domains
-    dnsovertls = "true";
+    settings.Resolve = {
+      Domains = [ "~." ]; # All domains
+      DNSOverTLS = "true";
+      DNSSEC = "true";
+    };
   };
 
   # userborn aims to replace the old perl script
