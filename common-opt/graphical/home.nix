@@ -37,6 +37,7 @@ with lib;
         telegram-desktop
         thunderbird
         ungoogled-chromium
+        virt-manager
         vscode
         wasistlos
         wineWowPackages.waylandFull
