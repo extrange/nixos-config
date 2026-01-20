@@ -56,12 +56,16 @@ in
   # Import our vm storage pool
   boot.zfs.extraPools = [ "vm-data" ];
 
-  # NFS
-  services.nfs.server.enable = true;
-  services.nfs.server.exports = ''
-    /home/user/software *(rw,all_squash,anonuid=1000,anongid=1000)
-  '';
-  networking.firewall.allowedTCPPorts = [ 2049 ];
+  # VFIO Passthrough
+  boot.initrd.kernelModules = [
+    "vfio_pci"
+    "vfio"
+    "vfio_iommu_type1"
+  ];
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "vfio-pci.ids=10de:1b80,10de:10f0"
+  ];
 
   # Samba
   networking.firewall.allowPing = true;
@@ -92,9 +96,9 @@ in
     };
   };
 
-  # Zellij terminal multiplexer
   home-manager.users.user = {
 
+    # Zellij terminal multiplexer
     programs.zellij = {
       enable = true;
       settings = {
