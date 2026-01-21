@@ -1,10 +1,8 @@
 # Server Configuration
 
-Some notes about my server configuration (as I'll be moving it to NixOS soon).
+Some notes about my server configuration (as I'll be moving it to NixOS soon). After the migration, the information here can be removed if it is in code.
 
 ## Drive configuration
-
-TODO: Move these to disko.
 
 Each volume/dataset may have:
 
