@@ -5,16 +5,6 @@
   lib,
   ...
 }:
-let
-  # Common mount options for local drives
-  mountOptions = [
-    "nofail"
-    "noatime"
-    "nosuid"
-    "nodev"
-    "compress-force=zstd"
-  ];
-in
 {
   allowSsh = {
     enable = true;
@@ -25,14 +15,6 @@ in
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
   };
   zswap = true;
-
-  # Shared folder
-  # If a folder in /mnt is used it is owned by root
-  fileSystems."/home/user/software" = {
-    device = "/dev/disk/by-uuid/83eb9c35-b354-4a0e-9695-e994edeb11fa";
-    fsType = "btrfs";
-    options = [ "subvol=root" ] ++ mountOptions;
-  };
 
   # Import our vm storage pool
   boot.zfs.extraPools = [ "vm-data" ];
@@ -48,9 +30,7 @@ in
     "vfio-pci.ids=1002:7550,1002:ab40"
   ];
 
-  home-manager.users.user = {
-
-  };
+  home-manager.users.user = { };
 
   # VSCode Remote Server fix
   programs.nix-ld.enable = true;
