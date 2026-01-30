@@ -168,6 +168,7 @@
     tailscale = {
       enable = true;
       useRoutingFeatures = "client"; # allow using exit node
+
     };
 
   };
