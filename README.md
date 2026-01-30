@@ -61,30 +61,6 @@ Once installation is completed successfully, reboot.
 - GSConnect pairing
 - VSCode settings sync (note: due to [automatic login], the keyring is not unlocked. However, it is possible to use a insecure storage and disable the [password].)
 
-## Raspberry Pi 4
-
-_Currently not working - GPU driver issues (`Qt Fatal: Could not open display`)._
-
-For the initial build, build locally on another build host:
-
-```sh
-NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build path:.#nixosConfigurations.rpi4.config.system.build.sdImage --impure --max-jobs 1
-```
-
-_Note: the build host requires `boot.binfmt.emulatedSystems = [ "aarch64-linux" ]` set._
-
-[`dd` the image to the sdcard](https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi.html):
-
-```sh
-sudo dd if=<path-to-img> of=/dev/sdX bs=4096 conv=fsync status=progress
-```
-
-Subsequent builds can be pushed to the pi remotely:
-
-```sh
-nixos-rebuild --target-host user@192.168.1.30 --flake path:.#rpi4 --use-remote-sudo switch
-```
-
 ## Notes
 
 - To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secrets.yaml`.

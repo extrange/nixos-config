@@ -11,7 +11,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
-    raspberry-pi-nix.url = "github:tstat/raspberry-pi-nix";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +34,6 @@
       nixpkgs-stable,
       home-manager,
       sops-nix,
-      nnn,
       self,
       ...
     }@inputs:
@@ -114,8 +112,6 @@
               (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
               (
                 {
-                  pkgs,
-                  lib,
                   config,
                   ...
                 }:

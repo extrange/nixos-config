@@ -1,10 +1,6 @@
 # Packages and options for graphical systems
 {
-  config,
-  pkgs,
   lib,
-  nnn,
-  home-manager,
   ...
 }:
 with lib;

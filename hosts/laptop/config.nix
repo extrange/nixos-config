@@ -14,15 +14,19 @@
     enable = true;
     interface-name = "wlp0s20f3";
   };
+  zram = {
+    enable = true;
+    memoryPercent = 200; # This laptop only has 8GB of RAM so we need even more ZRAM
+  };
 
-  # This laptop only has 8GB of RAM so we need even more ZRAM
-  zramSwap.memoryPercent = lib.mkForce 200;
+  # Boot drive encryption
+  boot.initrd.luks.devices."luks-primary" = {
+    device = "/dev/disk/by-label/primary";
+    bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
+  };
 
   # Declare secret and fix its permissions
   sops.secrets."laptop/syncthing/key".owner = config.users.users.user.name;
-
-  # Allow TZ to be set automatically
-  time.timeZone = lib.mkForce null;
 
   # Intel GPU
   hardware.graphics.extraPackages = with pkgs; [
@@ -42,10 +46,6 @@
     # Touchscreen: Disabled, as not required for now
     # "usbcore.quirks=2386:433b:bk"
   ];
-
-  environment.variables = {
-    AWS_PROFILE = "default";
-  };
 
   home-manager.users.user = {
 

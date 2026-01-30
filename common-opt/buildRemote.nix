@@ -26,16 +26,6 @@ with lib;
           "kvm"
         ];
       }
-
-      {
-        hostName = "eu.nixbuild.net";
-        system = "aarch64-linux";
-        maxJobs = 100;
-        supportedFeatures = [
-          "benchmark"
-          "big-parallel"
-        ];
-      }
     ];
 
     # Tell remote machines to fetch their own build substitutes

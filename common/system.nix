@@ -6,87 +6,56 @@
   config,
   pkgs,
   lib,
-  self,
   hostname,
   ...
 }:
 
 {
-  # Nix
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.trusted-users = [
-    "root"
-    config.users.users.user.name
-  ];
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        config.users.users.user.name
+      ];
+      auto-optimise-store = true;
+    };
+    optimise.automatic = true; # Run daily at 0345
+    gc = {
+      # Deletes old generations
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   # sops-nix
-  sops.age.sshKeyPaths = [ "/home/user/.ssh/id_ed25519" ];
+  sops.age.sshKeyPaths = [ "/home/${config.users.users.user.name}/.ssh/id_ed25519" ];
   sops.defaultSopsFile = ../secrets.yaml;
   sops.secrets.userPassword.neededForUsers = true;
+  sops.gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
 
-  # https://github.com/Mic92/sops-nix/issues/427
-  sops.gnupg.sshKeyPaths = [ ];
-
-  # i8n
-  time.timeZone = "Asia/Singapore";
   i18n.defaultLocale = "en_SG.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_SG.UTF-8";
-    LC_IDENTIFICATION = "en_SG.UTF-8";
-    LC_MEASUREMENT = "en_SG.UTF-8";
-    LC_MONETARY = "en_SG.UTF-8";
-    LC_NAME = "en_SG.UTF-8";
-    LC_NUMERIC = "en_SG.UTF-8";
-    LC_PAPER = "en_SG.UTF-8";
-    LC_TELEPHONE = "en_SG.UTF-8";
-    LC_TIME = "en_SG.UTF-8";
-  };
 
   # Core system
 
-  # See latest kernels here
-  # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/kernel/kernels-org.json
-  # Unfortunately because we are using ZFS we cannot use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot = {
+    # We are using ZFS, so cannot use the latest kernel (linuxPackages_latest)
+    kernelPackages = pkgs.linuxPackages;
+    supportedFilesystems = [ "zfs" ];
+    zfs.forceImportRoot = false; # Recommended disabled
 
-  boot.supportedFilesystems = [
-    "ntfs"
-    "zfs"
-  ];
-  boot.zfs.forceImportRoot = false;
-
-  # Boot
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.timeout = 0;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50;
-  };
-
-  # Optimize swap on zram
-  # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 180;
-    "vm.watermark_boost_factor" = 0;
-    "vm.watermark_scale_factor" = 125;
-    "vm.page-cluster" = 0;
-  };
-
-  # Encryption is enabled by default. Individual devices override this
-  boot.initrd.luks.devices."luks-primary" = {
-    device = "/dev/disk/by-label/primary";
-
-    # Bypass internal dm-crypt workqueues on SSDs to fix freezing problems
-    # Note: probably only for SSDs.
-    # https://blog.cloudflare.com/speeding-up-linux-disk-encryption/
-    # https://dannyvanheumen.nl/post/prevent-linux-system-freezes-dmcrypt-luks-configuration/
-    bypassWorkqueues = true;
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 10; # Saves space in /boot
+      timeout = 0;
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   # Enable btrfs compression on /
@@ -130,27 +99,25 @@
               options = [ "NOPASSWD" ];
             })
             [
+              # Don't require sudo for these commands
               "reboot"
               "poweroff"
               "suspend"
             ];
       }
     ];
-    extraConfig = "Defaults timestamp_timeout=30"; # 30 mins;
+    extraConfig = "Defaults timestamp_timeout=1440"; # 24 hours
   };
 
-  systemd.services."getty@tty1".enable = true;
-  systemd.services."autovt@tty1".enable = true;
+  networking = {
+    hostName = hostname;
+    hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" ];
+  };
 
-  # Network
-  networking.hostName = hostname;
-  networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
-  networking.networkmanager.enable = true;
-
-  networking.nameservers = [ "1.1.1.1" ];
-
-  # The default resolver (glibc) has the issue with no internet after resuming from suspend/link changes
-  # Appears to be due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
+  # The default resolver (glibc) has the issue with no internet after resuming from suspend/link changes so we use systemd-resolved instead.
+  # Due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
   services.resolved = {
     enable = true;
     settings.Resolve = {
@@ -211,12 +178,9 @@
   programs.ssh = {
     knownHosts = {
       # Added to /etc/ssh/ssh_known_hosts (global)
-      # Hostnames given here are their Tailscale MagicDNS names/LAN IPs
+      # Hostnames given here are their Tailscale MagicDNS names & LAN IPs
       "ssh.nicholaslyz.com,server,192.168.184".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
-
-      "192.168.1.238,family-server".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK7MT+3VHbkXr/nj6Z/a3WGrPy8W4eWa81vgtOKOs2Qc";
 
       "ssh.icybat.com".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
@@ -244,19 +208,6 @@
     '';
   };
 
-  # Optimization: symlink identical files in store
-  # nix.settings.auto-optimise-store = true; # Run during every build, may slow down builds
-  nix.optimise.automatic = true; # Run daily at 0345
-
-  # Save space
-  boot.loader.systemd-boot.configurationLimit = 10; # Only saves space in /boot
-  nix.gc = {
-    # Deletes old generations
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
   services.btrfs.autoScrub = {
     enable = true;
 
@@ -264,11 +215,10 @@
     fileSystems = [ "/" ];
   };
 
-  # Autoupgrades
   system.autoUpgrade = {
     enable = true;
     flake = "github:extrange/nixos-config";
-    dates = "*-*-* 05:00:00";
+    dates = "*-*-* 05:00:00"; # Upgrade daily
     operation = "switch"; # Upgrade immediately
     persistent = true;
     randomizedDelaySec = "45min";

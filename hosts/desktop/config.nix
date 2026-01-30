@@ -14,6 +14,12 @@
   };
   ffmpegCustom = true;
 
+  # Boot drive encryption
+  boot.initrd.luks.devices."luks-primary" = {
+    device = "/dev/disk/by-label/primary";
+    bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
+  };
+
   # Adds udev rules for solaar.
   # Note that you need to replug+repair the keyboard for the first time
   # https://github.com/3v1n0/Solaar/blob/master/docs/installation.md
@@ -21,15 +27,6 @@
     enable = true;
     enableGraphical = true;
   };
-
-  # For davinci resolve
-  hardware.graphics.extraPackages = with pkgs; [
-    rocmPackages.clr.icd
-  ];
-
-  # Allow compiling rpi4 iso
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-  nix.settings.trusted-substituters = [ "https://raspberry-pi-nix.cachix.org" ];
 
   # Printer
   services.printing.enable = true;
@@ -80,11 +77,6 @@
       gnomeExtensions.brightness-control-using-ddcutil
       gnomeExtensions.solaar-extension
     ];
-
-    # For Davinci resolve
-    home.sessionVariables = {
-      ROC_ENABLE_PRE_VEGA = "1";
-    };
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
       "org/gnome/mutter" = {

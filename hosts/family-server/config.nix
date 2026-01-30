@@ -16,7 +16,7 @@ let
   ];
 in
 {
-  addAuthorizedKeys = {
+  allowSsh = {
     enable = true;
     forRoot = true; # For virt-manager/qemu kvm access
   };
@@ -29,14 +29,6 @@ in
     enable = true;
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
   };
-
-  # Required for USB wifi dongle
-  # boot.extraModulePackages = with config.boot.kernelPackages; [
-  #   rtl8821cu
-  # ];
-
-  # No disk encryption
-  boot.initrd.luks.devices = lib.mkForce { };
 
   # Shared folder
   # If a folder in /mnt is used it is owned by root

@@ -1,14 +1,14 @@
 { lib, config, ... }:
 with lib;
 {
-  options.addAuthorizedKeys = {
-    enable = mkEnableOption "Add authorized keys to user";
-    forRoot = mkEnableOption "Also add authorized keys to root";
+  options.allowSsh = {
+    enable = mkEnableOption "Ssh access and add authorized keys to user";
+    forRoot = mkEnableOption "Adding authorized keys for root access";
   };
 
   config =
     let
-      cfg = config.addAuthorizedKeys;
+      cfg = config.allowSsh;
       # These are added to /etc/ssh/authorized_keys.d
       authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK laptop"
