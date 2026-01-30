@@ -38,13 +38,6 @@ in
     options = [ "subvol=root" ] ++ mountOptions;
   };
 
-  # BtrFS autoscrub
-  services.btrfs.autoScrub.fileSystems = lib.mkForce [
-    "/"
-    "/home/user/software"
-    "/mnt/vm-storage"
-  ];
-
   # Import our vm storage pool
   boot.zfs.extraPools = [ "vm-data" ];
 
