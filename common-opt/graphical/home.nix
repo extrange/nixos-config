@@ -87,8 +87,7 @@ with lib;
 
         # Virt-manager connections
         "org/virt-manager/virt-manager/connections" = {
-          autoconnect = uris;
-          uris = [
+          autoconnect = [
             "qemu+ssh://root@zephyr/system"
           ];
         };
