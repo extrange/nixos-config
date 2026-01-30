@@ -1,6 +1,7 @@
 # Settings specific to Home Manager
 {
   config,
+  lib,
   pkgs,
   nnn,
   ...
@@ -192,6 +193,31 @@
             };
           };
         };
+
+        zellij = {
+          enable = true;
+          settings = {
+            pane_frames = false;
+            ui.pane_frames.hide_session_name = true;
+            mouse_mode = false; # Mouse mode messes up copy/paste over SSH
+            show_startup_tips = false;
+          };
+        };
+
+        bash.initExtra = (
+          # Only in interactive shells (not rsync etc)
+          lib.mkOrder 200 ''
+            export ZELLIJ_AUTO_ATTACH=true
+            export ZELLIJ_AUTO_EXIT=true
+
+            # Only run when:
+            # - not in VSCode, and
+            # - over SSH (don't run locally)
+            if [[ -z $VSCODE_SHELL_INTEGRATION && ( -n $SSH_CONNECTION ) ]]; then
+              eval "$(zellij setup --generate-auto-start bash)"
+            fi
+          ''
+        );
       };
 
       home.stateVersion = "24.05";

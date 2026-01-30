@@ -90,28 +90,6 @@ in
 
   home-manager.users.user = {
 
-    # Zellij terminal multiplexer
-    programs.zellij = {
-      enable = true;
-      settings = {
-        pane_frames = false;
-        ui.pane_frames.hide_session_name = true;
-        mouse_mode = false; # Mouse mode messes up copy/paste over SSH
-      };
-    };
-
-    # initExtra only for interactive
-    # Do not run in VSCode
-    programs.bash.initExtra = (
-      lib.mkOrder 200 ''
-        export ZELLIJ_AUTO_ATTACH=true
-        export ZELLIJ_AUTO_EXIT=true
-
-        if [[ -z $VSCODE_INJECTION ]]; then
-          eval "$(zellij setup --generate-auto-start bash)"
-        fi
-      ''
-    );
   };
 
   # VSCode Remote Server fix
