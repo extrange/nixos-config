@@ -20,15 +20,11 @@ in
     enable = true;
     forRoot = true; # For virt-manager/qemu kvm access
   };
-  ffmpegCustom = true;
-  wifi = {
-    enable = false;
-    interface-name = "wlp0s29u1u4i2";
-  };
   uptime = {
     enable = true;
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
   };
+  zswap = true;
 
   # Shared folder
   # If a folder in /mnt is used it is owned by root
