@@ -2,7 +2,7 @@
 with lib;
 {
   options.zram = {
-    enable = mkEnableOption "zram";
+    enable = mkEnableOption "zram. Note: zswap is preferred if there is swap space available (see https://linuxblog.io/zswap-better-than-zram/)";
     memoryPercent = mkOption {
       default = 50;
       description = "Maximum total amount of memory that can be stored in the zram swap devices (as a percentage of your total memory).";
