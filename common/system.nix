@@ -205,13 +205,7 @@
     '';
   };
 
-  services.btrfs.autoScrub = {
-    # Once a month by default
-    enable = true;
-
-    # Filesystems not detected automatically since LUKS is being used
-    fileSystems = [ "/" ];
-  };
+  services.btrfs.autoScrub.enable = true; # Once a month by default
 
   system.autoUpgrade = {
     enable = true;
