@@ -58,9 +58,6 @@
     };
   };
 
-  # Enable btrfs compression on /
-  fileSystems."/".options = [ "compress=zstd" ];
-
   # Libvirt
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
