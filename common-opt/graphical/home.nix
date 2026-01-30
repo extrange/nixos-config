@@ -92,6 +92,14 @@ with lib;
           ];
         };
 
+        # Auto TZ
+        "org/gnome/desktop/datetime" = {
+          automatic-timezone = true;
+        };
+        "org/gnome/system/location" = {
+          enabled = true;
+        };
+
         "org/gnome/mutter" = {
           # Snap windows to top/horizontal edges
           edge-tiling = true;

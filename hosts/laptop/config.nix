@@ -91,14 +91,6 @@
         natural-scroll = false;
       };
 
-      # Auto TZ
-      "org/gnome/desktop/datetime" = {
-        automatic-timezone = true;
-      };
-      "org/gnome/system/location" = {
-        enabled = true;
-      };
-
       # Vitals
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
