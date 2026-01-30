@@ -33,9 +33,34 @@
                     mountpoint = "/";
                   };
                 };
-                mountpoint = "/mnt/partition-root";
+                mountpoint = "/mnt/system-root";
               };
               swap.swapfile.size = "8G";
+            };
+          };
+        };
+      };
+    };
+    vm = {
+      type = "disk";
+
+      device = "/dev/disk/by-id/nvme-ADATA_SX6000LNP_2N2929Q682FG"; # 512GB NVME
+      content = {
+        type = "gpt";
+        partitions = {
+          root = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              subvolumes = {
+                "/root" = {
+                  mountOptions = [
+                    "noatime"
+                  ];
+                  mountpoint = "/mnt/vm";
+                };
+              };
+              mountpoint = "/mnt/vm-root";
             };
           };
         };
