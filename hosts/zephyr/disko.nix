@@ -55,6 +55,7 @@
                   "/root" = {
                     mountOptions = [
                       "noatime"
+                      "nofail"
                     ];
                     mountpoint = "/mnt/vm";
                   };
