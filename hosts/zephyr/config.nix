@@ -49,37 +49,8 @@ in
   ];
   boot.kernelParams = [
     "intel_iommu=on"
-    "vfio-pci.ids=10de:1b80,10de:10f0"
+    "vfio-pci.ids=1002:7550,1002:ab40"
   ];
-
-  # Samba
-  networking.firewall.allowPing = true;
-  services.samba-wsdd = {
-    # make shares visible for windows 10 clients
-    enable = true;
-    openFirewall = true;
-  };
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      software = {
-        path = "/home/user/software";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "acl allow execute always" = "yes";
-        "force user" = "user"; # This is the most important line
-      };
-      global = {
-        workgroup = "WORKGROUP";
-        "server string" = "zephyr";
-        "netbios name" = "zephyr";
-        security = "user";
-        "map to guest" = "bad user";
-      };
-    };
-  };
 
   home-manager.users.user = {
 
