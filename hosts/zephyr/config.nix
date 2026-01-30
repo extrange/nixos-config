@@ -80,8 +80,8 @@ in
       };
       global = {
         workgroup = "WORKGROUP";
-        "server string" = "family-server";
-        "netbios name" = "family-server";
+        "server string" = "zephyr";
+        "netbios name" = "zephyr";
         security = "user";
         "map to guest" = "bad user";
       };

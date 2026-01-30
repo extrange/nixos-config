@@ -86,17 +86,12 @@ with lib;
       dconf.settings = with home-manager.lib.hm.gvariant; {
 
         # Virt-manager connections
-        "org/virt-manager/virt-manager/connections" =
-          let
-            uris = [
-              "qemu+ssh://root@server/system"
-              "qemu+ssh://root@family-server/system"
-            ];
-          in
-          {
-            autoconnect = uris;
-            uris = uris;
-          };
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = uris;
+          uris = [
+            "qemu+ssh://root@zephyr/system"
+          ];
+        };
 
         "org/gnome/mutter" = {
           # Snap windows to top/horizontal edges

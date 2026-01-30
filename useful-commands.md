@@ -224,7 +224,7 @@ nix eval path:.#nixosConfigurations.desktop.config.system --apply builtins.attrN
 nix eval path:.#checks --apply builtins.attrNames
 
 # Output:
-[ "desktop" "family-server" ...]
+[ "desktop" "zephyr" ...]
 ```
 
 Load a flake into the repl (more info on [nix repl]):
