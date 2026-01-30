@@ -27,7 +27,6 @@
   ];
   boot.kernelParams = [
     "intel_iommu=on"
-    "vfio-pci.ids=1002:7550,1002:ab40"
   ];
 
   home-manager.users.user = { };
