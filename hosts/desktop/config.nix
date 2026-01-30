@@ -8,7 +8,7 @@
 {
   imports = [ ./brightness.nix ];
   graphical = true;
-  addAuthorizedKeys = {
+  allowSsh = {
     enable = true;
     forRoot = true; # Chanel's btrbk-archive
   };
