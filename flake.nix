@@ -27,6 +27,7 @@
 
   outputs =
     {
+      disko,
       nixpkgs,
       nixpkgs-stable,
       home-manager,
@@ -45,6 +46,7 @@
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            disko.nixosModules.disko
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
