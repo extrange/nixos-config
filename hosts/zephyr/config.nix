@@ -5,6 +5,12 @@
   lib,
   ...
 }:
+let
+  pools = [
+    "vm-data"
+    "vm-os"
+  ];
+in
 {
   allowSsh = {
     enable = true;
@@ -17,7 +23,8 @@
   zswap = true;
 
   # Import our vm storage pool
-  boot.zfs.extraPools = [ "vm-data" ];
+  boot.zfs.extraPools = pools;
+  services.zfs.autoScrub = pools;
 
   # VFIO Passthrough
   boot.initrd.kernelModules = [
