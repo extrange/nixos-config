@@ -211,10 +211,9 @@
             export ZELLIJ_AUTO_EXIT=true
 
             # Only run when:
-            # - not in VSCode/Zellij
+            # - not in VSCode
             # - over SSH (don't run locally)
             if [[ -z $VSCODE_SHELL_INTEGRATION &&
-                  -z $ZELLIJ &&
                   -n $SSH_CONNECTION ]]; then
               eval "$(zellij setup --generate-auto-start bash)"
             fi
