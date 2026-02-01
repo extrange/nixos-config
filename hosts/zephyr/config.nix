@@ -24,7 +24,7 @@
   services.zfs.autoScrub.enable = true;
 
   # VFIO Passthrough
-  boot.initrd.kernelModules = [
+  boot.kernelModules = [
     "vfio_pci"
     "vfio"
     "vfio_iommu_type1"
