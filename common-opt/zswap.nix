@@ -7,6 +7,16 @@ with lib;
 {
   options.zswap = mkEnableOption "zswap";
   config = mkIf config.zswap {
+    assertions = [
+      {
+        assertion = config.swapDevices != [ ];
+        message = "zswap requires swap to be allocated).";
+      }
+      {
+        assertion = config.zramSwap.enable == false;
+        message = "zswap should not be used with zram";
+      }
+    ];
     boot.initrd.kernelModules = [
       "zsmalloc" # For zswap
     ];
