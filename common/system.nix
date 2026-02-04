@@ -110,19 +110,11 @@
     hostName = hostname;
     hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
     networkmanager.enable = true;
-    nameservers = [ "1.1.1.1" ];
   };
 
   # The default resolver (glibc) has the issue with no internet after resuming from suspend/link changes so we use systemd-resolved instead.
   # Due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
-  services.resolved = {
-    enable = true;
-    settings.Resolve = {
-      Domains = [ "~." ]; # All domains
-      DNSOverTLS = "true";
-      DNSSEC = "true";
-    };
-  };
+  services.resolved.enable = true;
 
   # userborn aims to replace the old perl script
   # https://nixos.org/manual/nixos/stable/#sec-userborn
