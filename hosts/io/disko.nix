@@ -28,12 +28,16 @@
                   "/root" = {
                     mountOptions = [
                       "noatime"
-                      "compress=zstd"
+                      "compress-force=zstd"
                     ];
                     mountpoint = "/";
                   };
+                  "/swap" = {
+                    mountpoint = "/swap";
+                    swap.swapfile.size = "8G";
+                  };
                 };
-                swap.swapfile.size = "8G";
+                mountpoint = "/mnt/system-root";
               };
             };
           };
