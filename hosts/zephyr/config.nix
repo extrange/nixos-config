@@ -45,7 +45,4 @@
   ];
 
   home-manager.users.user = { };
-
-  # VSCode Remote Server fix
-  programs.nix-ld.enable = true;
 }

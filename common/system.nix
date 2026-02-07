@@ -152,40 +152,45 @@
     };
   };
 
-  programs.ssh = {
-    knownHosts = {
-      # Added to /etc/ssh/ssh_known_hosts (global)
-      # Hostnames given here are their Tailscale MagicDNS names & LAN IPs
-      "ssh.nicholaslyz.com,server,192.168.184".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
+  programs = {
+    # VSCode Remote Server fix
+    nix-ld.enable = true;
 
-      "zephyr,192.168.1.210".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdaLHhOsYkfEJVv06L7JrcMFztAcFSbx04Z41edX6/W";
+    ssh = {
+      knownHosts = {
+        # Added to /etc/ssh/ssh_known_hosts (global)
+        # Hostnames given here are their Tailscale MagicDNS names & LAN IPs
+        "ssh.nicholaslyz.com,server,192.168.184".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
-      "io,io.icybat.com".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGfBBMyq3DxGMNhr1IEPYZfdLM3TeCA+bQUeUc5X9nQM";
+        "zephyr,192.168.1.210".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdaLHhOsYkfEJVv06L7JrcMFztAcFSbx04Z41edX6/W";
 
-      "ssh.icybat.com".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
+        "io,io.icybat.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGfBBMyq3DxGMNhr1IEPYZfdLM3TeCA+bQUeUc5X9nQM";
 
-      "chanel-server.tail14cd7.ts.net".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIATcbSmh4g3C4c+CDd0X8iIRaJjq9cf6nVu9mpo2lSN8";
+        "ssh.icybat.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";
 
-      "github.com".publicKey =
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+        "chanel-server.tail14cd7.ts.net".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIATcbSmh4g3C4c+CDd0X8iIRaJjq9cf6nVu9mpo2lSN8";
+
+        "github.com".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+      };
+
+      # Added to /etc/ssh/ssh_config (used by root and all users)
+      #
+      # Required for SSHFS (SSH client run as root)
+      # Otherwise, the root's IdentityFile is used (/root/.ssh) which is not recognized
+      extraConfig = ''
+        Host ssh.nicholaslyz.com
+          HostName ssh.nicholaslyz.com
+          Port 39483
+          User user
+          IdentityFile /home/user/.ssh/id_ed25519
+      '';
     };
-
-    # Added to /etc/ssh/ssh_config (used by root and all users)
-    #
-    # Required for SSHFS (SSH client run as root)
-    # Otherwise, the root's IdentityFile is used (/root/.ssh) which is not recognized
-    extraConfig = ''
-      Host ssh.nicholaslyz.com
-        HostName ssh.nicholaslyz.com
-        Port 39483
-        User user
-        IdentityFile /home/user/.ssh/id_ed25519
-    '';
   };
 
   services.btrfs.autoScrub.enable = true; # Once a month by default
