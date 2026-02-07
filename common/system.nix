@@ -45,11 +45,6 @@
   # Core system
 
   boot = {
-    # We are using ZFS, so cannot use the latest kernel (linuxPackages_latest)
-    kernelPackages = pkgs.linuxPackages;
-    supportedFilesystems = [ "zfs" ];
-    zfs.forceImportRoot = false; # Recommended disabled
-
     loader = {
       systemd-boot.enable = true;
       systemd-boot.configurationLimit = 10; # Saves space in /boot
@@ -57,11 +52,6 @@
       efi.canTouchEfiVariables = true;
     };
   };
-
-  # Libvirt
-  virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemu.swtpm.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
 
   # Docker/Kubernetes
   virtualisation.docker = {
@@ -156,13 +146,10 @@
   };
 
   services = {
-
     tailscale = {
       enable = true;
       useRoutingFeatures = "client"; # allow using exit node
-
     };
-
   };
 
   programs.ssh = {
@@ -174,6 +161,9 @@
 
       "zephyr,192.168.1.210".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdaLHhOsYkfEJVv06L7JrcMFztAcFSbx04Z41edX6/W";
+
+      "io,io.icybat.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGfBBMyq3DxGMNhr1IEPYZfdLM3TeCA+bQUeUc5X9nQM";
 
       "ssh.icybat.com".publicKey =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHEn/IvLVDjLJCIhAs8jPOhFUeE+T6gIxKXVpL2o/sMo";

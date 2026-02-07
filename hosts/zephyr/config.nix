@@ -17,11 +17,22 @@
   zswap = true;
 
   # ZFS
+  boot = {
+    # With ZFS, we cannot use the latest kernel (linuxPackages_latest)
+    kernelPackages = pkgs.linuxPackages;
+    supportedFilesystems = [ "zfs" ];
+    zfs.forceImportRoot = false; # Recommended disabled
+  };
   boot.zfs.extraPools = [
     "vm-data"
     "vm-os"
   ];
   services.zfs.autoScrub.enable = true;
+
+  # Libvirt
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemu.swtpm.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # VFIO Passthrough
   boot.kernelModules = [
