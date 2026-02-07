@@ -1,6 +1,12 @@
-# Server Configuration
+# Server
 
-Some notes about my server configuration (as I'll be moving it to NixOS soon). After the migration, the information here can be removed if it is in code.
+Some notes about my server configuration (as I'll be moving it to NixOS soon). After the migration, the information here can be removed once it is all in code.
+
+
+Functions:
+- Main storage (`/mnt/storage`)
+- Run docker containers for my homelab
+- Serve all the Windows Games/Utilities folders to Zephyr over SAMBA
 
 ## Drive configuration
 
@@ -17,12 +23,10 @@ Each volume/dataset may have:
 | Pool    | Drives         | Scrub |
 | ------- | -------------- | :---: |
 | storage | 4x HDD, RAIDZ2 |  ✅   |
-| vm-data | 2x HDD, RAID1  |  ✅   |
 
 | Dataset                | Snaps | Backup |
 | ---------------------- | :---: | :----: |
 | storage/data           |  ✅   |   ✅   |
-| vm-data/windows-gaming |  ✅   |        |
 
 _Note: RAIDZ [should not][raidz-database] be used with databases._
 
@@ -38,7 +42,6 @@ Mount options: `noatime,compress=zstd`
 | -------------- | :---: | :----: |
 | root           |  ✅   |   ✅   |
 | server         |  ✅   |   ✅   |
-| vm             |  ✅   |        |
 | var/log        |       |        |
 | var/lib/docker |       |        |
 | nix            |       |        |

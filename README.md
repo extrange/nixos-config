@@ -8,6 +8,32 @@ Secrets are encrypted by the hosts' own SSH key via `sops-nix`.
 
 [Server]
 
+## Hosts
+
+### server
+
+TBC
+
+### zephyr
+
+This is the PC I use to run Windows (in a VM), with a GPU passthrough for gaming/video editing.
+
+Features:
+
+- Used for gaming/video editing
+- Fast CPU
+- GPU
+- \>32GB RAM
+- NVME (backed up to HDD) + HDD (RAIDed)
+
+### io
+
+For logging and uptime monitoring.
+
+### desktop
+
+### laptop
+
 ## Configuration
 
 Host configuration is specified by `*.nix` files in `hosts/${hostname}`, e.g.:
@@ -20,7 +46,7 @@ They also inherit configurations from `common/`.
 
 See available options in `common-opt`.
 
-When adding a new host, generate its SSH keypair in `server`'s `/home/user/keys` directory: `ssh-keygen -t ed25519 -f <hostname>`
+When adding a new host, generate its SSH keypair in `server`'s `/home/user/keys` directory: `ssh-keygen -f <hostname>`
 
 ## Install
 
