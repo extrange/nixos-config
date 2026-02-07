@@ -7,18 +7,9 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
-              priority = 1;
-              name = "ESP";
-              start = "1M";
-              end = "1024M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
-              };
+            bios = {
+              size = "1M";
+              type = "EF02"; # BIOS Boot Partition
             };
             root = {
               size = "100%";
@@ -34,7 +25,7 @@
                   };
                   "/swap" = {
                     mountpoint = "/swap";
-                    swap.swapfile.size = "8G";
+                    swap.swapfile.size = "4G";
                   };
                 };
                 mountpoint = "/mnt/system-root";

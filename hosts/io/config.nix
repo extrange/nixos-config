@@ -12,5 +12,8 @@
   };
   zswap = true;
 
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.grub.configurationLimit = 3;
+
   home-manager.users.user = { };
 }
