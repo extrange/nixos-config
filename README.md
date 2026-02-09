@@ -7,13 +7,13 @@
 
 ## Hosts
 
-| Name         | Description                                                         |
-| ------------ | ------------------------------------------------------------------- |
-| server (TBC) | Runs my homelab and hosts the bulk of my data.                      |
-| zephyr       | Runs Windows in a VM with GPU passthrough for gaming/video editing. |
-| io           | Logging and uptime monitoring.                                      |
-| desktop      | Portal device                                                       |
-| laptop       | Portal device                                                       |
+| Name         | Description                                                    |
+| ------------ | -------------------------------------------------------------- |
+| server (TBC) | Runs my homelab and hosts the bulk of my data.                 |
+| zephyr       | Runs Windows VM with GPU passthrough for gaming/video editing. |
+| io           | Logging and uptime monitoring.                                 |
+| desktop      | Portal device                                                  |
+| laptop       | Portal device                                                  |
 
 ## Setting up a new host
 
@@ -49,6 +49,6 @@
 [reckenrode]: https://github.com/reckenrode/nixos-configs
 [dmadisetti]: https://github.com/dmadisetti/.dots
 [Useful Commands]: useful-commands.md
-[Server]: server.md
+[Server]: hosts/server/server.md
 [nixos-anywhere]: https://github.com/nix-community/nixos-anywhere
 [disko]: https://github.com/nix-community/disko

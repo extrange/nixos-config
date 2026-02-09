@@ -2,7 +2,6 @@
 
 Some notes about my server configuration (as I'll be moving it to NixOS soon). After the migration, the information here can be removed once it is all in code.
 
-
 Functions:
 - Main storage (`/mnt/storage`)
 - Run docker containers for my homelab
@@ -22,11 +21,11 @@ Each volume/dataset may have:
 
 | Pool    | Drives         | Scrub |
 | ------- | -------------- | :---: |
-| storage | 4x HDD, RAIDZ2 |  ✅   |
+| storage | 4x HDD, RAIDZ2 |   ✅   |
 
-| Dataset                | Snaps | Backup |
-| ---------------------- | :---: | :----: |
-| storage/data           |  ✅   |   ✅   |
+| Dataset      | Snaps | Backup |
+| ------------ | :---: | :----: |
+| storage/data |   ✅   |   ✅    |
 
 _Note: RAIDZ [should not][raidz-database] be used with databases._
 
@@ -36,12 +35,12 @@ Mount options: `noatime,compress=zstd`
 
 | Volume | Drives         | Scrub |
 | ------ | -------------- | :---: |
-| /      | 2x SSD, mirror |  ✅   |
+| /      | 2x SSD, mirror |   ✅   |
 
 | Subvolume      | Snaps | Backup |
 | -------------- | :---: | :----: |
-| root           |  ✅   |   ✅   |
-| server         |  ✅   |   ✅   |
+| root           |   ✅   |   ✅    |
+| server         |   ✅   |   ✅    |
 | var/log        |       |        |
 | var/lib/docker |       |        |
 | nix            |       |        |
@@ -50,7 +49,7 @@ Mount options: `noatime,compress=zstd`
 
 Btrfs has issues syncing the checksum with the written data when direct writes ([O_DIRECT]) are used. Some sources of direct writes are libvirt's `cache=none` and fio's `direct=1` flags.
 
-For this reason, in libvirt, avoid using `cache=none` for disks.
+For this reason, in libvirt, avoid using `cache=none` when writing to Btrfs.
 
 Further reading:
 
