@@ -46,8 +46,11 @@
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
-      systemd-boot.configurationLimit = 10; # Saves space in /boot
+      systemd-boot = {
+        enable = true;
+        memtest86.enable = true;
+        configurationLimit = 10; # Saves space in /boot
+      };
       timeout = 0;
       efi.canTouchEfiVariables = true;
     };
