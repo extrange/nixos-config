@@ -1,5 +1,4 @@
 creation_rules:
-  # This is encrypted/decrypted with multiple keys
   - path_regex: secrets.yaml
     key_groups:
       - age:

@@ -84,6 +84,10 @@ However, with `uv`, as it downloads Python binaries (which will [not work][uv-ni
 
 See [this][nix-progress].
 
+## sops-nix
+
+To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secret-file.yaml`.
+
 ## Commands
 
 [nixpkgs.lib functions](https://teu5us.github.io/nix-lib.html)
