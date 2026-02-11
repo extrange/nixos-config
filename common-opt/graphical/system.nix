@@ -82,10 +82,6 @@ with lib;
         // options;
       };
 
-    environment.systemPackages = with pkgs; [
-      sshfs # Can't be in user
-    ];
-
     system.userActivationScripts = {
       # pub key is required for seahorse to autoadd to ssh-agent
       # ssh-agent is used by vscode to forward ssh credentials to remote machines

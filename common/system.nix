@@ -42,6 +42,90 @@
 
   i18n.defaultLocale = "en_SG.UTF-8";
 
+  environment.systemPackages = with pkgs; [
+    age
+    aria2
+    awscli2
+    bat
+    biome
+    btop
+    btrfs-progs
+    compsize
+    cryptsetup
+    devenv
+    direnv
+    dmidecode
+    dnsutils # `dig` + `nslookup`
+    duf
+    eksctl
+    ethtool
+    exiftool
+    file
+    fio
+    # ffmpeg - use the option `ffmpegCustom` instead
+    fzf
+    gh
+    git
+    guestfs-tools # virt-sparsify
+    hdparm
+    iftop
+    iotop
+    ipcalc
+    iperf3
+    jq # Command-line JSON processor
+    kubectl
+    kubernetes-helm
+    libheif
+    libsecret # for github auth
+    libva-utils # vaainfo, check on VAAPI (hw acceleration)
+    lm_sensors # for `sensors` command
+    lsd # ls replacement with icons
+    lshw
+    lsof
+    lsscsi
+    ltrace # library call monitoring
+    minikube
+    mtr # ping + tracert TUI
+    ncdu
+    neofetch
+    nfs-utils
+    nil # Nix language server for vscode
+    nixd
+    nixfmt # Nix formatter
+    nmap
+    ntfs3g
+    openssl
+    p7zip
+    parted
+    pciutils # lspci
+    poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
+    postgresql
+    pre-commit
+    ripgrep # recursively searches directories for a regex pattern
+    sanoid
+    smartmontools
+    socat
+    sops
+    sqlfluff
+    ssh-to-age
+    sshfs
+    strace # system call monitoring
+    stress-ng
+    syncthing
+    sysstat
+    tree
+    treefmt
+    unzip
+    usbutils # lsusb
+    vim
+    which
+    xz
+    yq-go # yaml processer https://github.com/mikefarah/yq
+    yt-dlp
+    zip
+    zstd
+  ];
+
   # Core system
 
   boot = {
