@@ -18,6 +18,7 @@
     enable = true;
     memoryPercent = 200; # This laptop only has 8GB of RAM so we need even more ZRAM
   };
+  remoteDesktop = true;
 
   # Boot drive encryption
   boot.initrd.luks.devices."luks-primary" = {
@@ -46,6 +47,11 @@
     # Touchscreen: Disabled, as not required for now
     # "usbcore.quirks=2386:433b:bk"
   ];
+
+  # Don't sleep when lid is closed on external power
+  services.logind.settings.Login = {
+    HandleLidSwitchExternalPower = "ignore";
+  };
 
   home-manager.users.user = {
 
