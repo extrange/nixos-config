@@ -40,7 +40,7 @@ with lib;
         virt-manager
         vscode
         wasistlos
-        wineWowPackages.waylandFull
+        wineWow64Packages.waylandFull
         zoom-us
 
         # Gnome Extensions

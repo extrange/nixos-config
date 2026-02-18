@@ -1,0 +1,8 @@
+{
+  config,
+  specialArgs,
+  pkgs,
+  lib,
+  ...
+}:
+{ }
