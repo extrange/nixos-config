@@ -12,7 +12,6 @@ with lib;
     systemd.services.gnome-remote-desktop = {
       wantedBy = [ "graphical.target" ]; # for starting the unit automatically at boot
     };
-    services.displayManager.autoLogin.enable = lib.mkForce false;
     networking.firewall.allowedTCPPorts = [
       3389
       3390
