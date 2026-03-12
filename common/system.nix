@@ -53,6 +53,7 @@
     compsize
     cryptsetup
     devenv
+    # ffmpeg - use the option `ffmpegCustom` instead
     direnv
     dmidecode
     dnsutils # `dig` + `nslookup`
@@ -60,9 +61,9 @@
     eksctl
     ethtool
     exiftool
+    ffmpegthumbnailer
     file
     fio
-    # ffmpeg - use the option `ffmpegCustom` instead
     fzf
     gh
     git
