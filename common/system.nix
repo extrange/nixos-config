@@ -42,91 +42,110 @@
 
   i18n.defaultLocale = "en_SG.UTF-8";
 
-  environment.systemPackages = with pkgs; [
-    age
-    aria2
-    awscli2
-    bat
-    biome
-    btop
-    btrfs-progs
-    compsize
-    cryptsetup
-    devenv
-    # ffmpeg - use the option `ffmpegCustom` instead
-    direnv
-    dmidecode
-    dnsutils # `dig` + `nslookup`
-    duf
-    eksctl
-    ethtool
-    exiftool
-    ffmpegthumbnailer
-    file
-    fio
-    fzf
-    gh
-    git
-    guestfs-tools # virt-sparsify
-    hdparm
-    iftop
-    imagemagick
-    iotop
-    ipcalc
-    iperf3
-    jq # Command-line JSON processor
-    kubectl
-    kubernetes-helm
-    libheif
-    libsecret # for github auth
-    libva-utils # vaainfo, check on VAAPI (hw acceleration)
-    lm_sensors # for `sensors` command
-    lsd # ls replacement with icons
-    lshw
-    lsof
-    lsscsi
-    ltrace # library call monitoring
-    minikube
-    mtr # ping + tracert TUI
-    ncdu
-    neofetch
-    nfs-utils
-    nil # Nix language server for vscode
-    nixd
-    nixfmt # Nix formatter
-    nmap
-    ntfs3g
-    openssl
-    p7zip
-    parted
-    pciutils # lspci
-    poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
-    postgresql
-    pre-commit
-    ripgrep # recursively searches directories for a regex pattern
-    sanoid
-    smartmontools
-    socat
-    sops
-    sqlfluff
-    ssh-to-age
-    sshfs
-    strace # system call monitoring
-    stress-ng
-    syncthing
-    sysstat
-    tree
-    treefmt
-    unzip
-    usbutils # lsusb
-    vim
-    which
-    xz
-    yq-go # yaml processer https://github.com/mikefarah/yq
-    yt-dlp
-    zip
-    zstd
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      age
+      aria2
+      awscli2
+      bat
+      biome
+      btop
+      btrfs-progs
+      compsize
+      cryptsetup
+      devenv
+      # ffmpeg - use the option `ffmpegCustom` instead
+      direnv
+      dmidecode
+      dnsutils # `dig` + `nslookup`
+      duf
+      eksctl
+      ethtool
+      exiftool
+      ffmpegthumbnailer # Thumbnails for videos in nautilus
+      file
+      fio
+      fzf
+      gdk-pixbuf # Thumbnails for HEIC/AVIF etc in nautilus
+      gh
+      git
+      guestfs-tools # virt-sparsify
+      hdparm
+      iftop
+      imagemagick
+      iotop
+      ipcalc
+      iperf3
+      jq # Command-line JSON processor
+      kubectl
+      kubernetes-helm
+      libheif
+      libheif.bin # HEIC thumbail support
+      libheif.out # HEIC thumbnail support
+      libsecret # for github auth
+      libva-utils # vaainfo, check on VAAPI (hw acceleration)
+      lm_sensors # for `sensors` command
+      lsd # ls replacement with icons
+      lshw
+      lsof
+      lsscsi
+      ltrace # library call monitoring
+      minikube
+      mtr # ping + tracert TUI
+      ncdu
+      neofetch
+      nfs-utils
+      nil # Nix language server for vscode
+      nixd
+      nixfmt # Nix formatter
+      nmap
+      ntfs3g
+      openssl
+      p7zip
+      parted
+      pciutils # lspci
+      poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
+      postgresql
+      pre-commit
+      ripgrep # recursively searches directories for a regex pattern
+      sanoid
+      smartmontools
+      socat
+      sops
+      sqlfluff
+      ssh-to-age
+      sshfs
+      strace # system call monitoring
+      stress-ng
+      syncthing
+      sysstat
+      tree
+      treefmt
+      unzip
+      usbutils # lsusb
+      vim
+      which
+      xz
+      yq-go # yaml processer https://github.com/mikefarah/yq
+      yt-dlp
+      zip
+      zstd
+    ]
+    ++ [
+      # Allow gdk-pixbuf to thumbnail RAW photos by extracting the embedded jpeg
+      # https://wiki.nixos.org/wiki/Thumbnails
+      (pkgs.writeTextFile {
+        name = "raw-embedded-jpeg-thumbnailer";
+        destination = "/share/thumbnailers/raw-embedded-jpeg.thumbnailer";
+        text = ''
+          [Thumbnailer Entry]
+          TryExec=gdk-pixbuf-thumbnailer
+          Exec=gdk-pixbuf-thumbnailer -s %s %u %o
+          MimeType=image/x-canon-crw;image/x-canon-cr2;image/x-canon-cr3;image/x-adobe-dng;image/x-dng;
+        '';
+      })
+    ];
 
   # Core system
 
