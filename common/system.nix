@@ -69,6 +69,7 @@
     guestfs-tools # virt-sparsify
     hdparm
     iftop
+    imagemagick
     iotop
     ipcalc
     iperf3
