@@ -63,6 +63,7 @@
       eksctl
       ethtool
       exiftool
+      fastfetch
       ffmpegthumbnailer # Thumbnails for videos in nautilus
       file
       fio
@@ -94,7 +95,6 @@
       minikube
       mtr # ping + tracert TUI
       ncdu
-      neofetch
       nfs-utils
       nil # Nix language server for vscode
       nixd
