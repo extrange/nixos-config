@@ -19,9 +19,9 @@
 
 - Create its config (and optionally [disko]'s config) under `hosts/`
 - Generate the host's user's SSH key and place it in `server`'s `~/keys`. This key is used to encrypt/decrypt sops secrets in `secrets.yaml`.
-- Get the `age` key from the SSH public key: `ssh-keygen -y -f path/to/public/key | ssh-to-age`
-- Add that key to `.sops.yaml`. Then, from another host with its key added prior, add the new host's key to `secrets.yaml` with `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops updatekeys secrets.yaml`
-- (optional) If this host should be allowed to SSH into my servers, add that SSH key to the common authorized SSH keys.
+- Add the host's `age` key to `.sops.yaml`: `AGE_KEY=$(ssh-to-age -i /path/to/public/key) yq 'with(.creation_rules[0].key_groups[0].age;  . += env(AGE_KEY) | .[-1] line_comment="host-name")' -i .sops.yaml`
+- From another host with its key added prior, add the new host's key to `secrets.yaml` with `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops updatekeys secrets.yaml`
+- (optional) If this host should be allowed to SSH into my servers, add that SSH key to `common-opt/allowSsh.nix`.
 - Deploy via [nixos-anywhere]
 - SSH into the host as `root` and copy over the host's user's SSH key.
 - Add the machine's SSH host key to the common known keys (obtain with `ssh-keyscan -t ed25519 hostname`)
