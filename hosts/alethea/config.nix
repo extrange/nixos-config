@@ -17,31 +17,18 @@
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
-      "org/gnome/desktop/interface" = {
-        show-battery-percentage = true;
-      };
-      "org/gnome/desktop/peripherals/touchpad" = {
-        tap-to-click = true;
-        natural-scroll = false;
-      };
-
       # Vitals
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
           "_system_load_1m_"
           "_memory_usage_"
-          "_memory_swap_usage_"
-          "__temperature_max__"
           "__network-rx_max__"
-          "_battery_rate_"
-          "_battery_time_left_"
         ];
-        show-battery = true;
       };
 
-      # Increase screen blank timeout (seconds)
+      # Don't dim screen
       "org/gnome/desktop/session" = {
-        "idle-delay" = mkUint32 900; # 15mins
+        "idle-delay" = mkUint32 0;
       };
 
       "org/gnome/settings-daemon/plugins/power" = {
