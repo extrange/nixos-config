@@ -10,6 +10,10 @@
   buildRemote = true;
   graphical = true;
   remoteDesktop = true;
+  allowSsh = {
+    enable = true;
+    forRoot = true;
+  };
 
   services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
 

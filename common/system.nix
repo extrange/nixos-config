@@ -274,6 +274,9 @@
         "zephyr,192.168.1.210".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdaLHhOsYkfEJVv06L7JrcMFztAcFSbx04Z41edX6/W";
 
+        "alethea".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMY/Zigo8p/1UtiiyWuBtjlXui0gu36S2JbXcKaoqNt";
+
         "io,io.icybat.com".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGfBBMyq3DxGMNhr1IEPYZfdLM3TeCA+bQUeUc5X9nQM";
 
