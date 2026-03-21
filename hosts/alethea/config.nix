@@ -11,6 +11,8 @@
   graphical = true;
   remoteDesktop = true;
 
+  services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
+
   home-manager.users.user = {
 
     home.packages = with pkgs; [
