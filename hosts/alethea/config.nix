@@ -15,6 +15,7 @@
     forRoot = true;
   };
 
+  services.displayManager.autoLogin.enable = lib.mkForce false;
   services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
 
   home-manager.users.user = {
