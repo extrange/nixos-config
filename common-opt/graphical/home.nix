@@ -200,6 +200,7 @@ with lib;
           # Dash-to-dock
           "org/gnome/shell/extensions/dash-to-dock" = {
             transparency-mode = "DYNAMIC";
+            dock-fixed = false;
             show-trash = false;
           };
 
