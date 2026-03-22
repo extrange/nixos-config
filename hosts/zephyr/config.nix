@@ -16,6 +16,22 @@
   };
   zswap = true;
 
+  # Disable TSO to fix hanging on the e1000e NIC
+  # https://forum.proxmox.com/threads/e1000e-eno1-detected-hardware-unit-hang.59928/page-5#post-805080
+  networking.networkmanager.ensureProfiles.profiles = {
+    "Wired Connection 1" = {
+      connection = {
+        id = "Wired Connection 1";
+        interface-name = "eno1";
+        type = "ethernet";
+      };
+      ethtool = {
+        "feature-tso" = false;
+      };
+    };
+
+  };
+
   # ZFS
   boot = {
     # With ZFS, we cannot use the latest kernel (linuxPackages_latest)
