@@ -15,8 +15,18 @@
     forRoot = true;
   };
 
-  services.displayManager.autoLogin.enable = lib.mkForce false;
   services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
+
+  # Enable moonlight streaming
+  services.sunshine = {
+    enable = true;
+    autoStart = true; # optional: starts Sunshine automatically on login
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+  services.displayManager.autoLogin.enable = lib.mkForce true; # Required for moonlight to work
+  users.users.user.extraGroups = [ "uinput" ]; # fix cursor not moving
+  environment.variables.MUTTER_DEBUG_DISABLE_HW_CURSORS = 1; # fix curson not showing
 
   home-manager.users.user = {
 
@@ -24,6 +34,11 @@
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
+      "org/gnome/mutter" = {
+        # Fractional scaling
+        experimental-features = [ "scale-monitor-framebuffer" ];
+      };
+
       # Vitals
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
