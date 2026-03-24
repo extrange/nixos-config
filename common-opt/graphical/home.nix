@@ -32,6 +32,7 @@ with lib;
         obs-studio
         obsidian
         pdfarranger
+        remmina
         smplayer
         subsonic
         telegram-desktop
