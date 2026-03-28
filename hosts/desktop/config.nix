@@ -54,6 +54,9 @@
     SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
   '';
 
+  # Allow this host to redirect its USB devices to VMs
+  virtualisation.spiceUSBRedirection.enable = true;
+
   # Archival drives
   fileSystems."/mnt/chanel-archive" = {
     device = "/dev/disk/by-uuid/803c34f4-a16a-4c9f-abf2-f734157d08e8";
