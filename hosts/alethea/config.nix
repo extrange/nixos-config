@@ -16,6 +16,7 @@
   };
 
   services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
+  services.keyd.enable = lib.mkForce false; # Causes problems with Windows Remote Desktop
 
   # Enable moonlight streaming
   services.sunshine = {
