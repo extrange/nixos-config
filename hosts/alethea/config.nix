@@ -59,7 +59,7 @@
       };
 
       "org/gnome/shell/extensions/custom-hot-corners-extended/monitor-0-top-left-0" = {
-        action = "toggle-overview-app";
+        action = "toggle-overview";
       };
       "org/gnome/shell/extensions/custom-hot-corners-extended/misc" = {
         barrier-fallback = true;
