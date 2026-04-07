@@ -21,7 +21,6 @@ with lib;
         firefox
         gimp
         gnome-extension-manager
-        gnome-tweaks
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
         jan

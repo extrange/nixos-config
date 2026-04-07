@@ -41,6 +41,13 @@
         experimental-features = [ "scale-monitor-framebuffer" ];
       };
 
+      "org/gnome/desktop/input-sources" = {
+        xkb-options = lib.mkForce [
+          # Do not remap capslock to backspace, since we already do that on the Windows host
+          "terminate:ctrl_alt_bksp"
+        ];
+      };
+
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
           "_system_load_1m_"
