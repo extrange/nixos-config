@@ -64,6 +64,7 @@
   # Archival drives
   fileSystems."/mnt/chanel-archive" = {
     device = "/dev/disk/by-uuid/803c34f4-a16a-4c9f-abf2-f734157d08e8";
+    fsType = "btrfs";
     options = [
       "noauto"
       "compress-force=zstd"
