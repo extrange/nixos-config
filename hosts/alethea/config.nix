@@ -14,6 +14,14 @@
     enable = true;
     forRoot = true;
   };
+  zswap = true;
+
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8 * 1024;
+    }
+  ];
 
   services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
   services.keyd.enable = lib.mkForce false; # Causes problems with Windows Remote Desktop
