@@ -17,6 +17,8 @@
 
 ## Setting up a new host
 
+_All hosts with access to my server should have encrypted storage._
+
 - Create its config (and optionally [disko]'s config) under `hosts/`
 - Generate the host's user's SSH key and place it in `server`'s `~/keys`. This key is used to encrypt/decrypt sops secrets in `secrets.yaml`.
 - Add the host's `age` key to `.sops.yaml`: `AGE_KEY=$(ssh-to-age -i /path/to/public/key) yq 'with(.creation_rules[0].key_groups[0].age;  . += env(AGE_KEY) | .[-1] line_comment="host-name")' -i .sops.yaml`
@@ -26,7 +28,7 @@
 - SSH into the host as `root` and copy over the host's user's SSH key.
 - Add the machine's SSH host key to the common known keys (obtain with `ssh-keyscan -t ed25519 hostname`)
 
-**Post Install**
+### Post Install
 
 - Setup logins (these can't be declaratively set)
   - Tailscale

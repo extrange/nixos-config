@@ -3,6 +3,7 @@
 Some notes about my server configuration (as I'll be moving it to NixOS soon). After the migration, the information here can be removed once it is all in code.
 
 Functions:
+
 - Main storage (`/mnt/storage`)
 - Run docker containers for my homelab
 - Serve all the Windows Games/Utilities folders to Zephyr over SAMBA
