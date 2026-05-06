@@ -24,6 +24,7 @@ with lib;
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
         jan
+        karere
         kid3 # audio file tagger
         libreoffice
         lutris
@@ -40,7 +41,6 @@ with lib;
         ungoogled-chromium
         virt-manager
         vscode
-        wasistlos
         wineWow64Packages.waylandFull
         zoom-us
 
@@ -69,11 +69,6 @@ with lib;
 
         ".config/background" = {
           source = ./.config/background;
-          force = true;
-        };
-
-        ".config/wasistlos/settings.conf" = {
-          source = ./.config/wasistlos/settings.conf;
           force = true;
         };
 
@@ -174,8 +169,7 @@ with lib;
               "org.gnome.Nautilus.desktop"
               "code.desktop"
               "org.telegram.desktop.desktop"
-              "com.github.eneshecan.WhatsAppForLinux.desktop"
-              "com.github.xeco23.WasIstLos.desktop"
+              "io.github.tobagin.karere.desktop"
             ];
 
             # Enable extensions
@@ -217,6 +211,13 @@ with lib;
           };
           "org/gnome/desktop/search-providers" = {
             disable-external = true;
+          };
+
+          # Whatsapp Client
+          "io/github/tobagin/karere" = {
+            run-on-startup = true;
+            start-in-background = true;
+            enable-multi-account = true;
           };
         };
     };
