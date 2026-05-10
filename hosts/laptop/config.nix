@@ -6,12 +6,16 @@
   ...
 }:
 
+let
+  wifiInterface = "wlp0s20f3";
+in
+
 {
   buildRemote = true;
   graphical = true;
   wifi = {
     enable = true;
-    interface-name = "wlp0s20f3";
+    interface-name = wifiInterface;
   };
   zram = {
     enable = true;
@@ -27,6 +31,11 @@
 
   # Declare secret and fix its permissions
   sops.secrets."laptop/syncthing/key".owner = config.users.users.user.name;
+
+  programs.captive-browser = {
+    enable = true;
+    interface = wifiInterface;
+  };
 
   # Intel GPU
   hardware.graphics.extraPackages = with pkgs; [
