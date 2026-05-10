@@ -167,6 +167,9 @@
     rootless = {
       enable = true;
       setSocketVariable = true;
+      daemon.settings = {
+        dns = [ "172.17.0.1" ];
+      };
     };
   };
 
@@ -207,12 +210,35 @@
   networking = {
     hostName = hostname;
     hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
-    networkmanager.enable = true;
+    networkmanager = {
+      connectionConfig = {
+        # Only use our nameservers
+        "ipv4.ignore-auto-dns" = "true";
+        "ipv6.ignore-auto-dns" = "true";
+      };
+      enable = true;
+    };
+    nameservers = [
+      "1.1.1.1#cloudflare-dns.com"
+      "1.0.0.1#cloudflare-dns.com"
+      "2606:4700:4700::1111#cloudflare-dns.com"
+      "2606:4700:4700::1001#cloudflare-dns.com"
+    ];
   };
 
   # The default resolver (glibc) has the issue with no internet after resuming from suspend/link changes so we use systemd-resolved instead.
   # Due to tailscale overwriting /etc/resolv.conf (the default nameserver 192.168.1.1 is removed)
-  services.resolved.enable = true;
+  # This breaks captive portals, but we have
+  services.resolved = {
+    enable = true;
+    settings.Resolve = {
+      Domains = [ "~." ]; # All domains
+      DNSOverTLS = "true";
+      DNSSEC = "true";
+      DNSStubListenerExtra = [ "172.17.0.1" ];
+
+    };
+  };
 
   # userborn aims to replace the old perl script
   # https://nixos.org/manual/nixos/stable/#sec-userborn
