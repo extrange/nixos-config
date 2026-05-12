@@ -210,14 +210,7 @@
   networking = {
     hostName = hostname;
     hostId = builtins.substring 0 8 (builtins.hashString "sha256" hostname);
-    networkmanager = {
-      connectionConfig = {
-        # Only use our nameservers
-        "ipv4.ignore-auto-dns" = "true";
-        "ipv6.ignore-auto-dns" = "true";
-      };
-      enable = true;
-    };
+    networkmanager.enable = true;
     nameservers = [
       "1.1.1.1#cloudflare-dns.com"
       "1.0.0.1#cloudflare-dns.com"
@@ -232,7 +225,7 @@
   services.resolved = {
     enable = true;
     settings.Resolve = {
-      Domains = [ "~." ]; # All domains
+      Domains = [ "~." ]; # Force DNS lookups for all domains to use these nameservers
       DNSOverTLS = "true";
       DNSSEC = "true";
       DNSStubListenerExtra = [ "172.17.0.1" ];
