@@ -78,6 +78,15 @@ with lib;
         };
       };
 
+      programs = {
+        ghostty = {
+          enable = true;
+          enableBashIntegration = true;
+          installBatSyntax = true;
+          installVimSyntax = true;
+        };
+      };
+
       dconf.settings =
         with home-manager.lib.hm.gvariant;
         let
@@ -145,7 +154,7 @@ with lib;
           # Open terminal with Ctrl + Alt + T
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
             binding = "<Control><Alt>t";
-            command = "kgx";
+            command = "ghostty";
             name = "Launch terminal";
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -163,7 +172,7 @@ with lib;
             # Setup dash shortcuts
             favorite-apps = [
               "firefox.desktop"
-              "org.gnome.Console.desktop"
+              "com.mitchellh.ghostty.desktop"
               "obsidian.desktop"
               "org.gnome.Nautilus.desktop"
               "code.desktop"
@@ -196,11 +205,6 @@ with lib;
             transparency-mode = "DYNAMIC";
             dock-fixed = false;
             show-trash = false;
-          };
-
-          "org/gnome/Console" = {
-            use-system-font = false;
-            custom-font = "JetBrains Mono NL 12";
           };
 
           # Disable search completely
