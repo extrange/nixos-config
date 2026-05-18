@@ -42,6 +42,11 @@
 
   i18n.defaultLocale = "en_SG.UTF-8";
 
+  environment.variables = {
+    EDITOR = "vim";
+    VISUAL = "vim";
+  };
+
   environment.systemPackages =
     with pkgs;
     [

@@ -18,9 +18,6 @@ in
       # General settings
       home.username = user;
       home.homeDirectory = "/home/${user}";
-      home.sessionVariables = {
-        EDITOR = "vim";
-      };
 
       home.file = {
         ".aws/config" = {
