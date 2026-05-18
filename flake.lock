@@ -87,22 +87,6 @@
         "type": "github"
       }
     },
-    "nnn": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1776579319,
-        "narHash": "sha256-4AuQHNg848ukQxRYnfxlY/tzC/USoFFnypT8ltL+/jU=",
-        "owner": "jarun",
-        "repo": "nnn",
-        "rev": "fb3209431387540c0f0bfb3a4aa057c6aa94fe94",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jarun",
-        "repo": "nnn",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -110,7 +94,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "nnn": "nnn",
         "sops-nix": "sops-nix"
       }
     },

@@ -173,6 +173,17 @@
     };
   };
 
+  environment.etc = {
+    "subuid" = {
+      text = "1000:100000:65536\n";
+      mode = "0644";
+    };
+    "subgid" = {
+      text = "1000:100000:65536\n";
+      mode = "0644";
+    };
+  };
+
   # Decrease systemd shutdown timer duration
   # Written to /etc/systemd/system.conf
   # Verify with `systemctl show --all | grep -i timeout`
