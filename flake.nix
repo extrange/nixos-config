@@ -16,10 +16,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nnn = {
-      url = "github:jarun/nnn";
-      flake = false;
-    };
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };

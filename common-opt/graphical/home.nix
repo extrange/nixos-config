@@ -3,7 +3,6 @@
   config,
   pkgs,
   lib,
-  nnn,
   home-manager,
   pkgs-stable,
   ...

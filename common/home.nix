@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  nnn,
   ...
 }:
 let
@@ -21,7 +20,6 @@ in
       home.homeDirectory = "/home/${user}";
       home.sessionVariables = {
         EDITOR = "vim";
-        NNN_PLUG = "p:preview-tui";
       };
 
       home.file = {
@@ -40,9 +38,7 @@ in
             ls = "lsd";
             df = "duf";
             grep = "grep --color=auto";
-            nnn = "nnn -ae";
           };
-          bashrcExtra = builtins.readFile "${nnn}/misc/quitcd/quitcd.bash_sh_zsh"; # Allow changing directory on cd
         };
 
         home-manager.enable = true;
@@ -68,12 +64,6 @@ in
           options = {
             side-by-side = true;
           };
-        };
-
-        nnn = {
-          enable = true;
-          package = pkgs.nnn.override { withNerdIcons = true; };
-          plugins.src = "${nnn}/plugins";
         };
 
         starship.enable = true;
@@ -118,6 +108,12 @@ in
             mouse_mode = false; # Mouse mode messes up copy/paste over SSH
             show_startup_tips = false;
           };
+        };
+
+        yazi = {
+          enable = true;
+          enableBashIntegration = true;
+          shellWrapperName = "y";
         };
 
         bash.initExtra = (
