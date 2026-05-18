@@ -84,6 +84,10 @@ with lib;
           enableBashIntegration = true;
           installBatSyntax = true;
           installVimSyntax = true;
+          settings = {
+            background-opacity = 0.9;
+            theme = "Atom One Dark";
+          };
         };
       };
 
