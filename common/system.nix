@@ -168,11 +168,18 @@
       enable = true;
       setSocketVariable = true;
       daemon.settings = {
-        dns = [ "172.17.0.1" ];
+        # We need to specify a DNS server here when using systemd-resolve
+        # As rootless docker cannot reliably access systemd-resolve
+        # https://github.com/NixOS/nixpkgs/issues/231191
+        dns = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
       };
     };
   };
 
+  # Hack around rootless docker not working if subuid ranges are not specified
   environment.etc = {
     "subuid" = {
       text = "1000:100000:65536\n";
