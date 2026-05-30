@@ -6,12 +6,10 @@
   ...
 }:
 {
-  allowSsh = {
-    enable = true;
-    forRoot = true; # For virt-manager/qemu kvm access
-  };
+  allowSsh.enable = true;
   zswap = true;
 
+  # The VPS doesn't support UEFI
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub.configurationLimit = 3;
 
