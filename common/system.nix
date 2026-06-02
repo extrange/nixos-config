@@ -76,6 +76,7 @@
       gdk-pixbuf # Thumbnails for HEIC/AVIF etc in nautilus
       gh
       git
+      ghostty.terminfo
       guestfs-tools # virt-sparsify
       hdparm
       iftop
