@@ -18,6 +18,7 @@ with lib;
         dbeaver-bin
         discord
         firefox
+        ghostty.terminfo
         gimp
         gnome-extension-manager
         hunspell # libreoffice spellcheck
