@@ -23,7 +23,7 @@ in
     enable = mkEnableOption "SSH access into this machine";
     forRoot = mkEnableOption "SSH `root` access";
 
-    # These are added to /etc/ssh/authorized_keys.d
+    # These are added to /etc/ssh/authorized_keys.d/<user name>
     authorizedDeviceKeys = mkOption {
       type = types.attrsOf sshKey;
       description = "Authorized SSH keys";
