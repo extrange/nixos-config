@@ -61,18 +61,6 @@
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
 
-  # Archival drives
-  fileSystems."/mnt/chanel-archive" = {
-    device = "/dev/disk/by-uuid/803c34f4-a16a-4c9f-abf2-f734157d08e8";
-    fsType = "btrfs";
-    options = [
-      "noauto"
-      "compress-force=zstd"
-      "x-systemd.automount" # Automatically mount on access
-      "x-systemd.device-timeout=1s" # Don't freeze when accessing directory without the device
-    ];
-  };
-
   home-manager.users.user = {
     home.packages = with pkgs; [
       clinfo # Check OpenCL
