@@ -33,6 +33,7 @@
     options = [
       "subvol=root"
       "compress=zstd"
+      "x-systemd.device-timeout=infinity"
     ];
   };
 
