@@ -8,6 +8,7 @@
           type = "gpt";
           partitions = {
             ESP = {
+              device = "/dev/disk/by-id/nvme-WDC_PC_SN520_SDAPNUW-128G-1006_1903C4801837-part1";
               priority = 1;
               name = "ESP";
               start = "1M";
@@ -21,6 +22,7 @@
               };
             };
             root = {
+              device = "/dev/disk/by-id/nvme-WDC_PC_SN520_SDAPNUW-128G-1006_1903C4801837-part2";
               size = "100%";
               content = {
                 type = "btrfs";
