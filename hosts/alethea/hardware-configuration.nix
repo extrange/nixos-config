@@ -21,7 +21,11 @@
     "sr_mod"
     "virtio_blk"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [
+    "virtio_pci"
+    "sr_mod"
+    "virtio_blk"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
