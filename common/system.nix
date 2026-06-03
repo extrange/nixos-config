@@ -310,7 +310,8 @@
     ssh = {
       knownHosts = {
         # Added to /etc/ssh/ssh_known_hosts (global)
-        # Names here are their hhostnames (e.g. DNS, Tailscale MagicDNS, LAN IPs), NOT .ssh/config entries
+        # Keys here are their hostnames (e.g. DNS, Tailscale MagicDNS, LAN IPs), NOT .ssh/config entries
+        # Values are the server's SSH keys (not the user's)
         "ssh.nicholaslyz.com,server,192.168.184".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
