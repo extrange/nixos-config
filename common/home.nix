@@ -69,30 +69,27 @@ in
           enable = true;
           enableDefaultConfig = false;
 
-          # ~.ssh/config
-          matchBlocks = {
+          settings = {
 
-            # This is so I don't have to specify the port my server listens on
             server = {
-              hostname = "ssh.nicholaslyz.com";
-              port = 39483;
-              user = "user";
+              Hostname = "ssh.nicholaslyz.com";
+              Port = 39483;
+              User = "user";
             };
 
-            # This is so I don't have to specify the user as 'chanel'
             chanel-server = {
-              hostname = "chanel-server.tail14cd7.ts.net";
-              user = "chanel";
+              Hostname = "chanel-server.tail14cd7.ts.net";
+              User = "chanel";
             };
 
-            azure-chanel = {
-              hostname = "csid.southeastasia.cloudapp.azure.com";
-              user = "chanel";
+            chanel-vm = {
+              Hostname = "chanel-vm.tail14cd7.ts.net";
+              User = "chanel";
             };
 
             router = {
-              hostname = "192.168.1.1";
-              user = "admin";
+              Hostname = "192.168.1.1";
+              User = "admin";
             };
           };
         };

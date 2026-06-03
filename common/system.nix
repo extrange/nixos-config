@@ -310,7 +310,7 @@
     ssh = {
       knownHosts = {
         # Added to /etc/ssh/ssh_known_hosts (global)
-        # Hostnames given here are their Tailscale MagicDNS names & LAN IPs
+        # Names here are their hhostnames (e.g. DNS, Tailscale MagicDNS, LAN IPs), NOT .ssh/config entries
         "ssh.nicholaslyz.com,server,192.168.184".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
@@ -328,6 +328,9 @@
 
         "chanel-server.tail14cd7.ts.net".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIATcbSmh4g3C4c+CDd0X8iIRaJjq9cf6nVu9mpo2lSN8";
+
+        "chanel-vm.tail14cd7.ts.net".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN2evtqBRA3SAdaezg59SRFz2bnvNC8cM+Imbv+Trq0/";
 
         "github.com".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
