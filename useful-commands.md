@@ -204,6 +204,7 @@ nix shell nixpkgs/dd613136ee91f67e5dba3f3f41ac99ae89c5406b#vscode-fhs --impure
 Evaluate the value of a configuration option:
 
 ```bash
+# Preferred
 nix eval path:.<path-to-expression>
 
 # E.g.
@@ -211,6 +212,10 @@ nix eval path:.#nixosConfigurations.rpi4.config.networking.hostName
 
 # Output:
 "laptop"
+
+# Alternatively, but relative flake paths (e.g. path:.) are not supported
+nixos-option --flake <path to expression> <expression to evaluate>
+
 ```
 
 Evaluate the value of a flake, applying a function:
