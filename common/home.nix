@@ -6,14 +6,14 @@
   ...
 }:
 let
-  user = config.users.users.user.name;
+  user = config.userName;
 in
 
 {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.user = {
+    users."${user}" = {
 
       # General settings
       home.username = user;

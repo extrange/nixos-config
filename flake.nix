@@ -97,6 +97,18 @@
         )
         // {
 
+          chanel-fuji = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              sops-nix.nixosModules.sops
+              home-manager.nixosModules.home-manager
+              disko.nixosModules.disko
+            ]
+            ++ (getNixFilesInDir ./chanel-fuji);
+          };
+        }
+        // {
+
           # ISO installer image with USB wifi driver support
           # Build with:
           # nix build .#nixosConfigurations.iso-wifi.config.system.build.isoImage
