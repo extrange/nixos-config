@@ -8,9 +8,12 @@
   ...
 }:
 with lib;
+let
+  user = config.userName;
+in
 {
   config = mkIf config.graphical {
-    home-manager.users.user = {
+    home-manager.users."${user}" = {
       home.packages = with pkgs; [
         android-tools
         audacity
@@ -81,7 +84,6 @@ with lib;
       programs = {
         ghostty = {
           enable = true;
-          enableBashIntegration = true;
           installBatSyntax = true;
           installVimSyntax = true;
           settings = {

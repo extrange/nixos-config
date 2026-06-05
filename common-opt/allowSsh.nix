@@ -49,7 +49,7 @@ in
           ClientAliveInterval = 15;
         };
       };
-      users.users."user".openssh.authorizedKeys.keys = renderKey cfg.authorizedDeviceKeys;
+      users.users."${config.userName}".openssh.authorizedKeys.keys = renderKey cfg.authorizedDeviceKeys;
       users.users."root".openssh.authorizedKeys.keys = mkIf cfg.forRoot (
         renderKey cfg.authorizedDeviceKeys
       );

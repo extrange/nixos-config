@@ -30,7 +30,7 @@ in
   };
 
   # Declare secret and fix its permissions
-  sops.secrets."laptop/syncthing/key".owner = config.users.users.user.name;
+  sops.secrets."laptop/syncthing/key".owner = config.userName;
 
   programs.captive-browser = {
     enable = true;

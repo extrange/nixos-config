@@ -5,6 +5,9 @@
   home-manager,
   ...
 }:
+let
+  user = config.userName;
+in
 
 {
   buildRemote = true;
@@ -34,10 +37,10 @@
     openFirewall = true;
   };
   services.displayManager.autoLogin.enable = lib.mkForce true; # Required for moonlight to work
-  users.users.user.extraGroups = [ "uinput" ]; # fix cursor not moving
+  users.users."${user}".extraGroups = [ "uinput" ]; # fix cursor not moving
   environment.variables.MUTTER_DEBUG_DISABLE_HW_CURSORS = 1; # fix curson not showing
 
-  home-manager.users.user = {
+  home-manager.users."${user}" = {
 
     home.packages = with pkgs; [
       gnomeExtensions.custom-hot-corners-extended

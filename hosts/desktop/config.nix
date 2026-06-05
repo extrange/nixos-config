@@ -13,8 +13,9 @@
     forRoot = true; # Chanel's btrbk-archive
   };
   ffmpegCustom = true;
+  enablePrinting = true;
 
-  users.users."user".extraGroups = [
+  users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
   ];
 
@@ -31,25 +32,6 @@
     enable = true;
     enableGraphical = true;
   };
-
-  # Printer
-  services.printing.enable = true;
-  hardware.printers =
-    let
-      brother = "Brother_MFC-J470DW";
-    in
-    {
-      ensurePrinters = [
-        {
-          name = brother;
-          location = "Home";
-          deviceUri = "ipp://192.168.1.101/ipp";
-          model = "everywhere";
-        }
-      ];
-      ensureDefaultPrinter = brother;
-
-    };
 
   # For ddcutil (monitor brightness control)
   boot.kernelModules = [ "i2c-dev" ];

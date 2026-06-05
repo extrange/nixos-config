@@ -9,7 +9,7 @@ with lib;
   options.ffmpegCustom = mkEnableOption "Ffmpeg with FdkAac codec support";
 
   config = {
-    home-manager.users.user.home.packages = with pkgs; [
+    home-manager.users."${config.userName}".home.packages = with pkgs; [
       (
         if config.ffmpegCustom then
           ffmpeg.override {

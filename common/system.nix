@@ -9,6 +9,9 @@
   hostname,
   ...
 }:
+let
+  user = config.userName;
+in
 
 {
   nix = {
@@ -19,7 +22,7 @@
       ];
       trusted-users = [
         "root"
-        config.users.users.user.name
+        user
       ];
       auto-optimise-store = true;
     };
@@ -35,7 +38,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # sops-nix
-  sops.age.sshKeyPaths = [ "/home/${config.users.users.user.name}/.ssh/id_ed25519" ];
+  sops.age.sshKeyPaths = [ "/home/${user}/.ssh/id_ed25519" ];
   sops.defaultSopsFile = ../secrets.yaml;
   sops.secrets.userPassword.neededForUsers = true;
   sops.gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
@@ -265,9 +268,9 @@
 
   users = {
     mutableUsers = false;
-    users."user" = {
+    users."${user}" = {
       isNormalUser = true;
-      description = "user";
+      description = user;
       extraGroups = [
         "networkmanager"
         "wheel"
@@ -281,7 +284,7 @@
   # Configuration options applied on build-vm
   virtualisation.vmVariant = {
     # Override our default password so we can sudo
-    users.users.user = {
+    users.users."${user}" = {
       password = "12345";
       hashedPasswordFile = lib.mkForce null;
     };
@@ -290,7 +293,7 @@
     virtualisation.sharedDirectories = {
       ssh = {
         source = "$HOME/.ssh/id_ed25519"; # Substituted by the host's shell (and user)
-        target = "/home/${config.users.users.user.name}/.ssh/id_ed25519";
+        target = "/home/${user}/.ssh/id_ed25519";
       };
     };
     virtualisation.memorySize = 2048;

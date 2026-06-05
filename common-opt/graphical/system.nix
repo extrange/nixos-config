@@ -8,6 +8,9 @@
   ...
 }:
 with lib;
+let
+  user = config.userName;
+in
 {
   config = mkIf config.graphical {
 
@@ -21,7 +24,7 @@ with lib;
 
     # Display: enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
-    services.displayManager.autoLogin.user = "user";
+    services.displayManager.autoLogin.user = user;
     # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
     systemd.services."getty@tty1".enable = lib.mkForce false;
     systemd.services."autovt@tty1".enable = lib.mkForce false;
