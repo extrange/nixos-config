@@ -27,9 +27,6 @@ in
       libgourou
       logseq
       vlc
-
-      # Gnome Extensions
-      gnomeExtensions.brightness-control-using-ddcutil
     ];
 
     programs = {
@@ -65,12 +62,6 @@ in
           "org.telegram.desktop.desktop"
           "org.gnome.Console.desktop"
         ];
-
-        # Enable extensions
-        enabled-extensions = [
-          "display-brightness-ddcutil@themightydeity.github.com"
-        ];
-
       };
 
       # Background

@@ -8,6 +8,7 @@
 {
   imports = [ ./brightness.nix ];
   graphical = true;
+  ddcutil = true;
   allowSsh = {
     enable = true;
     forRoot = true; # Chanel's btrbk-archive
@@ -33,13 +34,6 @@
     enableGraphical = true;
   };
 
-  # For ddcutil (monitor brightness control)
-  boot.kernelModules = [ "i2c-dev" ];
-  services.udev.extraRules = ''
-    SUBSYSTEM=="i2c-dev", KERNEL=="i2c-[0-9]*", ATTRS{class}=="0x030000", TAG+="uaccess"
-    SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
-  '';
-
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -47,12 +41,10 @@
     home.packages = with pkgs; [
       clinfo # Check OpenCL
       darktable
-      ddcutil
       digikam
       nvtopPackages.amd
       solaar
 
-      gnomeExtensions.brightness-control-using-ddcutil
       gnomeExtensions.solaar-extension
     ];
 
@@ -70,11 +62,6 @@
         sleep-inactive-ac-type = "nothing";
       };
 
-      "org/gnome/shell" = {
-        enabled-extensions = [
-          "display-brightness-ddcutil@themightydeity.github.com"
-        ];
-      };
 
       "org/gnome/shell/extensions/vitals" = {
         hot-sensors = [
@@ -85,20 +72,6 @@
           "__network-rx_max__"
         ];
       };
-
-      "org/gnome/shell/extensions/display-brightness-ddcutil" = {
-        button-location = 1; # Show in system menu
-        only-all-slider = true;
-        show-all-slider = true;
-        allow-zero-brightness = true;
-        disable-display-state-check = true; # Seems to make changes faster
-        show-value-label = true;
-        hide-system-indicator = true;
-        ddcutil-binary-path = "${pkgs.ddcutil}/bin/ddcutil";
-        increase-brightness-shortcut = [ "MonBrightnessUp" ];
-        decrease-brightness-shortcut = [ "MonBrightnessDown" ];
-      };
-
     };
 
     # Set fractional scaling and monitor position
