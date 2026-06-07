@@ -33,7 +33,7 @@ in
         shellAliases = {
           ls = "${lib.getExe pkgs.lsd}";
           df = "${lib.getExe pkgs.duf}";
-          watch = "${lib.getExe pkgs.viddy}";
+          watch = "${lib.getExe pkgs.hwatch}";
           grep = "grep --color=auto";
         };
       };

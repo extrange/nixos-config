@@ -82,6 +82,7 @@ in
       ghostty.terminfo
       guestfs-tools # virt-sparsify
       hdparm
+      hwatch
       iftop
       imagemagick
       iotop
@@ -133,7 +134,6 @@ in
       treefmt
       unzip
       usbutils # lsusb
-      viddy
       vim
       virtiofsd # For virtiofs to work in libvirt
       which
