@@ -54,7 +54,7 @@ in
     dconf.settings = with home-manager.lib.hm.gvariant; {
       "org/gnome/shell" = {
         # Setup dash shortcuts
-        favorite-apps = [
+        favorite-apps = lib.mkForce [
           "firefox.desktop"
           "org.gnome.Nautilus.desktop"
           "Logseq.desktop"
@@ -62,6 +62,7 @@ in
           "org.telegram.desktop.desktop"
           "org.gnome.Console.desktop"
         ];
+        "org/gnome/desktop/input-sources" = lib.mkForce { };
       };
 
       # Background
