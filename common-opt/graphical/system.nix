@@ -29,9 +29,7 @@ in
     systemd.services."getty@tty1".enable = lib.mkForce false;
     systemd.services."autovt@tty1".enable = lib.mkForce false;
 
-    # Note: with autologin, the 'login' keyring will still require unlock when applications request access
-    # Without autologin, it will automatically be unlocked, but ether way you need to enter a password once
-    # https://askubuntu.com/questions/918712/the-login-keyring-did-not-get-unlocked-when-you-logged-into-your-computer
+    # To get around issues with the keyring locked after autologin, use a blank keyring password
     services.gnome.gnome-keyring.enable = true;
 
     environment.gnome.excludePackages = with pkgs; [
