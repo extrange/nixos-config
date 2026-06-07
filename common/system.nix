@@ -295,8 +295,22 @@ in
     virtualisation.sharedDirectories = {
       ssh = {
         source = "$HOME/.ssh"; # Substituted by the host's shell (and user)
-        target = "/home/${user}/.ssh";
+        target = "/run/host-ssh";
       };
+    };
+
+    # Make the shared parent directory read-only as well
+    fileSystems."/run/host-ssh".options = [ "ro" ];
+
+    # Bind-mount only the single key file to its real location (read-only)
+    fileSystems."/home/${user}/.ssh/id_ed25519" = {
+      device = "/run/host-ssh/id_ed25519";
+      fsType = "none";
+      options = [
+        "bind"
+        "ro"
+      ];
+      depends = [ "/run/host-ssh" ];
     };
     virtualisation.memorySize = 4096;
 
