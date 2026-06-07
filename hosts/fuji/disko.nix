@@ -4,7 +4,6 @@
     disk = {
       main = {
         type = "disk";
-        name = builtins.substring 0 10 (builtins.hashString "sha256" config.disko.devices.disk.main.device);
         device = "/dev/disk/by-id/nvme-WDC_PC_SN720_SDAPNTW-512G-1014_190885806635";
         content = {
           type = "gpt";
@@ -22,30 +21,47 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            root = {
+            luks = {
               size = "100%";
+              name = "luks-fuji";
               content = {
-                type = "btrfs";
-                subvolumes = {
-                  "/root" = {
-                    mountOptions = [
-                      "noatime"
-                      "compress-force=zstd"
-                    ];
-                    mountpoint = "/";
-                  };
-                  "/swap" = {
-                    mountpoint = "/swap";
-                    swap.swapfile.size = "16G";
-                  };
+                type = "luks";
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                  ];
                 };
-                mountpoint = "/mnt/system-root";
+                content = {
+                  type = "btrfs";
+                  subvolumes =
+                    let
+                      mountOptions = [
+                        "noatime"
+                        "compress"
+                      ];
+                    in
+                    {
+                      "/root" = {
+                        mountpoint = "/";
+                        inherit mountOptions;
+                      };
+                      "/home" = {
+                        mountpoint = "/home";
+                        inherit mountOptions;
+                      };
+                      "/swap" = {
+                        mountpoint = "/swap";
+                        swap.swapfile.size = "16G";
+                      };
+                    };
+                };
               };
             };
           };
         };
       };
     };
-
   };
 }
