@@ -31,8 +31,9 @@ in
         enable = true;
         enableCompletion = true;
         shellAliases = {
-          ls = "lsd";
-          df = "duf";
+          ls = "${lib.getExe pkgs.lsd}";
+          df = "${lib.getExe pkgs.duf}";
+          watch = "${lib.getExe pkgs.viddy}";
           grep = "grep --color=auto";
         };
       };
