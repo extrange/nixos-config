@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,6 +19,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -28,6 +32,7 @@
       nixpkgs-stable,
       home-manager,
       sops-nix,
+      lanzaboote,
       self,
       ...
     }@inputs:
@@ -42,6 +47,7 @@
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager

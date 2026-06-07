@@ -120,6 +120,7 @@ in
       pre-commit
       ripgrep # recursively searches directories for a regex pattern
       sanoid
+      sbctl # For generating new Secure Boot keys
       smartmontools
       socat
       sops
