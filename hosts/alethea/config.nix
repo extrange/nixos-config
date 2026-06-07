@@ -89,10 +89,6 @@ in
         "idle-delay" = mkUint32 0;
       };
 
-      "org/gnome/settings-daemon/plugins/power" = {
-        # Don't sleep on AC power
-        sleep-inactive-ac-type = "nothing";
-      };
     };
 
   };

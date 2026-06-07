@@ -7,6 +7,7 @@
 
 let
   wifiInterface = "wlp0s20f3";
+  user = config.userName;
 in
 {
   graphical = true;
@@ -30,6 +31,10 @@ in
     pkiBundle = "/var/lib/sbctl";
   };
 
+  users = {
+    mutableUsers = lib.mkForce true; # Allow using passwd
+    users.${user}.hashedPasswordFile = lib.mkForce null;
+  };
   services.keyd.enable = lib.mkForce false;
   virtualisation.spiceUSBRedirection.enable = true;
 }

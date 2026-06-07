@@ -96,16 +96,16 @@ in
       dconf.settings =
         with home-manager.lib.hm.gvariant;
         let
-          uris = [ "qemu+ssh://root@zephyr/system" ];
+          qemuUris = [ "qemu+ssh://root@zephyr/system" ];
         in
         {
 
           # Virt-manager connections
           "org/virt-manager/virt-manager/connections" = {
-            uris = uris;
+            uris = qemuUris;
           };
           "org/virt-manager/virt-manager/connections" = {
-            autoconnect = uris;
+            autoconnect = qemuUris;
           };
 
           # Auto TZ
@@ -172,6 +172,11 @@ in
           # Show thumbnails on SSH drives
           "org/gnome/nautilus/preferences" = {
             show-image-thumbnails = "always";
+          };
+
+          "org/gnome/settings-daemon/plugins/power" = {
+            # Don't sleep on AC power
+            sleep-inactive-ac-type = "nothing";
           };
 
           "org/gnome/shell" = {

@@ -62,7 +62,15 @@ in
           "org.telegram.desktop.desktop"
           "org.gnome.Console.desktop"
         ];
-        "org/gnome/desktop/input-sources" = lib.mkForce { };
+      };
+
+      "org/gnome/desktop/input-sources" = lib.mkForce {
+        sources = [
+          (mkTuple [
+            "xkb"
+            "us"
+          ])
+        ];
       };
 
       # Background

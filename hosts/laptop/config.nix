@@ -123,11 +123,6 @@ in
       "org/gnome/desktop/session" = {
         "idle-delay" = mkUint32 900; # 15mins
       };
-
-      "org/gnome/settings-daemon/plugins/power" = {
-        # Don't sleep on AC power
-        sleep-inactive-ac-type = "nothing";
-      };
     };
 
   };

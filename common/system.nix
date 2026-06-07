@@ -294,11 +294,15 @@ in
     # nixos-rebuild build-vm: Mount the hosts SSH key so the VM can decrypt secrets
     virtualisation.sharedDirectories = {
       ssh = {
-        source = "$HOME/.ssh/id_ed25519"; # Substituted by the host's shell (and user)
-        target = "/home/${user}/.ssh/id_ed25519";
+        source = "$HOME/.ssh"; # Substituted by the host's shell (and user)
+        target = "/home/${user}/.ssh";
       };
     };
-    virtualisation.memorySize = 2048;
+    virtualisation.memorySize = 4096;
+
+    # VMs have no real swap or btrfs — disable features that require them
+    zswap = lib.mkForce false;
+    services.btrfs.autoScrub.enable = lib.mkForce false;
   };
 
   services = {
