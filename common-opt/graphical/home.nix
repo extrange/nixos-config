@@ -76,7 +76,14 @@ in
 
         # SSHFS bookmarks
         ".config/gtk-3.0/bookmarks" = {
-          source = ./bookmarks;
+
+          text = ''
+            file:///home/${user}/Downloads Downloads
+            file:///home/${user}/Pictures Pictures
+            file:///home/${user}/Videos Videos
+            file:///mnt/workspace workspace
+            file:///mnt/storage storage
+          '';
           force = true;
         };
       };

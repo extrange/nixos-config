@@ -353,7 +353,8 @@ in
         "chanel-server.tail14cd7.ts.net".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIATcbSmh4g3C4c+CDd0X8iIRaJjq9cf6nVu9mpo2lSN8";
 
-        "chanel-vm.tail14cd7.ts.net".publicKey =
+        # Chanel's VM
+        "vm,vm.tail14cd7.ts.net".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN2evtqBRA3SAdaezg59SRFz2bnvNC8cM+Imbv+Trq0/";
 
         "github.com".publicKey =

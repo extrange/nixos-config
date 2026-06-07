@@ -20,6 +20,13 @@ in
         source = ./background.jpg;
         force = true;
       };
+      ".config/gtk-3.0/bookmarks" = lib.mkForce {
+        text = ''
+          file:///home/${user}/Downloads Downloads
+          file:///home/${user}/Pictures Pictures
+          file:///home/${user}/Videos Videos
+        '';
+      };
     };
 
     home.packages = with pkgs; [
