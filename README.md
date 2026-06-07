@@ -28,6 +28,8 @@ _All hosts with access to my server should have encrypted storage._
 - SSH into the host as `root` and copy over the host's user's SSH key.
 - Add the machine's SSH host key to the common known keys (obtain with `ssh-keyscan -t ed25519 hostname`)
 
+_Note: For systems using TPM2 with Secure Boot, ensure that Secure Boot is disabled during the installation. Follow the instructions [here][lanzaboote] to enroll the Secure Boot keys post-installation. After that, enroll the LUKS key into the TPM following the instructions on the [NixOS Wiki][nixos-tpm-wiki]._
+
 ### Post Install
 
 - Setup logins (these can't be declaratively set)
@@ -54,3 +56,5 @@ _All hosts with access to my server should have encrypted storage._
 [Server]: hosts/server/server.md
 [nixos-anywhere]: https://github.com/nix-community/nixos-anywhere
 [disko]: https://github.com/nix-community/disko
+[lanzaboote]: https://github.com/nix-community/lanzaboote/blob/master/docs/getting-started/prepare-your-system.md
+[nixos-tpm-wiki]: https://wiki.nixos.org/wiki/Full_Disk_Encryption#TPM2
