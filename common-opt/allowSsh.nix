@@ -47,6 +47,7 @@ in
         settings = {
           # Prevent inactive SSH connections from dropping
           ClientAliveInterval = 15;
+          PasswordAuthentication = false;
         };
       };
       users.users."${config.userName}".openssh.authorizedKeys.keys = renderKey cfg.authorizedDeviceKeys;

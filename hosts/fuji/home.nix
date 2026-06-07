@@ -11,7 +11,10 @@ let
 in
 
 {
-  sops.secrets."chanel/irasuser".owner = user;
+  sops.secrets = {
+    "chanel/irasuser".owner = user;
+    "chanel/syncthing/key".owner = user; # Allow syncthing to copy the key
+  };
   home-manager.users."${user}" = {
 
     # .config files
@@ -72,6 +75,7 @@ in
       };
 
       "org/gnome/desktop/input-sources" = lib.mkForce {
+        xkb-options = lib.mkForce [ ];
         sources = [
           (mkTuple [
             "xkb"
@@ -99,6 +103,28 @@ in
 
     services.syncthing = {
       enable = true;
+      cert = "${./syncthing-cert.pem}";
+      key = config.sops.secrets."chanel/syncthing/key".path;
+      settings = {
+        options = {
+          urAccepted = -1; # Decline usage reporting
+        };
+        devices = {
+          server.id = "VE43VRC-5MUVL3A-CDIUUQI-3P5VTUZ-Y2YVRTY-HRIJN2U-5JAKLHC-XOYZCAX";
+        };
+        folders = {
+          storage = {
+            path = "~/storage";
+            id = "upads-r9u37";
+            devices = [ "server" ];
+          };
+          relationship = {
+            path = "~/relationship";
+            id = "dvz3s-wetzy";
+            devices = [ "server" ];
+          };
+        };
+      };
     };
   };
 }
