@@ -32,6 +32,7 @@
                   crypttabExtraOpts = [
                     "tpm2-device=auto"
                   ];
+                  bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
                 };
                 content = {
                   type = "btrfs";
