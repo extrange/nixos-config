@@ -181,11 +181,6 @@ in
             show-image-thumbnails = "always";
           };
 
-          "org/gnome/settings-daemon/plugins/power" = {
-            # Don't sleep on AC power
-            sleep-inactive-ac-type = "nothing";
-          };
-
           "org/gnome/shell" = {
             # Setup dash shortcuts
             favorite-apps = [

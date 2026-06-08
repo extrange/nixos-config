@@ -15,6 +15,7 @@
   };
   ffmpegCustom = true;
   enablePrinting = true;
+  fixLogiBoltSleep = true;
 
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
@@ -26,14 +27,6 @@
     bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
   };
 
-  # Adds udev rules for solaar.
-  # Note that you need to replug+repair the keyboard for the first time
-  # https://github.com/3v1n0/Solaar/blob/master/docs/installation.md
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;
-  };
-
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
 
@@ -43,9 +36,6 @@
       darktable
       digikam
       nvtopPackages.amd
-      solaar
-
-      gnomeExtensions.solaar-extension
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
@@ -73,17 +63,6 @@
     home.file.".config/monitors.xml" = {
       source = ./monitors.xml;
       force = true; # overwrite existing
-    };
-
-    # Fixes Logitech Bolt receiver (kb) waking immediately after sleep
-    home.file.".config/autostart/solaar.desktop" = {
-      text = ''
-        [Desktop Entry]
-        Type=Application
-        Name=Solaar
-        Exec=${pkgs.solaar}/bin/solaar -w hide
-      '';
-      force = true;
     };
 
   };

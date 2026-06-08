@@ -23,6 +23,7 @@ in
     enable = true;
     interface-name = wifiInterface;
   };
+  fixLogiBoltSleep = true;
 
   # Secure Boot
   boot.loader.systemd-boot.enable = lib.mkForce false;
