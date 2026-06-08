@@ -25,9 +25,6 @@ in
     # Display: enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
     services.displayManager.autoLogin.user = user;
-    # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-    systemd.services."getty@tty1".enable = lib.mkForce false;
-    systemd.services."autovt@tty1".enable = lib.mkForce false;
 
     # To get around issues with the keyring locked after autologin, use a blank keyring password
     services.gnome.gnome-keyring.enable = true;
