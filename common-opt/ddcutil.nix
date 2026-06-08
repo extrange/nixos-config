@@ -18,6 +18,7 @@ in
       SUBSYSTEM=="dri", KERNEL=="card[0-9]*", TAG+="uaccess"
     '';
     environment.systemPackages = with pkgs; [ ddcutil ];
+    hardware.i2c.enable = true;
 
     home-manager.users."${user}" = {
       home.packages = with pkgs; [
