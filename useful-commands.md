@@ -95,8 +95,9 @@ To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id
 Override SHA hash for a package (see also [Overriding]):
 
 ```nix
-(azuredatastudio.overrideAttrs
-  rec {
+environment.systemPackages = [
+  # ...
+  (azuredatastudio.overrideAttrs rec {
     pname = "azuredatastudio";
     version = "1.48.1";
     src = fetchurl {
@@ -104,8 +105,8 @@ Override SHA hash for a package (see also [Overriding]):
       url = "https://download.microsoft.com/download/d/6/f/d6f2673f-5240-4605-8e7d-5b6c49d188e8/azuredatastudio-linux-1.48.1.tar.gz";
       sha256 = "sha256-JDNdMy0Wk6v2pMKS+NzSbsrffaEG2IneZO+K9pBFX48=";
     };
-  }
-)
+  })
+];
 ```
 
 The same thing, but as an [overlay]:
@@ -132,9 +133,29 @@ The same thing, but as an [overlay]:
           rm -rf $out/etc
         '';
       };
+
+      # Some packages are wrapped, e.g. telegram-desktop
+      telegram-desktop =
+        if lib.versionOlder prev.telegram-desktop.version "6.9.3" then
+          (prev.telegram-desktop.override {
+            unwrapped = prev.telegram-desktop.unwrapped.overrideAttrs (old: rec {
+              version = "6.9.3";
+              src = pkgs.fetchFromGitHub {
+                owner = "telegramdesktop";
+                repo = "tdesktop";
+                rev = "v${version}";
+                fetchSubmodules = true;
+                hash = "sha256-QCGtESg+38lHWCFcsevHdc0kQ7LKJQmJjUJWszphah8=";
+              };
+              buildInputs = old.buildInputs ++ [ prev.minizip ];
+            });
+          })
+        else
+          prev.telegram-desktop;
     })
   ];
 }
+
 ```
 
 Allow insecure packages temporarily:
