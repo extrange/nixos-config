@@ -5,6 +5,7 @@ with lib;
   options.enablePrinting = mkEnableOption "Whether to enable printing and setup the LAN printer too";
 
   config = mkIf config.enablePrinting {
+    services.printing.enable = true;
     hardware.printers =
       let
         brother = "Brother_MFC-J470DW";
