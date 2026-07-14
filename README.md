@@ -2,18 +2,17 @@
 
 ![screenshot](./screenshot.jpg)
 
-- [Useful Commands]
-- [Server]
+[Useful Commands]
 
 ## Hosts
 
-| Name         | Description                                                    |
-| ------------ | -------------------------------------------------------------- |
-| server (TBC) | Runs my homelab and hosts the bulk of my data.                 |
-| zephyr       | Runs Windows VM with GPU passthrough for gaming/video editing. |
-| io           | Logging and uptime monitoring.                                 |
-| desktop      | Portal device                                                  |
-| laptop       | Portal device                                                  |
+| Name     | Description                                       |
+| -------- | ------------------------------------------------- |
+| [server] | Runs my homelab and hosts the bulk of my data.    |
+| zephyr   | Runs `alethea`, `chanel-vm` and `windows-vm`.     |
+| io       | Runs on a VPS. For logging and uptime monitoring. |
+| desktop  | Portal device.                                    |
+| laptop   | Portal device.                                    |
 
 ## Setting up a new host
 
@@ -32,13 +31,12 @@ _Note: For systems using TPM2 with Secure Boot, ensure that Secure Boot is disab
 
 ### Post Install
 
-- Setup logins (these can't be declaratively set)
-  - Tailscale
-  - Telegram
-  - Whatsapp
-  - GSConnect pairing
-- (if necessary) Update DHCP reservations in router
-- (libvirt) setup network auto-start with `sudo virsh net-autostart --network default`
+Setup logins (these can't be declaratively set)
+
+- Tailscale
+- Telegram
+- Whatsapp
+- GSConnect pairing
 
 ## Resources
 
@@ -53,7 +51,7 @@ _Note: For systems using TPM2 with Secure Boot, ensure that Secure Boot is disab
 [reckenrode]: https://github.com/reckenrode/nixos-configs
 [dmadisetti]: https://github.com/dmadisetti/.dots
 [Useful Commands]: useful-commands.md
-[Server]: hosts/server/server.md
+[server]: hosts/server/server.md
 [nixos-anywhere]: https://github.com/nix-community/nixos-anywhere
 [disko]: https://github.com/nix-community/disko
 [lanzaboote]: https://github.com/nix-community/lanzaboote/blob/master/docs/getting-started/prepare-your-system.md
