@@ -44,6 +44,7 @@ in
   sops.gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
 
   i18n.defaultLocale = "en_SG.UTF-8";
+  time.timeZone = "Asia/Singapore";
 
   environment.variables = {
     EDITOR = "vim";
