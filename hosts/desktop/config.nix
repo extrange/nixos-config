@@ -21,6 +21,9 @@
     "dialout" # For ESP32 programming
   ];
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.open = true; # see the note above
+
   # Boot drive encryption
   boot.initrd.luks.devices."luks-primary" = {
     device = "/dev/disk/by-label/primary";

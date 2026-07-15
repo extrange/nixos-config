@@ -51,6 +51,8 @@ in
     VISUAL = "vim";
   };
 
+  hardware.graphics.enable = true;
+
   environment.systemPackages =
     with pkgs;
     [
@@ -59,7 +61,10 @@ in
       awscli2
       bat
       biome
-      btop
+      (btop.override {
+        cudaSupport = true;
+        rocmSupport = true;
+      })
       btrfs-progs
       compsize
       cryptsetup
