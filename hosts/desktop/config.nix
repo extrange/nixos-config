@@ -22,7 +22,11 @@
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = true; # see the note above
+
+  # Fixes issues with graphics freezing on resume
+  hardware.nvidia.open = false;
+  hardware.nvidia.powerManagement.enable = true;
+  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
 
   # Boot drive encryption
   boot.initrd.luks.devices."luks-primary" = {
