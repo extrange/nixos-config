@@ -35,6 +35,9 @@ in
     autoStart = true; # optional: starts Sunshine automatically on login
     capSysAdmin = true;
     openFirewall = true;
+    settings = {
+      csrf_allowed_origins = "https://100.92.215.21";
+    };
   };
   services.displayManager.autoLogin.enable = lib.mkForce true; # Required for moonlight to work
   users.users."${user}".extraGroups = [ "uinput" ]; # fix cursor not moving
