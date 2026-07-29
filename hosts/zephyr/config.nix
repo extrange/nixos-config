@@ -10,6 +10,8 @@
     enable = true;
     forRoot = true; # For virt-manager/qemu kvm access
   };
+  graphical = true;
+  remoteDesktop = true;
   uptime = {
     enable = true;
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
