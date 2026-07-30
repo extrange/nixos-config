@@ -43,6 +43,7 @@
   ];
   boot.kernelParams = [
     "intel_iommu=on"
+    "vfio-pci.ids=10de:10f8,10de:1e89,10de:1ad8,10de:1ad9" # Nvidia GPU
   ];
 
   home-manager.users.user = { };
