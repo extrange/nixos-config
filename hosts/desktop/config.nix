@@ -16,6 +16,7 @@
   ffmpegCustom = true;
   enablePrinting = true;
   fixLogiBoltSleep = true;
+  remoteDesktop = true;
 
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
