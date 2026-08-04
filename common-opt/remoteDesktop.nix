@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  home-manager,
   ...
 }:
 with lib;
@@ -20,5 +21,12 @@ with lib;
       "PATH=/run/wrappers/bin:/run/current-system/sw/bin"
       "SHELL=/run/current-system/sw/bin/bash"
     ];
+
+    # Disable screen blanking/sleep
+    home-manager.users."${config.userName}".dconf.settings = with home-manager.lib.hm.gvariant; {
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
+    };
   };
 }
