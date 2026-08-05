@@ -86,7 +86,7 @@ See [this][nix-progress].
 
 ## sops-nix
 
-To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secret-file.yaml`.
+To edit `sops` secrets, use `SOPS_AGE_KEY=$(ssh-to-age -private-key -i ~/.ssh/id_ed25519) sops secrets.yaml`.
 
 ## Commands
 

@@ -3,12 +3,11 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-WDC_PC_SN520_SDAPNUW-128G-1006_1903C4801837"; # 128GB NVME
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB512HBJQ-00000_S4GENX0N733466"; # 512GB NVME
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              device = "/dev/disk/by-id/nvme-WDC_PC_SN520_SDAPNUW-128G-1006_1903C4801837-part1";
               priority = 1;
               name = "ESP";
               start = "1M";
@@ -21,25 +20,40 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            root = {
-              device = "/dev/disk/by-id/nvme-WDC_PC_SN520_SDAPNUW-128G-1006_1903C4801837-part2";
+            luks = {
               size = "100%";
+              name = "luks-zephyr";
               content = {
-                type = "btrfs";
-                subvolumes = {
-                  "/root" = {
-                    mountOptions = [
-                      "noatime"
-                      "compress-force=zstd"
-                    ];
-                    mountpoint = "/";
-                  };
-                  "/swap" = {
-                    mountpoint = "/swap";
-                    swap.swapfile.size = "16G";
-                  };
+                type = "luks";
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                  ];
+                  bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
                 };
-                mountpoint = "/mnt/system-root";
+                content = {
+                  type = "btrfs";
+                  subvolumes =
+                    let
+                      mountOptions = [
+                        "noatime"
+                        "compress-force=zstd"
+                      ];
+                    in
+                    {
+                      "/root" = {
+                        mountpoint = "/";
+                        inherit mountOptions;
+                      };
+                      "/swap" = {
+                        mountpoint = "/swap";
+                        swap.swapfile.size = "16G";
+                      };
+                    };
+                  mountpoint = "/mnt/system-root";
+                };
               };
             };
           };
