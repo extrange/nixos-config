@@ -96,34 +96,47 @@ in
       };
     };
 
-    dconf.settings = with home-manager.lib.hm.gvariant; {
-      "org/gnome/desktop/interface" = {
-        show-battery-percentage = true;
-      };
-      "org/gnome/desktop/peripherals/touchpad" = {
-        tap-to-click = true;
-        natural-scroll = false;
-      };
+    dconf.settings =
+      with home-manager.lib.hm.gvariant;
+      let
+        qemuUris = [ "qemu+ssh://root@zephyr/system" ];
+      in
+      {
+        # Virt-manager connections
+        "org/virt-manager/virt-manager/connections" = {
+          uris = qemuUris;
+        };
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = qemuUris;
+        };
 
-      # Vitals
-      "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [
-          "_system_load_1m_"
-          "_memory_usage_"
-          "_memory_swap_usage_"
-          "__temperature_max__"
-          "__network-rx_max__"
-          "_battery_rate_"
-          "_battery_time_left_"
-        ];
-        show-battery = true;
-      };
+        "org/gnome/desktop/interface" = {
+          show-battery-percentage = true;
+        };
+        "org/gnome/desktop/peripherals/touchpad" = {
+          tap-to-click = true;
+          natural-scroll = false;
+        };
 
-      # Increase screen blank timeout (seconds)
-      "org/gnome/desktop/session" = {
-        "idle-delay" = mkUint32 900; # 15mins
+        # Vitals
+        "org/gnome/shell/extensions/vitals" = {
+          hot-sensors = [
+            "_system_load_1m_"
+            "_memory_usage_"
+            "_memory_swap_usage_"
+            "__temperature_max__"
+            "__network-rx_max__"
+            "_battery_rate_"
+            "_battery_time_left_"
+          ];
+          show-battery = true;
+        };
+
+        # Increase screen blank timeout (seconds)
+        "org/gnome/desktop/session" = {
+          "idle-delay" = mkUint32 900; # 15mins
+        };
       };
-    };
 
   };
 
