@@ -6,12 +6,12 @@
 
 ## Hosts
 
-| Name     | Description                                       |
-| -------- | ------------------------------------------------- |
-| [server] | Runs my homelab and hosts the bulk of my data.    |
-| zephyr   | Portal device, runs `windows-vm`.                 |
-| io       | Runs on a VPS. For logging and uptime monitoring. |
-| laptop   | Portal device.                                    |
+| Name     | Description                                    |
+| -------- | ---------------------------------------------- |
+| [server] | Runs my homelab and hosts the bulk of my data. |
+| zephyr   | Portal device, runs `windows-vm`.              |
+| io       | Logging and uptime monitoring (on VPS).        |
+| laptop   | Portal device.                                 |
 
 ## Setting up a new host
 
@@ -58,19 +58,9 @@ mkdir -p "$ssh_dir"
 scp <path-to-host-key> "$ssh_dir/id_ed25519"
 ```
 
-### (optional) Copy Secure Boot keys to temporary folder
-
-Required if using Lanzaboote.
-
-```bash
-nix shell nixpkgs#sbctl
-sudo sbctl create-keys                        # writes /var/lib/sbctl/keys
-mkdir -p "$temp/var/lib/sbctl"
-sudo cp -r /var/lib/sbctl/keys "$temp/var/lib/sbctl/"
-sudo chown -R user "$temp/var/lib/sbctl/"
-```
-
 ### Deploy via nixos-anywhere
+
+> Note: For systems using TPM2 with Secure Boot, ensure that Secure Boot is disabled during the installation (i.e. in Setup Mode, as verified with `sudo sbctl status`)
 
 Copy the host's SSH key to a temporary directory, then install via nixos-anywhere:
 
@@ -84,6 +74,10 @@ nix run github:nix-community/nixos-anywhere -- \
 ```
 
 ### (optional) Enroll LUKS key into TPM
+
+For convenience, so we can enter a TPM PIN (with on-chip bruteforce protection), instead of the long passphrase.
+
+Lanzaboote keeps the PCRs [updated on each rebuild].
 
 ```bash
 sudo systemd-cryptenroll \
@@ -100,8 +94,6 @@ ssh-keyscan -t ed25519 hostname
 ```
 
 Add the output to `programs.ssh.knownHosts`.
-
-_Note: For systems using TPM2 with Secure Boot, ensure that Secure Boot is disabled during the installation. Follow the instructions [here][lanzaboote] to enroll the Secure Boot keys post-installation. After that, enroll the LUKS key into the TPM following the instructions on the [NixOS Wiki][nixos-tpm-wiki]._
 
 ### Post Install
 
@@ -130,3 +122,4 @@ Setup logins (these can't be declaratively set)
 [disko]: https://github.com/nix-community/disko
 [lanzaboote]: https://github.com/nix-community/lanzaboote/blob/master/docs/getting-started/prepare-your-system.md
 [nixos-tpm-wiki]: https://wiki.nixos.org/wiki/Full_Disk_Encryption#TPM2
+[updated on each rebuild]: https://nix-community.github.io/lanzaboote/how-to-guides/enable-measured-boot.html#enroll-the-policy

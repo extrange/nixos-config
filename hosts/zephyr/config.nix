@@ -4,6 +4,7 @@
   pkgs,
   lib,
   home-manager,
+  nixvirt,
   ...
 }:
 {
@@ -63,8 +64,31 @@
   services.zfs.autoScrub.enable = true;
 
   # Libvirt
-  virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemu.swtpm.enable = true;
+
+  # NixVirt
+  virtualisation.libvirt.enable = true;
+  virtualisation.libvirt.connections."qemu:///system" = {
+    domains = [
+      {
+        # https://github.com/AshleyYakeley/NixVirt#nixosmodulesdefault
+        definition = ./win11.xml;
+        active = true;
+      }
+    ];
+    networks = [
+      {
+        definition = nixvirt.lib.network.writeXML (
+          nixvirt.lib.network.templates.bridge {
+            uuid = "27ec7197-429a-418e-9b91-d3bd43622869";
+            subnet_byte = 122; # 192.168.122.0/24
+          }
+        );
+        active = true;
+      }
+
+    ];
+  };
 
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
@@ -90,6 +114,14 @@
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
+      # Virt-manager connections
+      "org/virt-manager/virt-manager/connections" = {
+        uris = [ "qemu:///system" ];
+      };
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = [ "qemu:///system" ];
+      };
+
       "org/gnome/mutter" = {
         # Fractional scaling
         experimental-features = [ "scale-monitor-framebuffer" ];

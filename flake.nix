@@ -23,6 +23,10 @@
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,6 +37,7 @@
       home-manager,
       sops-nix,
       lanzaboote,
+      nixvirt,
       self,
       ...
     }@inputs:
@@ -51,6 +56,7 @@
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
+            nixvirt.nixosModules.default
             {
               _module.args = inputs // {
                 inherit hostname;
