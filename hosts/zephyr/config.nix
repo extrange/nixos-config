@@ -43,12 +43,24 @@
         7
       ];
     };
-
   };
 
-  users.users."${config.userName}".extraGroups = [
-    "dialout" # For ESP32 programming
-  ];
+  # Fix name of ethernet adapter
+  systemd.network.links."10-lan" = {
+    matchConfig = {
+      MACAddress = "24:4b:fe:45:61:6a"; # most reliable for a physical NIC
+      # Path = "pci-0000:05:00.0";        # alternative: match by PCI slot
+    };
+    linkConfig = {
+      Name = "lan";
+    };
+  };
+
+  # Allow this host to redirect its USB devices to VMs
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  # For ESP32 programming
+  users.users."${config.userName}".extraGroups = [ "dialout" ];
 
   # ZFS
   boot = {
@@ -62,47 +74,6 @@
     "vm-os"
   ];
   services.zfs.autoScrub.enable = true;
-
-  # Libvirt
-  virtualisation.libvirtd.qemu.swtpm.enable = true;
-
-  # NixVirt
-  virtualisation.libvirt.enable = true;
-  virtualisation.libvirt.connections."qemu:///system" = {
-    domains = [
-      {
-        # https://github.com/AshleyYakeley/NixVirt#nixosmodulesdefault
-        definition = ./win11.xml;
-        active = true;
-      }
-    ];
-    networks = [
-      {
-        definition = nixvirt.lib.network.writeXML (
-          nixvirt.lib.network.templates.bridge {
-            uuid = "27ec7197-429a-418e-9b91-d3bd43622869";
-            subnet_byte = 122; # 192.168.122.0/24
-          }
-        );
-        active = true;
-      }
-
-    ];
-  };
-
-  # Allow this host to redirect its USB devices to VMs
-  virtualisation.spiceUSBRedirection.enable = true;
-
-  # VFIO Passthrough
-  boot.kernelModules = [
-    "vfio_pci"
-    "vfio"
-    "vfio_iommu_type1"
-  ];
-  boot.kernelParams = [
-    "intel_iommu=on"
-    "vfio-pci.ids=10de:2705,10de:22bb" # Nvidia GPU
-  ];
 
   home-manager.users.user = {
 
