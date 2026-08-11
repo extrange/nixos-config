@@ -103,6 +103,7 @@ Setup logins (these can't be declaratively set)
 - Telegram
 - Whatsapp
 - GSConnect pairing
+- Gnome Remote Desktop (needs a toggle in the GUI to generate certificates)
 
 ## Resources
 

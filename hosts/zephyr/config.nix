@@ -62,16 +62,6 @@
   # For ESP32 programming
   users.users."${config.userName}".extraGroups = [ "dialout" ];
 
-  boot.kernelPatches = [
-    {
-      name = "add-acs-overrides";
-      patch = pkgs.fetchurl {
-        url = "https://aur.archlinux.org/cgit/aur.git/tree/1001-6.14.0-add-acs-overrides.patch?h=linux-vfio&id=bb9dbf9b13b404bc1b6b4349788deefe840447df";
-        sha256 = "0qlzbrzxfc2kzizir9ifrsijkhmzkc93xazjp242gbganh4drrb9";
-      };
-    }
-  ];
-
   # ZFS
   boot = {
     # With ZFS, we cannot use the latest kernel (linuxPackages_latest)
