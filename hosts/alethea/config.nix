@@ -26,20 +26,22 @@ in
     }
   ];
 
-  services.btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
-  services.keyd.enable = lib.mkForce false; # Causes problems with Windows Remote Desktop
+  services = {
+    btrfs.autoScrub.enable = lib.mkForce false; # We are using ext4
+    keyd.enable = lib.mkForce false; # Causes problems with Windows Remote Desktop
 
-  # Enable moonlight streaming
-  services.sunshine = {
-    enable = true;
-    autoStart = true; # optional: starts Sunshine automatically on login
-    capSysAdmin = true;
-    openFirewall = true;
-    settings = {
-      csrf_allowed_origins = "https://100.92.215.21";
+    # Enable moonlight streaming
+    sunshine = {
+      enable = true;
+      autoStart = true; # optional: starts Sunshine automatically on login
+      capSysAdmin = true;
+      openFirewall = true;
+      settings = {
+        csrf_allowed_origins = "https://100.92.215.21";
+      };
     };
+    displayManager.autoLogin.enable = lib.mkForce true; # Required for moonlight to work
   };
-  services.displayManager.autoLogin.enable = lib.mkForce true; # Required for moonlight to work
   users.users."${user}".extraGroups = [ "uinput" ]; # fix cursor not moving
   environment.variables.MUTTER_DEBUG_DISABLE_HW_CURSORS = 1; # fix curson not showing
 

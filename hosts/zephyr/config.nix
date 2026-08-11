@@ -1,10 +1,8 @@
 {
   config,
-  specialArgs,
   pkgs,
   lib,
   home-manager,
-  nixvirt,
   ...
 }:
 {
@@ -25,23 +23,25 @@
   zswap = true;
 
   # Secure Boot
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    configurationLimit = 8;
-    enable = true;
-    autoGenerateKeys.enable = true;
-    autoEnrollKeys = {
+  boot = {
+    loader.systemd-boot.enable = lib.mkForce false;
+    lanzaboote = {
+      configurationLimit = 8;
       enable = true;
-      autoReboot = true;
-    };
-    pkiBundle = "/var/lib/sbctl";
-    measuredBoot = {
-      enable = true;
-      pcrs = [
-        0
-        4
-        7
-      ];
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys = {
+        enable = true;
+        autoReboot = true;
+      };
+      pkiBundle = "/var/lib/sbctl";
+      measuredBoot = {
+        enable = true;
+        pcrs = [
+          0
+          4
+          7
+        ];
+      };
     };
   };
 
@@ -67,12 +67,14 @@
     # With ZFS, we cannot use the latest kernel (linuxPackages_latest)
     kernelPackages = pkgs.linuxPackages;
     supportedFilesystems = [ "zfs" ];
-    zfs.forceImportRoot = false; # Recommended disabled
+    zfs = {
+      forceImportRoot = false; # Recommended disabled
+      extraPools = [
+        "vm-data"
+        "vm-os"
+      ];
+    };
   };
-  boot.zfs.extraPools = [
-    "vm-data"
-    "vm-os"
-  ];
   services.zfs.autoScrub.enable = true;
 
   home-manager.users.user = {

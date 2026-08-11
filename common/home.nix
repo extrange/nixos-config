@@ -108,9 +108,11 @@ in
         shellWrapperName = "y";
       };
 
-      bash.initExtra = (
+      bash.initExtra =
         # Only in interactive shells (not rsync etc)
         lib.mkOrder 200 ''
+          eval "$(devenv hook bash)"
+
           export ZELLIJ_AUTO_ATTACH=true
           export ZELLIJ_AUTO_EXIT=true
 
@@ -121,8 +123,7 @@ in
                 -n $SSH_CONNECTION ]]; then
             eval "$(zellij setup --generate-auto-start bash)"
           fi
-        ''
-      );
+        '';
     };
 
     home.stateVersion = "24.05";

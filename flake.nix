@@ -85,13 +85,12 @@
           #   ...
           # ]
           systems = mapAttrsToList (
-            hostname: type:
+            hostname: _:
             let
               config = self.nixosConfigurations.${hostname}.config.system.build.toplevel;
-              system = config.system;
             in
             {
-              ${system} = {
+              ${config.system} = {
                 name = hostname;
                 value = config;
               };
@@ -100,10 +99,10 @@
         in
         # Shape:
         # {x86_64-linux = {desktop = desktopConfig; laptop: laptopConfig;}}
-        zipAttrsWith (system: listToAttrs) systems;
+        zipAttrsWith (_system: listToAttrs) systems;
 
       nixosConfigurations =
-        (mapAttrs (hostname: _: mkHost hostname)
+        (mapAttrs (hostname: _type: mkHost hostname)
           # Get hostnames by reading folder name in hosts/
           (readDir ./hosts)
         )

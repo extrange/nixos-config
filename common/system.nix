@@ -38,10 +38,12 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # sops-nix
-  sops.age.sshKeyPaths = [ "/home/${user}/.ssh/id_ed25519" ];
-  sops.defaultSopsFile = ../secrets.yaml;
-  sops.secrets.userPassword.neededForUsers = true;
-  sops.gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
+  sops = {
+    age.sshKeyPaths = [ "/home/${user}/.ssh/id_ed25519" ];
+    defaultSopsFile = ../secrets.yaml;
+    secrets.userPassword.neededForUsers = true;
+    gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
+  };
 
   i18n.defaultLocale = "en_SG.UTF-8";
   time.timeZone = "Asia/Singapore";

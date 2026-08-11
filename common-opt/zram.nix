@@ -18,7 +18,7 @@ with lib;
 
       zramSwap = {
         enable = true;
-        memoryPercent = cfg.memoryPercent;
+        inherit memoryPercent;
       };
 
       # Optimize swap on zram
