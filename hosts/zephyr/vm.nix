@@ -443,6 +443,11 @@
                   }
                 ];
 
+                redirdev = {
+                  bus = "usb";
+                  type = "spicevmc";
+                };
+
                 watchdog = {
                   model = "itco";
                   action = "reset";
