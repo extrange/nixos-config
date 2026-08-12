@@ -108,22 +108,36 @@ in
         shellWrapperName = "y";
       };
 
-      bash.initExtra =
-        # Only in interactive shells (not rsync etc)
-        lib.mkOrder 200 ''
+      bash.initExtra = lib.mkOrder 200 (
+        # Devenv
+        ''
+          # Start devenv shell automatically on entering directories
           eval "$(devenv hook bash)"
-
-          export ZELLIJ_AUTO_ATTACH=true
-          export ZELLIJ_AUTO_EXIT=true
-
-          # Only run when:
+        ''
+        # Zellij
+        + ''
+          # Only run zellij in interactive shells (not rsync etc). Specifically:
           # - not in VSCode
           # - over SSH (don't run locally)
           if [[ -z $VSCODE_SHELL_INTEGRATION &&
                 -n $SSH_CONNECTION ]]; then
             eval "$(zellij setup --generate-auto-start bash)"
           fi
-        '';
+
+          # Fix garbled mouse commands appearing when SSH crashes with Zellij
+          # https://github.com/zellij-org/zellij/issues/4371
+          reset_mouse_tracking() { printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'; }
+          PROMPT_COMMAND="reset_mouse_tracking''${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+        ''
+      );
+
+    };
+
+    home.sessionVariables = {
+      # If the zellij session already exists, attach to the default session. (not starting as a new session)
+      ZELLIJ_AUTO_ATTACH = "true";
+      # When zellij exits, the shell exits as well.
+      ZELLIJ_AUTO_EXIT = "true";
     };
 
     home.stateVersion = "24.05";
