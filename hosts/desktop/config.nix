@@ -81,27 +81,37 @@
       nvtopPackages.amd
     ];
 
-    dconf.settings = with home-manager.lib.hm.gvariant; {
-      "org/gnome/mutter" = {
-        # Fractional scaling
-        experimental-features = [ "scale-monitor-framebuffer" ];
-      };
-      "org/gnome/desktop/session" = {
-        # Don't dim screen
-        idle-delay = mkUint32 0;
-      };
+    dconf.settings =
+      with home-manager.lib.hm.gvariant;
+      let
+        qemuUris = [ "qemu+ssh://root@zephyr/system" ];
+      in
+      {
+        # Virt-manager connections
+        "org/virt-manager/virt-manager/connections" = {
+          uris = qemuUris;
+        };
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = qemuUris;
+        };
+        "org/gnome/mutter" = {
+          # Fractional scaling
+          experimental-features = [ "scale-monitor-framebuffer" ];
+        };
+        "org/gnome/desktop/session" = {
+          idle-delay = mkUint32 900; # 15mins
+        };
 
-      "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [
-          "_processor_usage_"
-          "_memory_usage_"
-          "_temperature_processor_0_"
-          "__network-rx_max__"
-          "_gpu#1_utilization_"
-          "_gpu#1_temperature_"
-        ];
+        "org/gnome/shell/extensions/vitals" = {
+          hot-sensors = [
+            "_processor_usage_"
+            "_memory_usage_"
+            "_temperature_processor_0_"
+            "__network-rx_max__"
+            "_temperature_amdgpu_edge_"
+          ];
+        };
       };
-    };
 
     # Set fractional scaling and monitor position
     home.file.".config/monitors.xml" = {

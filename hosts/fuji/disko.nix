@@ -36,7 +36,6 @@
                 };
                 content = {
                   type = "btrfs";
-                  name = hostname;
                   subvolumes =
                     let
                       mountOptions = [

@@ -16,7 +16,7 @@
   # Fix name of ethernet adapter (for VM)
   systemd.network.links."10-lan" = {
     matchConfig = {
-      MACAddress = "24:4b:fe:45:61:6a"; # most reliable for a physical NIC
+      MACAddress = "24:4b:fe:45:61:a5"; # most reliable for a physical NIC
     };
     linkConfig = {
       Name = "lan";

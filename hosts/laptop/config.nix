@@ -134,7 +134,7 @@ in
 
         # Increase screen blank timeout (seconds)
         "org/gnome/desktop/session" = {
-          "idle-delay" = mkUint32 900; # 15mins
+          idle-delay = mkUint32 900; # 15mins
         };
       };
 

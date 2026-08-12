@@ -23,10 +23,10 @@ in
     enable = mkEnableOption "SSH access into this machine";
     forRoot = mkEnableOption "SSH `root` access";
 
-    # These are added to /etc/ssh/authorized_keys.d/<user name>
+    # These USER keys are added to /etc/ssh/authorized_keys.d/<user name>
     authorizedDeviceKeys = mkOption {
       type = types.attrsOf sshKey;
-      description = "Authorized SSH keys";
+      description = "Authorized SSH keys (ED25519)";
       default = {
         "user@laptop".key = "AAAAC3NzaC1lZDI1NTE5AAAAIN3RCwHWzK/gKI8Lplk/qoaoJemh8h/op5Oe7/IXepWK";
         "user@desktop".key = "AAAAC3NzaC1lZDI1NTE5AAAAIGyJ0LttXH9j3Ql7J1ccJbhLWdYhYn24qR6a8ur72hVi";

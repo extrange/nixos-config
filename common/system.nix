@@ -346,8 +346,8 @@ in
         "ssh.nicholaslyz.com,server,192.168.184".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAm3fEcDvIM7cFCjB3vzBb4YctOGMpjf8X3IxRl5HhjV";
 
-        "zephyr,192.168.1.210".publicKey =
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEdaLHhOsYkfEJVv06L7JrcMFztAcFSbx04Z41edX6/W";
+        "zephyr,192.168.1.152".publicKey =
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIMddodnjBMJAjf9F3FuctLIWDH37bFqqvtppJvC3be0";
 
         "alethea".publicKey =
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMY/Zigo8p/1UtiiyWuBtjlXui0gu36S2JbXcKaoqNt";
