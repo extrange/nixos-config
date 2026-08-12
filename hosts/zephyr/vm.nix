@@ -27,6 +27,7 @@
             }
           );
           active = true;
+          restart = false; # Don't power-cycle the VM on rebuild
         }
       ];
       domains = [
@@ -443,9 +444,31 @@
                   }
                 ];
 
-                redirdev = {
-                  bus = "usb";
-                  type = "spicevmc";
+                redirdev = [
+                  {
+                    bus = "usb";
+                    type = "spicevmc";
+                  }
+                  {
+                    bus = "usb";
+                    type = "spicevmc";
+                  }
+                  {
+                    bus = "usb";
+                    type = "spicevmc";
+                  }
+                  {
+                    bus = "usb";
+                    type = "spicevmc";
+                  }
+                ];
+                graphics = {
+                  # Required for USB redirection
+                  type = "spice";
+                  autoport = true;
+                  listen = {
+                    type = "address";
+                  };
                 };
 
                 watchdog = {
