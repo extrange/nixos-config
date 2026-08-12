@@ -20,40 +20,25 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            luks = {
+            root = {
               size = "100%";
-              name = "luks-zephyr";
+              name = "zephyr";
               content = {
-                type = "luks";
-                name = "cryptroot";
-                settings = {
-                  allowDiscards = true;
-                  crypttabExtraOpts = [
-                    "tpm2-device=auto"
-                  ];
-                  bypassWorkqueues = true; # https://nicholaslyz.com/blog/2025/05/14/dm-crypt-causing-system-freezes/
+                type = "btrfs";
+                subvolumes = {
+                  "/root" = {
+                    mountpoint = "/";
+                    mountOptions = [
+                      "noatime"
+                      "compress-force=zstd"
+                    ];
+                  };
+                  "/swap" = {
+                    mountpoint = "/swap";
+                    swap.swapfile.size = "16G";
+                  };
                 };
-                content = {
-                  type = "btrfs";
-                  subvolumes =
-                    let
-                      mountOptions = [
-                        "noatime"
-                        "compress-force=zstd"
-                      ];
-                    in
-                    {
-                      "/root" = {
-                        mountpoint = "/";
-                        inherit mountOptions;
-                      };
-                      "/swap" = {
-                        mountpoint = "/swap";
-                        swap.swapfile.size = "16G";
-                      };
-                    };
-                  mountpoint = "/mnt/system-root";
-                };
+                mountpoint = "/mnt/system-root";
               };
             };
           };

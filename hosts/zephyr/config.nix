@@ -10,57 +10,21 @@
     enable = true;
     forRoot = true; # For virt-manager/qemu kvm access
   };
-  ffmpegCustom = true;
-  enablePrinting = true;
-  fixLogiBoltSleep = true;
-  graphical = true;
-  ddcutil = true;
-  remoteDesktop = true;
   uptime = {
     enable = true;
     url = "https://uptime.icybat.com/api/push/4RbFRv0UVQ?status=up&msg=OK&ping=";
   };
   zswap = true;
 
-  # Secure Boot
-  boot = {
-    loader.systemd-boot.enable = lib.mkForce false;
-    lanzaboote = {
-      configurationLimit = 8;
-      enable = true;
-      autoGenerateKeys.enable = true;
-      autoEnrollKeys = {
-        enable = true;
-        autoReboot = true;
-      };
-      pkiBundle = "/var/lib/sbctl";
-      measuredBoot = {
-        enable = true;
-        pcrs = [
-          0
-          4
-          7
-        ];
-      };
-    };
-  };
-
-  # Fix name of ethernet adapter
+  # Fix name of ethernet adapter (for VM)
   systemd.network.links."10-lan" = {
     matchConfig = {
       MACAddress = "24:4b:fe:45:61:6a"; # most reliable for a physical NIC
-      # Path = "pci-0000:05:00.0";        # alternative: match by PCI slot
     };
     linkConfig = {
       Name = "lan";
     };
   };
-
-  # Allow this host to redirect its USB devices to VMs
-  virtualisation.spiceUSBRedirection.enable = true;
-
-  # For ESP32 programming
-  users.users."${config.userName}".extraGroups = [ "dialout" ];
 
   # ZFS
   boot = {
@@ -76,41 +40,4 @@
     };
   };
   services.zfs.autoScrub.enable = true;
-
-  home-manager.users.user = {
-
-    home.packages = with pkgs; [
-      clinfo # Check OpenCL
-      darktable
-      digikam
-      nvtopPackages.amd
-    ];
-
-    dconf.settings = with home-manager.lib.hm.gvariant; {
-      # Virt-manager connections
-      "org/virt-manager/virt-manager/connections" = {
-        uris = [ "qemu:///system" ];
-      };
-      "org/virt-manager/virt-manager/connections" = {
-        autoconnect = [ "qemu:///system" ];
-      };
-
-      "org/gnome/mutter" = {
-        # Fractional scaling
-        experimental-features = [ "scale-monitor-framebuffer" ];
-      };
-
-      "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [
-          "_processor_usage_"
-          "_memory_usage_"
-          "_temperature_processor_0_"
-          "__network-rx_max__"
-          "_temperature_amdgpu_edge_"
-        ];
-      };
-    };
-
-  };
-
 }
