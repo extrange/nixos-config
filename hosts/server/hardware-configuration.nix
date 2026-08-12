@@ -1,8 +1,6 @@
 # TODO: Stub file to prevent btrfs autoscrub errors when no filesystem is specified.
 {
-  config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:

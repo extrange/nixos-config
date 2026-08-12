@@ -4,7 +4,6 @@
   pkgs,
   lib,
   home-manager,
-  pkgs-stable,
   ...
 }:
 with lib;

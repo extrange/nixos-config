@@ -3,8 +3,6 @@
   config,
   pkgs,
   lib,
-  self,
-  hostname,
   ...
 }:
 with lib;

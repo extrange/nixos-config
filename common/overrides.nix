@@ -3,7 +3,7 @@
 { lib, pkgs, ... }:
 {
   nixpkgs.overlays = [
-    (final: prev: {
+    (_final: prev: {
       openldap = prev.openldap.overrideAttrs {
         doCheck = !prev.stdenv.hostPlatform.isi686; # https://github.com/NixOS/nixpkgs/issues/514113#issuecomment-4338976393
       };
