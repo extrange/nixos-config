@@ -1,4 +1,4 @@
-{ ... }:
+{ hostname, ... }:
 {
   disko.devices = {
     disk = {
@@ -23,10 +23,10 @@
             };
             luks = {
               size = "100%";
-              name = "luks-fuji";
+              name = "luks-${hostname}";
               content = {
                 type = "luks";
-                name = "cryptroot";
+                name = "cryptroot-${hostname}";
                 settings = {
                   allowDiscards = true;
                   crypttabExtraOpts = [
@@ -36,6 +36,7 @@
                 };
                 content = {
                   type = "btrfs";
+                  name = hostname;
                   subvolumes =
                     let
                       mountOptions = [

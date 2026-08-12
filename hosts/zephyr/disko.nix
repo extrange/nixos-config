@@ -1,4 +1,4 @@
-{
+{ hostname, ... }: {
   disko.devices = {
     disk = {
       main = {
@@ -22,7 +22,7 @@
             };
             root = {
               size = "100%";
-              name = "zephyr";
+              name = hostname;
               content = {
                 type = "btrfs";
                 subvolumes = {
