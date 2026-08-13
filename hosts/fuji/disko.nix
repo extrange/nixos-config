@@ -26,7 +26,7 @@
               name = "luks-${hostname}";
               content = {
                 type = "luks";
-                name = "cryptroot-${hostname}";
+                name = "cryptroot";
                 settings = {
                   allowDiscards = true;
                   crypttabExtraOpts = [
