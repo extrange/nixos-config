@@ -17,8 +17,6 @@
   fixLogiBoltSleep = true;
   remoteDesktop = true;
 
-  boot.kernelParams = [ "amdgpu.virtual_display=0000:01:00.0,1" ];
-
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
   ];
