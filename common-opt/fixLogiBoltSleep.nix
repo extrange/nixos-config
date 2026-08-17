@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -12,21 +11,9 @@ with lib;
     # Adds udev rules for solaar.
     # Note that you need to replug+repair the keyboard for the first time
     # https://github.com/3v1n0/Solaar/blob/master/docs/installation.md
-    hardware.logitech.wireless = {
+    programs.solaar = {
       enable = true;
-      enableGraphical = true;
-    };
-
-    systemd.user.services.solaar = {
-      description = "Solaar, the open source driver for Logitech devices";
-      wantedBy = [ "graphical-session.target" ];
-      after = [ "dbus.service" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${lib.getExe pkgs.solaar} --window hide";
-        Restart = "on-failure";
-        RestartSec = "5";
-      };
+      userService.enable = true;
     };
   };
 }
