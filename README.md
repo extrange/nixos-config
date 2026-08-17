@@ -6,12 +6,13 @@
 
 ## Hosts
 
-| Name     | Description                                    |
-| -------- | ---------------------------------------------- |
-| [server] | Runs my homelab and hosts the bulk of my data. |
-| zephyr   | Portal device, runs `windows-vm`.              |
-| io       | Logging and uptime monitoring (on VPS).        |
-| laptop   | Portal device.                                 |
+| Name     | Purpose                                                                                      | Notes                                                                                |
+| -------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [server] | Runs my homelab (Docker containers), remote NixOS rebuilds, storage, development (`~/repos`) | Decent GPU (12GB VRAM for Frigate, MinerU etc), 64GB ECC RAM, CPU for multicore work |
+| zephyr   | Gaming (via `windows-vm`).                                                                   | Powerful GPU, CPU for gaming, 64 GB non-ECC RAM                                      |
+| desktop  | Portal device.                                                                               |                                                                                      |
+| io       | Logging and uptime monitoring (on VPS).                                                      |                                                                                      |
+| laptop   | Portal device.                                                                               |                                                                                      |
 
 ## Setting up a new host
 
