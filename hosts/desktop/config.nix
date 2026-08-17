@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   home-manager,
   ...
 }:
@@ -17,6 +16,8 @@
   enablePrinting = true;
   fixLogiBoltSleep = true;
   remoteDesktop = true;
+
+  boot.kernelParams = [ "amdgpu.virtual_display=0000:01:00.0,1" ];
 
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
@@ -78,7 +79,4 @@
     };
 
   };
-
-  # Upgrade once a week max
-  system.autoUpgrade.dates = lib.mkForce "Sun *-*-* 05:00:00";
 }
