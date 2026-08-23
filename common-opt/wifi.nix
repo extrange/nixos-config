@@ -57,14 +57,14 @@ with lib;
             wifi = {
               mode = "infrastructure";
               ssid = "Wireless@SGx";
-              security = "802-11-wireless-security";
             };
             wifi-security = {
               key-mgmt = "wpa-eap";
             };
             "802-1x" = {
+              domain-suffix-match = "singtel-wsg.singtel.com";
               eap = "peap;";
-              identity = "essa-MigsYlp4938@m1net.com.sg";
+              identity = "essa-Oe9GOAJq9RDARB-iEBZPYiTYrhw@singtel-wsg";
               password = "$wireless_sgx";
               phase2-auth = "mschapv2";
             };
