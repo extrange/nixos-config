@@ -119,6 +119,7 @@ in
       nixfmt # Nix formatter
       nmap
       ntfs3g
+      nvme-cli
       openssl
       p7zip
       parted

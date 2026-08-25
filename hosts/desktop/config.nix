@@ -17,13 +17,18 @@
   fixLogiBoltSleep = true;
   remoteDesktop = true;
 
+  # Intel GPU
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver
+    intel-compute-runtime
+  ];
+
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
   ];
 
   home-manager.users.user = {
     home.packages = with pkgs; [
-      clinfo # Check OpenCL
       darktable
       digikam
       nvtopPackages.amd
