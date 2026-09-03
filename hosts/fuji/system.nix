@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -23,6 +24,12 @@ in
     interface-name = wifiInterface;
   };
   fixLogiBoltSleep = true;
+
+  # Intel GPU
+  hardware.graphics.extraPackages = with pkgs; [
+    intel-media-driver
+    intel-compute-runtime
+  ];
 
   # Secure Boot
   boot.loader.systemd-boot.enable = lib.mkForce false;
