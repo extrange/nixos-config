@@ -8,10 +8,7 @@
   imports = [ ./brightness.nix ];
   graphical = true;
   ddcutil = true;
-  allowSsh = {
-    enable = true;
-    forRoot = true; # Chanel's btrbk-archive
-  };
+  allowSsh.enable = true;
   ffmpegCustom = true;
   enablePrinting = true;
   fixLogiBoltSleep = true;
@@ -19,7 +16,8 @@
 
   # Intel GPU
   hardware.graphics.extraPackages = with pkgs; [
-    vpl-gpu-rt
+    vpl-gpu-rt # Intel QSV
+    intel-media-driver # VAAPI (iHD) — hw video decode; needed by moonlight-qt/Firefox
     intel-compute-runtime
   ];
 
@@ -31,14 +29,10 @@
     home.packages = with pkgs; [
       darktable
       digikam
-      nvtopPackages.amd
+      nvtopPackages.intel
     ];
 
     dconf.settings = with home-manager.lib.hm.gvariant; {
-      "org/gnome/mutter" = {
-        # Fractional scaling
-        experimental-features = [ "scale-monitor-framebuffer" ];
-      };
       "org/gnome/desktop/session" = {
         idle-delay = mkUint32 900; # 15mins
       };
@@ -49,7 +43,6 @@
           "_memory_usage_"
           "_temperature_processor_0_"
           "__network-rx_max__"
-          "_temperature_amdgpu_edge_"
         ];
       };
     };
