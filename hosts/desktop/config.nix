@@ -21,6 +21,12 @@
     intel-compute-runtime
   ];
 
+  # Force xe drivers (over i915)
+  boot.kernelParams = [
+    "i915.force_probe=!*"
+    "xe.force_probe=*"
+  ];
+
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
   ];
