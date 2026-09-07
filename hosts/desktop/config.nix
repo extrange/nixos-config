@@ -38,19 +38,31 @@
       nvtopPackages.intel
     ];
 
-    dconf.settings = with home-manager.lib.hm.gvariant; {
-      "org/gnome/desktop/session" = {
-        idle-delay = mkUint32 900; # 15mins
-      };
+    dconf.settings =
+      with home-manager.lib.hm.gvariant;
+      let
+        qemuUris = [ "qemu:///system" ];
+      in
+      {
+        # Virt-manager connections
+        "org/virt-manager/virt-manager/connections" = {
+          uris = qemuUris;
+        };
+        "org/virt-manager/virt-manager/connections" = {
+          autoconnect = qemuUris;
+        };
+        "org/gnome/desktop/session" = {
+          idle-delay = mkUint32 900; # 15mins
+        };
 
-      "org/gnome/shell/extensions/vitals" = {
-        hot-sensors = [
-          "_processor_usage_"
-          "_memory_usage_"
-          "_temperature_processor_0_"
-          "__network-rx_max__"
-        ];
+        "org/gnome/shell/extensions/vitals" = {
+          hot-sensors = [
+            "_processor_usage_"
+            "_memory_usage_"
+            "_temperature_processor_0_"
+            "__network-rx_max__"
+          ];
+        };
       };
-    };
   };
 }

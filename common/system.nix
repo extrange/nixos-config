@@ -76,6 +76,7 @@ in
       dmidecode
       dnsutils # `dig` + `nslookup`
       duf
+      e2fsprogs # lsattr
       eksctl
       ethtool
       exiftool
@@ -196,18 +197,6 @@ in
           "8.8.8.8"
         ];
       };
-    };
-  };
-
-  # Hack around rootless docker not working if subuid ranges are not specified
-  environment.etc = {
-    "subuid" = {
-      text = "1000:100000:65536\n";
-      mode = "0644";
-    };
-    "subgid" = {
-      text = "1000:100000:65536\n";
-      mode = "0644";
     };
   };
 
