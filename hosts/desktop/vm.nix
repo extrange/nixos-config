@@ -380,6 +380,14 @@
                   };
                 };
 
+                video = {
+                  model = {
+                    type = "virtio";
+
+                  };
+                  address = pci 0 1 0;
+                };
+
                 watchdog = {
                   model = "itco";
                   action = "reset";

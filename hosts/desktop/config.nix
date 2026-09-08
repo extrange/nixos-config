@@ -27,6 +27,9 @@
     "xe.force_probe=*"
   ];
 
+  # Allow this host to redirect its USB devices to VMs
+  virtualisation.spiceUSBRedirection.enable = true;
+
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
   ];
