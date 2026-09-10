@@ -11,7 +11,6 @@
   allowSsh.enable = true;
   ffmpegCustom = true;
   enablePrinting = true;
-  fixLogiBoltSleep = true;
   remoteDesktop = true;
 
   # Intel GPU
@@ -44,6 +43,8 @@
       darktable
       digikam
       nvtopPackages.intel
+      gscan2pdf
+      naps2
     ];
 
     dconf.settings =
