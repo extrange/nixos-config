@@ -30,8 +30,13 @@
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
 
+  # Scanner
+  hardware.sane.enable = true;
+  hardware.sane.drivers.scanSnap.enable = true;
+
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
+    "scanner"
   ];
 
   home-manager.users.user = {
