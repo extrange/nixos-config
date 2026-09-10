@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  home-manager,
   ...
 }:
 with lib;
@@ -23,10 +22,21 @@ with lib;
     ];
 
     # Disable screen blanking/sleep
-    home-manager.users."${config.userName}".dconf.settings = with home-manager.lib.hm.gvariant; {
+    home-manager.users."${config.userName}".dconf.settings = {
       "org/gnome/settings-daemon/plugins/power" = {
         sleep-inactive-ac-type = "nothing";
       };
     };
+
+    # Prevent sleep at login screen
+    programs.dconf.profiles.gdm.databases = [
+      {
+        settings = {
+          "org/gnome/settings-daemon/plugins/power" = {
+            sleep-inactive-ac-type = "nothing";
+          };
+        };
+      }
+    ];
   };
 }
