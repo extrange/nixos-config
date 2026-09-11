@@ -30,8 +30,18 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   # Scanner
-  hardware.sane.enable = true;
-  hardware.sane.drivers.scanSnap.enable = true;
+  hardware.sane = {
+    enable = true;
+    brscan4 = {
+      enable = true;
+      netDevices = {
+        MFCJ470DW = {
+          ip = "192.168.1.101";
+          model = "MFC-J470DW";
+        };
+      };
+    };
+  };
 
   users.users."${config.userName}".extraGroups = [
     "dialout" # For ESP32 programming
@@ -43,8 +53,6 @@
       darktable
       digikam
       nvtopPackages.intel
-      gscan2pdf
-      naps2
     ];
 
     dconf.settings =
