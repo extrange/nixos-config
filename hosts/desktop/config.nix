@@ -21,10 +21,10 @@
   ];
 
   # Force xe drivers (over i915)
-  boot.kernelParams = [
-    "i915.force_probe=!*"
-    "xe.force_probe=*"
-  ];
+  # boot.kernelParams = [
+  #   "i915.force_probe=!*"
+  #   "xe.force_probe=*"
+  # ];
 
   # Allow this host to redirect its USB devices to VMs
   virtualisation.spiceUSBRedirection.enable = true;
