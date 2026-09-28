@@ -171,7 +171,7 @@ in
           favorite-apps = [
             "firefox.desktop"
             "com.mitchellh.ghostty.desktop"
-            "obsidian.desktop"
+            "md.obsidian.Obsidian.desktop"
             "org.gnome.Nautilus.desktop"
             "code.desktop"
             "org.telegram.desktop.desktop"
