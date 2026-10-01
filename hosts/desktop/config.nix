@@ -4,6 +4,9 @@
   home-manager,
   ...
 }:
+let
+  user = config.userName;
+in
 {
   imports = [ ./brightness.nix ];
   graphical = true;
@@ -12,6 +15,35 @@
   ffmpegCustom = true;
   enablePrinting = true;
   remoteDesktop = true;
+
+  # Force primary display to always be detected as on (for streaming)
+  hardware.display.edid.packages = [
+    (pkgs.runCommandLocal "edid-p2715q" { } ''
+      mkdir -p $out/lib/firmware/edid
+      cp ${./edid-p2715q.bin} $out/lib/firmware/edid/p2715q.bin
+    '')
+  ];
+
+  # Pin the primary monitor's EDID to the DP connector
+  hardware.display.outputs."DP-1".edid = "p2715q.bin";
+  hardware.display.outputs."DP-1".mode = "e"; # Force always on
+
+  services = {
+    sunshine = {
+      enable = true;
+      autoStart = true; # optional: starts Sunshine automatically on login
+      capSysAdmin = true;
+      openFirewall = true;
+    };
+  };
+
+  users.users."${user}".extraGroups = [
+    "uinput" # Moonlight: fix cursor not moving
+    "dialout" # For ESP32 programming
+    "scanner"
+  ];
+
+  environment.variables.MUTTER_DEBUG_DISABLE_HW_CURSORS = 1; # fix curson not showing
 
   # Intel GPU
   hardware.graphics.extraPackages = with pkgs; [
@@ -43,11 +75,6 @@
     };
   };
 
-  users.users."${config.userName}".extraGroups = [
-    "dialout" # For ESP32 programming
-    "scanner"
-  ];
-
   home-manager.users.user = {
     home.packages = with pkgs; [
       darktable
@@ -69,7 +96,7 @@
           autoconnect = qemuUris;
         };
         "org/gnome/desktop/session" = {
-          idle-delay = mkUint32 900; # 15mins
+          idle-delay = mkUint32 3600; # 60mins
         };
 
         "org/gnome/shell/extensions/vitals" = {
