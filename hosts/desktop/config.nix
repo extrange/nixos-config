@@ -34,6 +34,9 @@ in
       autoStart = true; # optional: starts Sunshine automatically on login
       capSysAdmin = true;
       openFirewall = true;
+      settings = {
+        csrf_allowed_origins = "https://100.126.84.29";
+      };
     };
   };
 

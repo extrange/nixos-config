@@ -27,6 +27,7 @@ in
         jan
         karere
         kid3 # audio file tagger
+        libnotify
         libreoffice
         lutris
         moonlight-qt
