@@ -35,7 +35,7 @@ in
       capSysAdmin = true;
       openFirewall = true;
       settings = {
-        csrf_allowed_origins = "https://100.126.84.29";
+        csrf_allowed_origins = "https://desktop,https://desktop.tail96daa.ts.net";
       };
     };
   };
