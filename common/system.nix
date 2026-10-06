@@ -110,7 +110,6 @@ in
       lshw
       lsof
       lsscsi
-      ltrace # library call monitoring
       minikube
       mtr # ping + tracert TUI
       ncdu
