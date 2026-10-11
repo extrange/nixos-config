@@ -163,7 +163,7 @@ in
           [Thumbnailer Entry]
           TryExec=gdk-pixbuf-thumbnailer
           Exec=gdk-pixbuf-thumbnailer -s %s %u %o
-          MimeType=image/x-canon-crw;image/x-canon-cr2;image/x-canon-cr3;image/x-adobe-dng;image/x-dng;
+          MimeType=image/x-canon-crw;image/x-canon-cr2;image/x-canon-cr3;image/x-adobe-dng;image/x-dng;image/x-olympus-orf;
         '';
       })
     ];
