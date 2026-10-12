@@ -37,6 +37,18 @@ in
       settings = {
         csrf_allowed_origins = "https://desktop,https://desktop.tail96daa.ts.net";
       };
+      applications = {
+        apps = [
+          {
+            name = "Desktop";
+            prep-cmd = [
+              {
+                do = "loginctl lock-session";
+              }
+            ];
+          }
+        ];
+      };
     };
   };
 
