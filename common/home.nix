@@ -135,6 +135,14 @@ in
       yazi = {
         enable = true;
         shellWrapperName = "y";
+
+        keymap.mgr.prepend_keymap = [
+          {
+            on = "!";
+            run = ''shell "$SHELL" --block'';
+            desc = "Open $SHELL here";
+          }
+        ];
       };
 
       bash.initExtra = lib.mkOrder 200 (
