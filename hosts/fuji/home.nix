@@ -41,7 +41,16 @@ in
 
     programs = {
       git = {
-        settings = lib.mkForce { };
+        # common/home.nix gives every host extrange's git identity, so this
+        # host has to override it. Emptying `settings` here left git with no
+        # user.email at all ("unable to auto-detect email address"), so set
+        # Chanel's own identity explicitly instead.
+        settings = lib.mkForce {
+          user = {
+            name = "ChanelN";
+            email = "71637824+ChanelN@users.noreply.github.com";
+          };
+        };
         signing = lib.mkForce { };
       };
       ssh.settings = lib.mkForce {
