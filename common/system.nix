@@ -67,10 +67,6 @@ in
     };
   };
 
-  # The sops installer creates missing parent directories world-executable;
-  # keep the Harness home private when it is created before the first run.
-  systemd.tmpfiles.rules = [ "d /home/${user}/.dsh 0700 ${user} ${user} - -" ];
-
   i18n.defaultLocale = "en_SG.UTF-8";
   time.timeZone = "Asia/Singapore";
 
