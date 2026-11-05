@@ -7,6 +7,7 @@
   pkgs,
   lib,
   hostname,
+  llm-agents,
   ...
 }:
 let
@@ -25,6 +26,13 @@ in
         user
       ];
       auto-optimise-store = true;
+
+      # Prebuilt `dsh` (and other numtide/llm-agents packages). Trusting this
+      # key means any store path signed by it may be substituted, not only dsh.
+      extra-substituters = [ "https://cache.numtide.com" ];
+      extra-trusted-public-keys = [
+        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      ];
     };
     optimise.automatic = true; # Run daily at 0345
     gc = {
@@ -75,6 +83,9 @@ in
       direnv
       dmidecode
       dnsutils # `dig` + `nslookup`
+      # DeepSeek Harness CLI. The numtide package patches the two NixOS
+      # blockers: the hardcoded /bin/bash and node-addon-require-builtin.
+      llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.dsh
       duf
       e2fsprogs # lsattr
       eksctl
@@ -124,6 +135,7 @@ in
       p7zip
       parted
       pciutils # lspci
+      pnpm # runtime dependency of `dsh plugin`
       poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
       postgresql
       pre-commit

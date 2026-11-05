@@ -27,6 +27,11 @@
       url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents = {
+      # No `nixpkgs.follows`: the pinned nixpkgs is what numtide's cache was
+      # built against, so following ours would force a from-source rebuild.
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   outputs =
