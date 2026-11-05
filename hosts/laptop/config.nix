@@ -13,6 +13,7 @@ in
 {
   buildRemote = true;
   graphical = true;
+  monitoring.client.enable = true;
   wifi = {
     enable = true;
     interface-name = wifiInterface;

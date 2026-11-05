@@ -10,5 +10,11 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub.configurationLimit = 3;
 
+  # io monitors itself over loopback.
+  monitoring.client = {
+    enable = true;
+    serverAddress = "127.0.0.1";
+  };
+
   home-manager.users.user = { };
 }

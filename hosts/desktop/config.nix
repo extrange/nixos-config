@@ -10,6 +10,7 @@ in
 {
   imports = [ ./brightness.nix ];
   graphical = true;
+  monitoring.client.enable = true;
   ddcutil = true;
   allowSsh.enable = true;
   ffmpegCustom = true;
