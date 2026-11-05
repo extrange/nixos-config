@@ -4,7 +4,11 @@
 }:
 
 {
-  packages = [ pkgs.git ];
+  packages = with pkgs; [
+    git
+    ssh-to-age
+    sops
+  ];
   languages.nix.enable = true;
   languages.nix.lsp.enable = true;
 
