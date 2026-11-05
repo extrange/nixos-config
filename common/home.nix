@@ -15,11 +15,6 @@ in
     useUserPackages = true;
   };
 
-  sops.secrets = {
-    "opencode/tavily".owner = user;
-    "opencode/openrouter".owner = user;
-  };
-
   home-manager.users."${user}" = {
     home.username = user;
     home.homeDirectory = "/home/${user}";
@@ -66,29 +61,6 @@ in
         enableGitIntegration = true;
         options = {
           side-by-side = true;
-        };
-      };
-
-      opencode = {
-        enable = true;
-        settings = {
-          model = "openrouter/deepseek/deepseek-v4.1-flash";
-
-          provider = {
-            openrouter = {
-              options = {
-                apiKey = "{file:${config.sops.secrets."opencode/openrouter".path}}";
-              };
-            };
-          };
-          mcp.tavily = {
-            enabled = true;
-            url = "https://mcp.tavily.com/mcp/?tavilyApiKey={file:${
-              config.sops.secrets."opencode/tavily".path
-            }}";
-          };
-          lsp = true;
-
         };
       };
 
