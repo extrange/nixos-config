@@ -97,8 +97,6 @@ in
       direnv
       dmidecode
       dnsutils # `dig` + `nslookup`
-      # DeepSeek Harness CLI. The numtide package patches the two NixOS
-      # blockers: the hardcoded /bin/bash and node-addon-require-builtin.
       llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.dsh
       duf
       e2fsprogs # lsattr
