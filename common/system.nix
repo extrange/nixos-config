@@ -51,7 +51,25 @@ in
     defaultSopsFile = ../secrets.yaml;
     secrets.userPassword.neededForUsers = true;
     gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
+
+    secrets."dsh/deepseek_api_key".owner = user;
+
+    # dsh reads `$DSH_HOME/.env` as its user layer, so the key never has to
+    # enter the shell environment. A value saved through the Web UI lives in
+    # `~/.dsh/.credentials.yaml`, which takes precedence over this file.
+    templates."dsh-env" = {
+      path = "/home/${user}/.dsh/.env";
+      owner = user;
+      mode = "0400";
+      content = ''
+        DEEPSEEK_API_KEY=${config.sops.placeholder."dsh/deepseek_api_key"}
+      '';
+    };
   };
+
+  # The sops installer creates missing parent directories world-executable;
+  # keep the Harness home private when it is created before the first run.
+  systemd.tmpfiles.rules = [ "d /home/${user}/.dsh 0700 ${user} ${user} - -" ];
 
   i18n.defaultLocale = "en_SG.UTF-8";
   time.timeZone = "Asia/Singapore";
