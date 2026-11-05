@@ -19,6 +19,7 @@ in
 
     # For Lutris
     hardware.graphics.enable32Bit = true;
+    programs.gamemode.enable = true;
 
     # Display: enable automatic login for the user.
     services.displayManager.autoLogin.enable = true;
@@ -110,6 +111,13 @@ in
         };
       };
     };
+
+    # Let the desktop user control tailscaled without sudo. The
+    # tailscale-status GNOME extension shells out to the CLI to set exit
+    # nodes; without an operator its privileged fallback is broken on current
+    # Tailscale versions (it appends a second --reset, which the CLI rejects),
+    # so exit-node changes silently do nothing.
+    services.tailscale.extraSetFlags = [ "--operator=${user}" ];
 
     # Early OOM Killer - Fedora uses it
     # https://fedoraproject.org/wiki/Changes/EnableEarlyoom

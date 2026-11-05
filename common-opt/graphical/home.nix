@@ -29,7 +29,6 @@ in
         kid3 # audio file tagger
         libnotify
         libreoffice
-        lutris
         moonlight-qt
         mpv # required for smplayer
         obs-studio
@@ -43,7 +42,6 @@ in
         ungoogled-chromium
         virt-manager
         vscode
-        wineWow64Packages.waylandFull
         zoom-us
 
         # Gnome Extensions
@@ -97,6 +95,22 @@ in
             background-opacity = 0.9;
             theme = "Atom One Dark";
           };
+        };
+
+        lutris = {
+          enable = true;
+          # Wine/Proton builds are linked into ~/.local/share/lutris/runners
+          # instead of being downloaded at runtime.
+          winePackages = [ pkgs.wineWow64Packages.waylandFull ];
+          protonPackages = [ pkgs.proton-ge-bin ];
+          defaultWinePackage = pkgs.proton-ge-bin;
+          extraPackages = with pkgs; [
+            umu-launcher
+            mangohud
+            gamescope
+            gamemode
+            winetricks
+          ];
         };
       };
 
