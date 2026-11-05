@@ -40,11 +40,11 @@ jobs:
         uses: cachix/install-nix-action@75c75c31ebece974e48ebc36b4ad125bd97bd97b # v31
 
       - name: Update flake.lock file
-        run: nix flake update --accept-flake-config
+        run: nix flake update
 
       - name: Run tests + builds for all hosts
         run: |
           # Use --max-jobs 1 to avoid OOM issues on GitHub Actions
-          nix flake check --accept-flake-config --max-jobs 1
+          nix flake check --max-jobs 1
 
       - run: df -h
