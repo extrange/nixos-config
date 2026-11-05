@@ -45,6 +45,7 @@ in
       domain = "*.${acmeDomain}";
       dnsProvider = "cloudflare";
       environmentFile = config.sops.secrets."acme/cloudflare".path;
+      dnsResolver = "1.1.1.1:53"; # Avoid using the local stub resolver
     };
   };
 
