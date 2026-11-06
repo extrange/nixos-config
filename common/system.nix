@@ -351,7 +351,7 @@ in
   services = {
     tailscale = {
       enable = true;
-      useRoutingFeatures = "client"; # allow using exit node
+      useRoutingFeatures = lib.mkDefault "client"; # Allow using exit nodes (by default)
     };
   };
 

@@ -10,6 +10,9 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub.configurationLimit = 3;
 
+  # Allow use as exit node
+  services.tailscale.useRoutingFeatures = "server";
+
   # io monitors itself over loopback.
   monitoring.client = {
     enable = true;
