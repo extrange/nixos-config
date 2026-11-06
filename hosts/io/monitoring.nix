@@ -1,6 +1,7 @@
 # Central Prometheus/Loki/Grafana stack for the tailnet.
 {
   config,
+  pkgs,
   ...
 }:
 let
@@ -173,6 +174,16 @@ in
 
   services.grafana = {
     enable = true;
+
+    declarativePlugins = with pkgs.grafanaPlugins; [
+      grafana-lokiexplore-app
+      grafana-metricsdrilldown-app
+      grafana-exploretraces-app
+      grafana-pyroscope-app
+      loki
+      prometheus
+      tempo
+    ];
 
     settings = {
       server = {
