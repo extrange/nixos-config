@@ -9,6 +9,21 @@
 with lib;
 let
   user = config.userName;
+
+  # tailscale-status changes preferences with `tailscale up --reset`. `--reset`
+  # rewrites every preference to its default, including `--operator`, so the
+  # first change (e.g. turning an exit node on) succeeds and revokes the user's
+  # operator rights; afterwards every change (e.g. turning the exit node off)
+  # is denied. The extension's pkexec fallback cannot recover because it
+  # appends a second `--reset`, which Tailscale rejects.
+  #
+  # Backport the unmerged upstream fix (PR #75): use `tailscale set` for
+  # preference changes (which only touches the named pref) and retry the same
+  # arguments as root.
+  # https://github.com/maxgallup/tailscale-status/pull/75
+  tailscale-status = pkgs.gnomeExtensions.tailscale-status.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [ ./patches/tailscale-status-set-prefs.patch ];
+  });
 in
 {
   config = mkIf config.graphical {
@@ -50,7 +65,7 @@ in
         gnomeExtensions.dash-to-dock
         gnomeExtensions.fullscreen-avoider
         gnomeExtensions.gsconnect
-        gnomeExtensions.tailscale-status
+        tailscale-status
         gnomeExtensions.vitals
 
         # Fonts
