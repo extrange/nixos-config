@@ -67,6 +67,14 @@ in
     };
   };
 
+  # sops-nix creates missing parent directories of template paths as root
+  # (0755), so on a fresh host `~/.dsh` would be root-owned before `dsh` first
+  # runs and it could not create `profiles/`. Create the Harness home as the
+  # user instead; `d` also fixes the ownership of an already-created directory.
+  systemd.tmpfiles.rules = [
+    "d /home/${user}/.dsh 0700 ${user} ${config.users.users.${user}.group} - -"
+  ];
+
   i18n.defaultLocale = "en_SG.UTF-8";
   time.timeZone = "Asia/Singapore";
 
