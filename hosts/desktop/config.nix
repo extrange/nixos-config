@@ -112,7 +112,7 @@ in
           autoconnect = qemuUris;
         };
         "org/gnome/desktop/session" = {
-          idle-delay = mkUint32 3600; # 60mins
+          idle-delay = mkUint32 0; # Prevent monitor blanking to fix sunshine display errors
         };
 
         "org/gnome/shell/extensions/vitals" = {
