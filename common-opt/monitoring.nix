@@ -69,7 +69,7 @@ in
           encoding.codec = "json";
           labels = {
             host = "{{ host }}";
-            source_type = "{{ source_type }}";
+            source = "{{ source_type }}";
           };
           # Buffer through io/network outages instead of dropping logs.
           buffer = {
