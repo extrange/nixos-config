@@ -48,6 +48,7 @@ in
       enable = true;
       journaldAccess = true;
       settings = {
+        acknowledgements = true;
         data_dir = "/var/lib/vector";
 
         sources.journald = {
@@ -74,7 +75,6 @@ in
           buffer = {
             type = "disk";
             max_size = cfg.bufferSize;
-            when_full = "drop_newest";
           };
         };
       };
