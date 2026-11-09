@@ -22,11 +22,11 @@ Each volume/dataset may have:
 
 | Pool    | Drives         | Scrub |
 | ------- | -------------- | :---: |
-| storage | 4x HDD, RAIDZ2 |   ✅   |
+| storage | 4x HDD, RAIDZ2 |  ✅   |
 
 | Dataset      | Snaps | Backup |
 | ------------ | :---: | :----: |
-| storage/data |   ✅   |   ✅    |
+| storage/data |  ✅   |   ✅   |
 
 _Note: RAIDZ [should not][raidz-database] be used with databases._
 
@@ -36,12 +36,12 @@ Mount options: `noatime,compress=zstd`
 
 | Volume | Drives         | Scrub |
 | ------ | -------------- | :---: |
-| /      | 2x SSD, mirror |   ✅   |
+| /      | 2x SSD, mirror |  ✅   |
 
 | Subvolume      | Snaps | Backup |
 | -------------- | :---: | :----: |
-| root           |   ✅   |   ✅    |
-| server         |   ✅   |   ✅    |
+| root           |  ✅   |   ✅   |
+| server         |  ✅   |   ✅   |
 | var/log        |       |        |
 | var/lib/docker |       |        |
 | nix            |       |        |
@@ -68,7 +68,6 @@ sudo bash -c "
   syncoid \
     --delete-target-snapshots \
     --sshkey ~/.ssh/id_ed25519 \
-    --sshport 39483 \
     server:storage/data archive/storage/data && \
   zpool scrub -w archive && \
   zpool status archive

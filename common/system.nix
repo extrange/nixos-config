@@ -397,7 +397,6 @@ in
       extraConfig = ''
         Host ssh.nicholaslyz.com
           HostName ssh.nicholaslyz.com
-          Port 39483
           User user
           IdentityFile /home/user/.ssh/id_ed25519
       '';

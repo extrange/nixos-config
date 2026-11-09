@@ -74,7 +74,6 @@ in
 
           server = {
             Hostname = "ssh.nicholaslyz.com";
-            Port = 39483;
             User = "user";
           };
 
