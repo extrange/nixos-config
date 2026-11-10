@@ -39,7 +39,6 @@ in
         gnome-extension-manager
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
-        jan
         karere
         kid3 # audio file tagger
         libnotify
