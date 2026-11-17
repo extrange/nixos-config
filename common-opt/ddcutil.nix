@@ -22,24 +22,19 @@ in
 
     home-manager.users."${user}" = {
       home.packages = with pkgs; [
-        gnomeExtensions.brightness-control-using-ddcutil
+        gnomeExtensions.ddc-brightness-controller
       ];
       dconf.settings = {
-        "org/gnome/shell/extensions/display-brightness-ddcutil" = {
-          button-location = 1; # Show in system menu
-          only-all-slider = true;
-          show-all-slider = true;
-          allow-zero-brightness = true;
-          disable-display-state-check = true;
-          show-value-label = true;
-          hide-system-indicator = true;
-          ddcutil-binary-path = "${pkgs.ddcutil}/bin/ddcutil";
-          increase-brightness-shortcut = [ "MonBrightnessUp" ];
-          decrease-brightness-shortcut = [ "MonBrightnessDown" ];
+        "org/gnome/shell/extensions/ddcbrightness" = {
+          vcp-code = "10";
+          step = 10;
+          link-displays = false; # single monitor
+          brightness-up = [ "XF86MonBrightnessUp" ];
+          brightness-down = [ "XF86MonBrightnessDown" ];
         };
         "org/gnome/shell" = {
           enabled-extensions = [
-            "display-brightness-ddcutil@themightydeity.github.com"
+            "ddcbrightness@lucaso.io"
           ];
         };
       };
