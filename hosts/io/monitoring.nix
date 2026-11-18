@@ -7,6 +7,44 @@
 let
   acmeDomain = "internal.nicholaslyz.com";
   grafanaAlerting = import ./grafana/alerting.nix;
+
+  uptimeTargets = import ./uptime/targets.nix;
+
+  mkBlackboxJob = moduleName: {
+    job_name = "blackbox-${moduleName}";
+    metrics_path = "/probe";
+    params.module = [ moduleName ];
+    scrape_interval = "60s";
+    scrape_timeout = "20s";
+    static_configs = map (target: {
+      targets = [ target.target ];
+      labels = {
+        monitor = target.name;
+        group = target.group;
+        exposure =
+          if target.module == "icmp" then
+            "host"
+          else if builtins.match ".*\\.internal\\.nicholaslyz\\.com.*" target.target != null then
+            "internal"
+          else
+            "external";
+      };
+    }) (builtins.filter (target: target.module == moduleName) uptimeTargets);
+    relabel_configs = [
+      {
+        source_labels = [ "__address__" ];
+        target_label = "__param_target";
+      }
+      {
+        source_labels = [ "__param_target" ];
+        target_label = "instance";
+      }
+      {
+        target_label = "__address__";
+        replacement = "127.0.0.1:9115";
+      }
+    ];
+  };
 in
 {
   sops.secrets = {
@@ -71,8 +109,10 @@ in
       auth_enabled = false;
 
       server = {
-        http_listen_address = "0.0.0.0";
+        http_listen_address = "0.0.0.0"; # Firewall limits to tailscale/localhost only
         http_listen_port = 3100;
+        # Nothing off-host uses Loki's gRPC API; keep it off the tailnet.
+        grpc_listen_address = "127.0.0.1";
         # Fixes grpc: received message larger than max errors
         # https://github.com/grafana/loki/issues/2271
         grpc_server_max_recv_msg_size = 104857600; # 100MB
@@ -166,11 +206,35 @@ in
         static_configs = [ { targets = [ "server:9633" ]; } ];
       }
       {
+        job_name = "crowdsec";
+        static_configs = [ { targets = [ "server:6060" ]; } ];
+      }
+      {
         job_name = "loki";
         static_configs = [ { targets = [ "127.0.0.1:3100" ]; } ];
       }
+      (mkBlackboxJob "http_2xx")
+      (mkBlackboxJob "http_401")
+      (mkBlackboxJob "http_403")
+      (mkBlackboxJob "icmp")
     ];
   };
+
+  services.prometheus.exporters.blackbox = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+    configFile = ./uptime/blackbox.yml;
+  };
+
+  # The exporter is cgo-built, so lookups go through glibc's NSS, where
+  # nss-resolve talks to systemd-resolved over an AF_UNIX varlink socket.
+  # Without AF_UNIX it silently falls back to plain DNS via the stub, and
+  # single-label tailnet names (e.g. `server-kvm`) stall on the search domain.
+  systemd.services.prometheus-blackbox-exporter.serviceConfig.RestrictAddressFamilies = [
+    "AF_UNIX"
+    "AF_INET"
+    "AF_INET6"
+  ];
 
   services.grafana = {
     enable = true;
