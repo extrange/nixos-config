@@ -16,7 +16,6 @@ in
       home.packages = with pkgs; [
         android-tools
         audacity
-        calibre
         dbeaver-bin
         discord
         firefox
