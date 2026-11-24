@@ -84,6 +84,7 @@ in
           enable = true;
           extraArgs = [
             "--service"
+            "--hostname"
             # The desktop app's local connection expects the server on localhost.
             # Remote clients use the host's Tailscale IP or MagicDNS name.
             "0.0.0.0"
