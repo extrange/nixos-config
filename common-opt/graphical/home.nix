@@ -27,6 +27,7 @@ in
         kid3 # audio file tagger
         libnotify
         libreoffice
+        llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2-desktop
         moonlight-qt
         mpv # required for smplayer
         obs-studio
