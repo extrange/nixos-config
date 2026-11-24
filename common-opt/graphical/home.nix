@@ -206,6 +206,9 @@ in
         };
 
         "org/gnome/shell" = {
+          # Show Log Out in the system menu even with a single user/session
+          always-show-log-out = true;
+
           # Setup dash shortcuts
           favorite-apps = [
             "firefox.desktop"
