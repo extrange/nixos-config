@@ -126,9 +126,6 @@ in
               show_msg = false;
               respect_dnd = true;
             };
-            # ZapZap's config is a read-only Home Manager symlink, so the app
-            # can't write its own "setup completed" marker. Set it here or the
-            # first-run wizard reappears on every launch.
             onboarding.initial_setup_completed = true;
             downloads.behavior = "dialog";
             privacy.webrtc_shield = true;
