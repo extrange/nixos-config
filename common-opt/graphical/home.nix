@@ -109,7 +109,36 @@ in
             winetricks
           ];
         };
+
+        zapzap = {
+          enable = true;
+          settings = {
+            system = {
+              theme = "dark";
+              scale = 100;
+              tray_icon = true;
+              sidebar = true;
+              notificationCounter = true;
+            };
+            notification = {
+              app = true;
+              sound = true;
+              show_msg = false;
+              respect_dnd = true;
+            };
+            # ZapZap's config is a read-only Home Manager symlink, so the app
+            # can't write its own "setup completed" marker. Set it here or the
+            # first-run wizard reappears on every launch.
+            onboarding.initial_setup_completed = true;
+            downloads.behavior = "dialog";
+            privacy.webrtc_shield = true;
+            website.open_page = false;
+          };
+        };
       };
+
+      # Fix issue with ZapZap configuration overwriting
+      xdg.configFile."ZapZap/ZapZap.conf".force = true;
 
       dconf.settings = with home-manager.lib.hm.gvariant; {
         # Auto TZ
