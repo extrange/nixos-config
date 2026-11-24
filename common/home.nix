@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  llm-agents,
   ...
 }:
 let
@@ -40,6 +41,71 @@ in
       };
 
       home-manager.enable = true;
+
+      opencode = {
+        enable = true;
+        package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+
+        settings = {
+          model = "opencode-go/deepseek-v4.1-flash";
+          agents.build.model = "opencode-go/deepseek-v4.1-flash#max";
+          default_agent = "plan";
+          update = "disable"; # Managed via nix
+
+          permissions = [
+            # .env files; keep examples readable
+            {
+              action = "read";
+              resource = "*.env";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "*.env.*";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "*.env.example";
+              effect = "allow";
+            }
+
+            # Repo/sops secrets
+            {
+              action = "read";
+              resource = "*secrets.yaml";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "*secrets.yml";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "/run/secrets/*";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "/run/secrets-for-users/*";
+              effect = "ask";
+            }
+
+            # Credential stores
+            {
+              action = "read";
+              resource = "*.ssh/*";
+              effect = "ask";
+            }
+            {
+              action = "read";
+              resource = "*.bash_history";
+              effect = "ask";
+            }
+          ];
+        };
+      };
 
       git = {
         enable = true;

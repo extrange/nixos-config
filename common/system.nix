@@ -7,7 +7,6 @@
   pkgs,
   lib,
   hostname,
-  llm-agents,
   ...
 }:
 let
@@ -27,8 +26,9 @@ in
       ];
       auto-optimise-store = true;
 
-      # Prebuilt `dsh` (and other numtide/llm-agents packages). Trusting this
-      # key means any store path signed by it may be substituted, not only dsh.
+      # Prebuilt `opencode2` packages (and other numtide/llm-agents packages).
+      # Trusting this key means any store path signed by it may be substituted,
+      # not only llm-agents' packages.
       extra-substituters = [ "https://cache.numtide.com" ];
       extra-trusted-public-keys = [
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
@@ -51,29 +51,7 @@ in
     defaultSopsFile = ../secrets.yaml;
     secrets.userPassword.neededForUsers = true;
     gnupg.sshKeyPaths = [ ]; # https://github.com/Mic92/sops-nix/issues/427
-
-    secrets."dsh/deepseek_api_key".owner = user;
-
-    # dsh reads `$DSH_HOME/.env` as its user layer, so the key never has to
-    # enter the shell environment. A value saved through the Web UI lives in
-    # `~/.dsh/.credentials.yaml`, which takes precedence over this file.
-    templates."dsh-env" = {
-      path = "/home/${user}/.dsh/.env";
-      owner = user;
-      mode = "0400";
-      content = ''
-        DEEPSEEK_API_KEY=${config.sops.placeholder."dsh/deepseek_api_key"}
-      '';
-    };
   };
-
-  # sops-nix creates missing parent directories of template paths as root
-  # (0755), so on a fresh host `~/.dsh` would be root-owned before `dsh` first
-  # runs and it could not create `profiles/`. Create the Harness home as the
-  # user instead; `d` also fixes the ownership of an already-created directory.
-  systemd.tmpfiles.rules = [
-    "d /home/${user}/.dsh 0700 ${user} ${config.users.users.${user}.group} - -"
-  ];
 
   i18n.defaultLocale = "en_SG.UTF-8";
   time.timeZone = "Asia/Singapore";
@@ -105,7 +83,6 @@ in
       direnv
       dmidecode
       dnsutils # `dig` + `nslookup`
-      llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.dsh
       duf
       e2fsprogs # lsattr
       eksctl
@@ -155,7 +132,6 @@ in
       p7zip
       parted
       pciutils # lspci
-      pnpm # runtime dependency of `dsh plugin`
       poppler-utils # pdftocairo, pdftoppm for pdf to image rendering
       postgresql
       pre-commit
