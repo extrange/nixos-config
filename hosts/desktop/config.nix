@@ -10,30 +10,13 @@ in
 {
   imports = [ ./brightness.nix ];
 
-  sops.secrets."opencode/go_api_key" = {
-    owner = user;
-  };
-  sops.secrets."opencode/web_password" = {
-    owner = user;
-  };
-  sops.templates."opencode-web-env" = {
-    path = "/run/secrets/rendered/opencode-web-env";
-    owner = user;
-    mode = "0400";
-    content = ''
-      OPENCODE_SERVER_PASSWORD=${config.sops.placeholder."opencode/web_password"}
-    '';
-  };
-
-  # OpenCode server
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 4096 ];
-
   graphical = true;
   monitoring.client.enable = true;
   ddcutil = true;
   allowSsh.enable = true;
   ffmpegCustom = true;
   enablePrinting = true;
+  openCodeServer.enable = true;
   remoteDesktop = true;
 
   # Force primary display to always be detected as on (for streaming)
@@ -143,23 +126,6 @@ in
           ];
         };
       };
-
-    programs.opencode = {
-      web = {
-        enable = true;
-        extraArgs = [
-          "--hostname"
-          "0.0.0.0"
-          "--port"
-          "4096"
-        ];
-        environmentFile = config.sops.templates."opencode-web-env".path;
-      };
-
-      settings.providers."opencode-go".settings.apiKey = "{file:${
-        config.sops.secrets."opencode/go_api_key".path
-      }}";
-    };
   };
 
 }

@@ -4,6 +4,7 @@
   pkgs,
   lib,
   home-manager,
+  llm-agents,
   ...
 }:
 with lib;
@@ -83,6 +84,12 @@ in
       };
 
       programs = {
+        opencode = {
+          enable = true;
+          package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+          settings.update = "disable"; # Managed via nix
+        };
+
         ghostty = {
           enable = true;
           installBatSyntax = true;

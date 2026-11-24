@@ -18,6 +18,7 @@ in
   };
   zswap = true;
   enablePrinting = true;
+  openCodeServer.enable = true;
   userName = "chanel";
   wifi = {
     enable = true;
