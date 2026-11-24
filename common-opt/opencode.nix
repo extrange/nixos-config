@@ -1,7 +1,8 @@
 # Standalone OpenCode web server.
 #
-# This only configures the server; the OpenCode CLI/package is installed for
-# graphical hosts in common-opt/graphical/home.nix.
+# This installs the OpenCode package and configures the standalone server.
+# The desktop app is installed for graphical hosts in
+# common-opt/graphical/home.nix.
 #
 # This runs `opencode serve` under the user's systemd manager. It is not the
 # shared `opencode serve --service` instance, so local clients have to use
@@ -10,6 +11,8 @@
 {
   lib,
   config,
+  pkgs,
+  llm-agents,
   ...
 }:
 with lib;
@@ -63,6 +66,9 @@ in
     networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ cfg.port ];
 
     home-manager.users."${user}".programs.opencode = {
+      enable = true;
+      package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+
       web = {
         enable = true;
         extraArgs = [
@@ -74,9 +80,12 @@ in
         environmentFile = config.sops.templates."opencode-web-env".path;
       };
 
-      settings.providers."opencode-go".settings.apiKey = "{file:${
-        config.sops.secrets."${cfg.apiKeySecret}".path
-      }}";
+      settings = {
+        update = "disable"; # Managed via nix
+        providers."opencode-go".settings.apiKey = "{file:${
+          config.sops.secrets."${cfg.apiKeySecret}".path
+        }}";
+      };
     };
   };
 }

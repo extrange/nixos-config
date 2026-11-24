@@ -85,12 +85,6 @@ in
       };
 
       programs = {
-        opencode = {
-          enable = true;
-          package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
-          settings.update = "disable"; # Managed via nix
-        };
-
         ghostty = {
           enable = true;
           installBatSyntax = true;
@@ -219,6 +213,7 @@ in
             "md.obsidian.Obsidian.desktop"
             "org.gnome.Nautilus.desktop"
             "code.desktop"
+            "opencode2-desktop.desktop"
             "org.telegram.desktop.desktop"
             "com.rtosta.zapzap.desktop"
           ];
