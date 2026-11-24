@@ -23,7 +23,6 @@ in
         gnome-extension-manager
         hunspell # libreoffice spellcheck
         hunspellDicts.en-us
-        karere
         kid3 # audio file tagger
         libnotify
         libreoffice
@@ -213,7 +212,7 @@ in
             "org.gnome.Nautilus.desktop"
             "code.desktop"
             "org.telegram.desktop.desktop"
-            "io.github.tobagin.karere.desktop"
+            "com.rtosta.zapzap.desktop"
           ];
 
           # Enable extensions
@@ -249,13 +248,6 @@ in
         };
         "org/gnome/desktop/search-providers" = {
           disable-external = true;
-        };
-
-        # Whatsapp Client
-        "io/github/tobagin/karere" = {
-          run-on-startup = true;
-          start-in-background = true;
-          enable-multi-account = true;
         };
       };
     };
