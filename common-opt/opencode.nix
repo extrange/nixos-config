@@ -1,13 +1,9 @@
-# Standalone OpenCode web server.
+# OpenCode background server.
 #
-# This installs the OpenCode package and configures the standalone server.
-# The desktop app is installed for graphical hosts in
-# common-opt/graphical/home.nix.
-#
-# This runs `opencode serve` under the user's systemd manager. It is not the
-# shared `opencode serve --service` instance, so local clients have to use
-# `OPENCODE_PASSWORD=... opencode --server http://127.0.0.1:<port>` to share
-# its sessions.
+# This installs the OpenCode package and runs `opencode serve --service` under
+# the user's systemd manager. The desktop app discovers and reuses this shared
+# service instead of starting its own local server. The desktop app itself is
+# installed for graphical hosts in common-opt/graphical/home.nix.
 {
   lib,
   config,
@@ -19,16 +15,30 @@ with lib;
 let
   cfg = config.openCodeServer;
   user = config.userName;
+
+  # `serve --service` ignores OPENCODE_PASSWORD and reads the password from
+  # ~/.config/opencode/service.json. Sync the sops value into that file before
+  # each start, preserving unrelated service settings (remote, cors, ...).
+  servicePasswordScript = pkgs.writeShellScript "opencode-service-password" ''
+    set -eu
+    config="$HOME/.config/opencode/service.json"
+    tmp="$(${pkgs.coreutils}/bin/mktemp)"
+    trap '${pkgs.coreutils}/bin/rm -f "$tmp"' EXIT
+
+    if [ -f "$config" ]; then
+      ${pkgs.jq}/bin/jq --arg password "$OPENCODE_PASSWORD" \
+        '.password = $password' "$config" > "$tmp"
+    else
+      ${pkgs.jq}/bin/jq -n --arg password "$OPENCODE_PASSWORD" \
+        '{ password: $password }' > "$tmp"
+    fi
+
+    ${pkgs.coreutils}/bin/install -D -m 600 "$tmp" "$config"
+  '';
 in
 {
   options.openCodeServer = {
-    enable = mkEnableOption "the standalone OpenCode web server";
-
-    hostname = mkOption {
-      type = types.str;
-      default = "0.0.0.0";
-      description = "Address for the OpenCode server to listen on.";
-    };
+    enable = mkEnableOption "the OpenCode background server";
 
     port = mkOption {
       type = types.port;
@@ -65,27 +75,33 @@ in
     # Only expose the server over Tailscale; the password is the second layer.
     networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ cfg.port ];
 
-    home-manager.users."${user}".programs.opencode = {
-      enable = true;
-      package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
-
-      web = {
+    home-manager.users."${user}" = {
+      programs.opencode = {
         enable = true;
-        extraArgs = [
-          "--hostname"
-          cfg.hostname
-          "--port"
-          (toString cfg.port)
-        ];
-        environmentFile = config.sops.templates."opencode-web-env".path;
+        package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2;
+
+        web = {
+          enable = true;
+          extraArgs = [
+            "--service"
+            # The desktop app's local connection expects the server on localhost.
+            # Remote clients use the host's Tailscale IP or MagicDNS name.
+            "0.0.0.0"
+            "--port"
+            (toString cfg.port)
+          ];
+          environmentFile = config.sops.templates."opencode-web-env".path;
+        };
+
+        settings = {
+          update = "disable"; # Managed via nix
+          providers."opencode-go".settings.apiKey = "{file:${
+            config.sops.secrets."${cfg.apiKeySecret}".path
+          }}";
+        };
       };
 
-      settings = {
-        update = "disable"; # Managed via nix
-        providers."opencode-go".settings.apiKey = "{file:${
-          config.sops.secrets."${cfg.apiKeySecret}".path
-        }}";
-      };
+      systemd.user.services.opencode-web.Service.ExecStartPre = "${servicePasswordScript}";
     };
   };
 }
